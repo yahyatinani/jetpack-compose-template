@@ -5,6 +5,6 @@ import io.kotest.matchers.ints.shouldBeExactly
 
 class NothingTest : FreeSpec({
     "nothing" {
-        4 shouldBeExactly 2 + 2
+        2 + 2 shouldBeExactly 4
     }
 })

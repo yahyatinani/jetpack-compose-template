@@ -17,7 +17,7 @@ object Libs {
     }
 
     object AndroidMaterial {
-        private const val version = "1.2.1"
+        private const val version = "1.3.0-beta01"
 
         const val material = "com.google.android.material:material:$version"
     }

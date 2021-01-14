@@ -1,4 +1,4 @@
-package com.why.template.compose
+package com.why.template.compose.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

@@ -23,11 +23,23 @@ object Libs {
     }
 
     object Compose {
-        const val version = "1.0.0-alpha09"
+        private const val prefix = "androidx.compose"
+        const val version = "1.0.0-alpha10"
 
-        const val ui = "androidx.compose.ui:ui:$version"
-        const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
-        const val material = "androidx.compose.material:material:$version"
+        const val ui = "$prefix.ui:ui:$version"
+
+        // Tooling support (Previews, etc.)
+        const val uiTooling = "$prefix.ui:ui-tooling:$version"
+
+        // Foundation (Border, Background, Box, Image, shapes, animations, etc.)
+        const val foundation = "$prefix.foundation:foundation:$version"
+
+        // Material design
+        const val material = "$prefix.material:material:$version"
+
+        // Material design icons
+        const val iconsCore = "$prefix.material:material-icons-core:$version"
+        const val iconsExt = "$prefix.material:material-icons-extended:$version"
     }
 
     object Kotest {
@@ -36,5 +48,13 @@ object Libs {
         const val runner = "io.kotest:kotest-runner-junit5:$version"
         const val assertions = "io.kotest:kotest-assertions-core:$version"
         const val property = "io.kotest:kotest-property:$version"
+    }
+
+    object Y {
+        private const val group = "com.github.whyrising.y"
+        private const val version = "0.0.2.1"
+
+        const val core = "$group:y-core:$version"
+        const val collections = "$group:y-collections:$version"
     }
 }

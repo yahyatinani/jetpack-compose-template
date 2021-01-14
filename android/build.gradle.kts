@@ -12,8 +12,13 @@ dependencies {
 
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.uiTooling)
+    implementation(Libs.Compose.foundation)
+    implementation(Libs.Compose.iconsCore)
+    implementation(Libs.Compose.iconsExt)
     implementation(Libs.Compose.material)
 
+    implementation(Libs.Y.core)
+    implementation(Libs.Y.collections)
 
     testImplementation(Libs.Kotest.runner)
     testImplementation(Libs.Kotest.assertions)
@@ -25,7 +30,7 @@ android {
     buildToolsVersion("30.0.3")
 
     defaultConfig {
-        applicationId = "com.why.composetemplate"
+        applicationId = "com.why.template.compose"
         minSdkVersion(22)
         targetSdkVersion(30)
         versionCode = 1

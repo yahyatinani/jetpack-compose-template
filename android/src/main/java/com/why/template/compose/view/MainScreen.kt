@@ -27,7 +27,7 @@ private fun formatHelloText(name: String): AnnotatedString =
         ) {
             append(name)
         }
-        append("!")
+        append(" \uD83D\uDE01")
     }
 
 @Composable

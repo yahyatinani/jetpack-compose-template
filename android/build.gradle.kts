@@ -23,6 +23,8 @@ dependencies {
     testImplementation(Libs.Kotest.runner)
     testImplementation(Libs.Kotest.assertions)
     testImplementation(Libs.Kotest.property)
+
+    testImplementation(Libs.Compose.uiTestJUnit)
 }
 
 android {

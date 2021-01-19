@@ -10,36 +10,39 @@ object Libs {
     }
 
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:1.3.2"
-        const val appcompat = "androidx.appcompat:appcompat:1.2.0"
+        const val coreKtx = "androidx.core:core-ktx:1.5.0-beta01"
+        const val appcompat = "androidx.appcompat:appcompat:1.3.0-beta01"
         const val lifecycle =
             "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-rc01"
     }
 
     object AndroidMaterial {
-        private const val version = "1.3.0-beta01"
+        private const val version = "1.3.0-rc01"
 
         const val material = "com.google.android.material:material:$version"
     }
 
     object Compose {
-        private const val prefix = "androidx.compose"
+        private const val gr = "androidx.compose"
         const val version = "1.0.0-alpha10"
 
-        const val ui = "$prefix.ui:ui:$version"
+        const val ui = "$gr.ui:ui:$version"
 
         // Tooling support (Previews, etc.)
-        const val uiTooling = "$prefix.ui:ui-tooling:$version"
+        const val uiTooling = "$gr.ui:ui-tooling:$version"
 
         // Foundation (Border, Background, Box, Image, shapes, animations, etc.)
-        const val foundation = "$prefix.foundation:foundation:$version"
+        const val foundation = "$gr.foundation:foundation:$version"
 
         // Material design
-        const val material = "$prefix.material:material:$version"
+        const val material = "$gr.material:material:$version"
 
         // Material design icons
-        const val iconsCore = "$prefix.material:material-icons-core:$version"
-        const val iconsExt = "$prefix.material:material-icons-extended:$version"
+        const val iconsCore = "$gr.material:material-icons-core:$version"
+        const val iconsExt = "$gr.material:material-icons-extended:$version"
+
+        // UI Testing
+        const val uiTestJUnit = "$gr.ui:ui-test-junit4:$version"
     }
 
     object Kotest {

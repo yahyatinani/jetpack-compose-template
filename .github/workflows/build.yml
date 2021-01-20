@@ -52,6 +52,9 @@ jobs:
           name: error-report
           path: build-reports.zip
 
+      - name: Generate android app bundle
+        run: ./gradlew bundle
+
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v2.2.1
         with:

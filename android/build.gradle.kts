@@ -36,7 +36,7 @@ android {
         minSdkVersion(22)
         targetSdkVersion(30)
         versionCode = 1
-        versionName = "1.0"
+        versionName = Ci.publishVersion
     }
 
     buildTypes {

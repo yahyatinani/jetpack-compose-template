@@ -53,7 +53,7 @@ jobs:
           path: build-reports.zip
 
       - name: Upload AAB Artifact
-          uses: actions/upload-artifact@v2.2.1
-          with:
-            name: debug-apk
-            path: app/build/outputs/bundle/debug/android-debug.aab
+        uses: actions/upload-artifact@v2.2.1
+        with:
+          name: debug-apk
+          path: app/build/outputs/bundle/debug/android-debug.aab

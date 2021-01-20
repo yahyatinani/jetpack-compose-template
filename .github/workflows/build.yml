@@ -59,4 +59,4 @@ jobs:
         uses: actions/upload-artifact@v2.2.1
         with:
           name: debug-apk
-          path: app/build/outputs/bundle/debug/android-debug.aab
+          path: android/build/outputs/bundle/debug/android-debug.aab

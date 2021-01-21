@@ -8,4 +8,9 @@
         <item name="android:statusBarColor">@color/red_200</item>
     </style>
 
+    <style name="Theme.Compose.Template.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
 </resources>

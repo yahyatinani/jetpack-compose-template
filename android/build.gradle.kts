@@ -32,7 +32,7 @@ android {
     buildToolsVersion("30.0.3")
 
     defaultConfig {
-        //TODO: Change the applicationId
+        // TODO: Change the applicationId
         applicationId = "com.why.template.compose"
         minSdkVersion(22)
         targetSdkVersion(30)

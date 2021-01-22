@@ -4,7 +4,9 @@
 
     <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />
 
+    <!-- TODO : Change the themes' names -->
     <style name="Theme.Compose.Template" parent="Theme.Material.DayNight.NoActionBar">
+        <!-- TODO : Change the status bar color -->
         <item name="android:statusBarColor">@color/red_200</item>
     </style>
 

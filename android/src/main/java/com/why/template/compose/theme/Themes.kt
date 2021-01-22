@@ -38,7 +38,7 @@ fun TemplateTheme(
 ) {
     MaterialTheme(
         colors = getAppropriateColors(isDarkTheme),
-        typography = MaterialTheme.typography,
+        typography = TemplateTypography,
         shapes = MaterialTheme.shapes,
         content = content
     )

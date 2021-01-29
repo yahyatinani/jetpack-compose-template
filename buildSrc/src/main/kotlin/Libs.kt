@@ -1,12 +1,12 @@
 object Libs {
     const val kotlinVersion = "1.4.21"
-    const val jvmTarget = "1.8"
+    const val jvmTarget = "11"
 
     object Gradle {
         const val plugin =
             "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
-        const val build = "com.android.tools.build:gradle:7.0.0-alpha04"
+        const val build = "com.android.tools.build:gradle:7.0.0-alpha05"
     }
 
     object AndroidX {

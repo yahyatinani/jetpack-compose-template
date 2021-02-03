@@ -7,6 +7,7 @@ dependencies {
     implementation(Libs.AndroidX.coreKtx)
     implementation(Libs.AndroidX.appcompat)
     implementation(Libs.AndroidX.lifecycle)
+    implementation(Libs.AndroidX.vmLifecycle)
 
     implementation(Libs.AndroidMaterial.material)
 
@@ -20,9 +21,13 @@ dependencies {
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 
+    implementation(Libs.Kotlinx.coroutines)
+
     testImplementation(Libs.Kotest.runner)
     testImplementation(Libs.Kotest.assertions)
     testImplementation(Libs.Kotest.property)
+    
+    testImplementation(Libs.Kotlinx.coroutinesTest)
 
     testImplementation(Libs.Compose.uiTestJUnit)
 }

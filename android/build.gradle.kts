@@ -26,7 +26,7 @@ dependencies {
     testImplementation(Libs.Kotest.runner)
     testImplementation(Libs.Kotest.assertions)
     testImplementation(Libs.Kotest.property)
-    
+
     testImplementation(Libs.Kotlinx.coroutinesTest)
 
     testImplementation(Libs.Compose.uiTestJUnit)

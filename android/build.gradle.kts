@@ -1,3 +1,5 @@
+import Libs.kotlinVersion
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -22,6 +24,9 @@ dependencies {
     implementation(Libs.Y.collections)
 
     implementation(Libs.Kotlinx.coroutines)
+
+    debugImplementation(Libs.Compose.uiTooling)
+    debugImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 
     testImplementation(Libs.Kotest.runner)
     testImplementation(Libs.Kotest.assertions)

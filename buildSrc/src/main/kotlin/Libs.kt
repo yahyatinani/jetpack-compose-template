@@ -1,12 +1,12 @@
 object Libs {
-    const val kotlinVersion = "1.4.21"
+    const val kotlinVersion = "1.4.21-2"
     const val jvmTarget = "11"
 
     object Gradle {
         const val plugin =
             "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
-        const val build = "com.android.tools.build:gradle:7.0.0-alpha05"
+        const val build = "com.android.tools.build:gradle:7.0.0-alpha06"
     }
 
     object AndroidX {
@@ -22,14 +22,14 @@ object Libs {
     }
 
     object AndroidMaterial {
-        private const val version = "1.3.0-rc01"
+        private const val version = "1.3.0"
 
         const val material = "com.google.android.material:material:$version"
     }
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.0-alpha10"
+        const val version = "1.0.0-alpha11"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -51,7 +51,7 @@ object Libs {
     }
 
     object Kotest {
-        private const val version = "4.3.2"
+        private const val version = "4.4.1"
 
         const val runner = "io.kotest:kotest-runner-junit5:$version"
         const val assertions = "io.kotest:kotest-assertions-core:$version"

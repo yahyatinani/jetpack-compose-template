@@ -7,7 +7,7 @@
     <!-- TODO : Change the themes' names -->
     <style name="Theme.Compose.Template" parent="Theme.Material.DayNight.NoActionBar">
         <!-- TODO : Change the status bar color -->
-        <item name="android:statusBarColor">@color/red_200</item>
+        <item name="android:statusBarColor">@color/blue_900</item>
     </style>
 
     <style name="Theme.Compose.Template.Splash" parent="Theme.AppCompat.Light.NoActionBar">

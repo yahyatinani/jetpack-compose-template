@@ -1,13 +1,13 @@
 buildscript {
     repositories {
         gradlePluginPortal()
-        jcenter()
         google()
+
         mavenCentral()
     }
     dependencies {
-        classpath(Libs.Gradle.plugin)
-        classpath(Libs.Gradle.build)
+        classpath(Plugins.Android.gradle)
+        classpath(Plugins.Kotlin.gradle)
     }
 }
 
@@ -18,8 +18,10 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
+        maven {
+            setUrl("https://kotlin.bintray.com/kotlinx")
+        }
     }
 }
 

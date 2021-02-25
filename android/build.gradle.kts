@@ -1,32 +1,25 @@
-import Libs.kotlinVersion
-
 plugins {
     id("com.android.application")
     kotlin("android")
 }
 
 dependencies {
-    implementation(Libs.AndroidX.coreKtx)
-    implementation(Libs.AndroidX.appcompat)
-    implementation(Libs.AndroidX.lifecycle)
-    implementation(Libs.AndroidX.vmLifecycle)
-
-    implementation(Libs.AndroidMaterial.material)
-
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.uiTooling)
     implementation(Libs.Compose.foundation)
+    implementation(Libs.Compose.material)
     implementation(Libs.Compose.iconsCore)
     implementation(Libs.Compose.iconsExt)
-    implementation(Libs.Compose.material)
+    implementation(Libs.Compose.activity)
+    implementation(Libs.Compose.viewModels)
 
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 
     implementation(Libs.Kotlinx.coroutines)
 
-    debugImplementation(Libs.Compose.uiTooling)
-    debugImplementation("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+    debugImplementation(Libs.LayoutInspector.uiTooling)
+    debugImplementation(Libs.LayoutInspector.reflect)
 
     testImplementation(Libs.Kotest.runner)
     testImplementation(Libs.Kotest.assertions)
@@ -61,8 +54,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {

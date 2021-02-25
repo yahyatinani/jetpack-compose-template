@@ -3,7 +3,7 @@ package com.why.template.compose.view
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.compose.ui.platform.setContent
+import androidx.activity.compose.setContent
 import com.why.template.compose.theme.TemplateTheme
 
 class MainActivity : ComponentActivity() {

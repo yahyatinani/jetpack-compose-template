@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-
-    <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar" />
+    <style name="Theme.Material.DayNight.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar" />
 
     <!-- TODO : Change the themes' names -->
     <style name="Theme.Compose.Template" parent="Theme.Material.DayNight.NoActionBar">
@@ -14,5 +13,4 @@
         <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-
 </resources>

@@ -10,7 +10,7 @@ object Plugins {
     }
 
     object Android {
-        private const val version = "7.0.0-alpha08"
+        private const val version = "7.0.0-beta04"
 
         const val gradle = "com.android.tools.build:gradle:$version"
     }

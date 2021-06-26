@@ -12,6 +12,7 @@ dependencies {
     implementation(Libs.Compose.iconsExt)
     implementation(Libs.Compose.activity)
     implementation(Libs.Compose.viewModels)
+    implementation(Libs.Compose.appcompat)
 
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
@@ -31,14 +32,14 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdk = 30
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         // TODO: Change the applicationId
         applicationId = "com.why.template.compose"
-        minSdkVersion(22)
-        targetSdkVersion(30)
+        minSdk = 22
+        targetSdk = 30
         versionCode = 1
         versionName = Ci.publishVersion
     }
@@ -60,7 +61,6 @@ android {
 
     kotlinOptions {
         jvmTarget = Libs.jvmTarget
-        useIR = true
     }
 
     buildFeatures {

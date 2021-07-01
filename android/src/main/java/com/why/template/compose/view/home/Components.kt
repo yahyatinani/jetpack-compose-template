@@ -48,18 +48,16 @@ fun Greeting(name: String) {
         topBar = { TopAppBar() }
     ) {
         Surface {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(text = helloText(name))
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Button(
-                        onClick = { /*TODO: Navigation library*/ }) {
-                        Text(text = "Navigate")
-                    }
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = helloText(name))
+                Spacer(modifier = Modifier.height(24.dp))
+                Button(
+                    onClick = { /*TODO: Navigation library*/ }) {
+                    Text(text = "Navigate")
                 }
             }
         }

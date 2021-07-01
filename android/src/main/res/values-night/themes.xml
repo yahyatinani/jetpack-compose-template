@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+    <style name="Base.Theme.Template.DayNight" parent="@style/Base.Theme.Template.Dark" />
 
-    <style name="Theme.Material.DayNight.NoActionBar" parent="@android:style/Theme.Material.NoActionBar" />
+    <style name="Theme.Template.Fullscreen" parent="@style/Base.Theme.Template.Fullscreen">
+        <item name="android:statusBarColor">@color/template_theme_dark_translucent_system_ui_color
+        </item>
+    </style>
 
 </resources>

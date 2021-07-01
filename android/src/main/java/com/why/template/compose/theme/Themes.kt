@@ -18,6 +18,7 @@ private val LightTheme = lightColors(
 )
 
 private val DarkTheme = darkColors(
+    surface = Grey900,
     primary = Blue300,
     primaryVariant = Blue700,
     secondary = Blue300,

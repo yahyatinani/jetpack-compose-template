@@ -15,22 +15,21 @@ import androidx.compose.ui.unit.dp
 import com.why.template.compose.theme.MyTheme
 
 @Composable
-fun helloText(name: String): AnnotatedString =
-    buildAnnotatedString {
-        append("Hello ")
-        withStyle(
-            SpanStyle(
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colors.primary
-            )
-        ) {
-            append(name)
-        }
-        append(" \uD83D\uDE01")
+fun helloText(name: String): AnnotatedString = buildAnnotatedString {
+    append("Hello ")
+    withStyle(
+        SpanStyle(
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.primary
+        )
+    ) {
+        append(name)
     }
+    append(" \uD83D\uDE01")
+}
 
-@Composable
-fun TopAppBar() {
+
+fun topAppBar() = @Composable {
     TopAppBar(
         elevation = 1.dp,
         title = {
@@ -44,9 +43,7 @@ fun TopAppBar() {
 
 @Composable
 fun Greeting(name: String) {
-    Scaffold(
-        topBar = { TopAppBar() }
-    ) {
+    Scaffold(topBar = topAppBar()) {
         Surface {
             Column(
                 modifier = Modifier.fillMaxSize(),

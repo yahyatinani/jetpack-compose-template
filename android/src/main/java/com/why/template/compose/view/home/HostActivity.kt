@@ -1,4 +1,4 @@
-package com.why.template.compose.view
+package com.why.template.compose.view.home
 
 import android.os.Build
 import android.os.Bundle
@@ -6,7 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.why.template.compose.theme.MyTheme
 
-class HomeActivity : ComponentActivity() {
+class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

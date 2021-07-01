@@ -1,11 +1,7 @@
-package com.why.template.compose.view
+package com.why.template.compose.view.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,10 +11,11 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.why.template.compose.theme.MyTheme
 
 @Composable
-private fun formatHelloText(name: String): AnnotatedString =
+fun helloText(name: String): AnnotatedString =
     buildAnnotatedString {
         append("Hello ")
         withStyle(
@@ -33,17 +30,47 @@ private fun formatHelloText(name: String): AnnotatedString =
     }
 
 @Composable
+fun TopAppBar() {
+    TopAppBar(
+        elevation = 1.dp,
+        title = {
+            Text(
+                text = "Compose Template",
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    )
+}
+
+@Composable
 fun Greeting(name: String) {
-    Scaffold {
+    Scaffold(
+        topBar = { TopAppBar() }
+    ) {
         Surface {
             Box(modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier.align(Alignment.Center)) {
-                    Text(text = formatHelloText(name))
+                Column(
+                    modifier = Modifier.align(Alignment.Center),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(text = helloText(name))
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Button(
+                        onClick = { /*TODO: Navigation library*/ }) {
+                        Text(text = "Navigate")
+                    }
                 }
             }
         }
     }
 }
+
+/**
+ *
+ * Previews
+ *
+ * */
 
 @Composable
 @Preview

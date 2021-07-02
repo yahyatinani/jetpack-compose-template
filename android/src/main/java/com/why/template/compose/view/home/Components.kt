@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -25,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.why.template.compose.theme.MyTheme
+import com.why.template.compose.view.common.MyApp
 
 fun topAppBar(text: String) = @Composable {
     TopAppBar(
@@ -60,39 +58,43 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage() {
-    MyTheme {
-        Scaffold(topBar = topAppBar("Compose Template")) {
-            Surface {
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Greeting("Android ${Build.VERSION.SDK_INT}")
-                    Spacer(modifier = Modifier.height(24.dp))
-                    Button(onClick = { /*TODO: Navigation library*/ }) {
-                        Text(text = "Navigate")
-                    }
-                }
-            }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Greeting("Android ${Build.VERSION.SDK_INT}")
+        Spacer(modifier = Modifier.height(24.dp))
+        Button(onClick = { /*TODO: Navigation library*/ }) {
+            Text(text = "Navigate")
         }
     }
 }
 
-/**
- *
- * Previews
- *
- * */
+/*
+*
+* Previews
+*
+* */
 
 @Composable
-@Preview
-fun GreetingPreview() {
-    HomePage()
+fun HomePageWithTheme() {
+    MyApp {
+        HomePage()
+    }
 }
 
 @Composable
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-fun GreetingDarkPreview() {
-    HomePage()
+@Preview(name = "HomePage Preview - Light Mode")
+fun HomePagePreview() {
+    HomePageWithTheme()
+}
+
+@Composable
+@Preview(
+    name = "HomePage Preview - Dark Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+fun HomePageDarkPreview() {
+    HomePageWithTheme()
 }

@@ -3,6 +3,7 @@ package com.why.template.compose.view.home
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.why.template.compose.view.common.MyApp
 
 class HostActivity : ComponentActivity() {
 
@@ -10,7 +11,9 @@ class HostActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            HomePage()
+            MyApp(topAppBarText = "Compose Template") {
+                HomePage()
+            }
         }
     }
 }

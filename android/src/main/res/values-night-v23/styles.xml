@@ -2,6 +2,6 @@
 <resources>
 
     <style name="Theme.Template" parent="Base.Theme.Template.DayNight">
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
     </style>
 </resources>

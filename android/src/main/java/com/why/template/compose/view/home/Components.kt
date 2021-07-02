@@ -43,7 +43,7 @@ fun helloText(name: String): AnnotatedString = buildAnnotatedString {
     withStyle(
         SpanStyle(
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colors.primary
+            color = MaterialTheme.colors.primaryVariant
         )
     ) {
         append(name)

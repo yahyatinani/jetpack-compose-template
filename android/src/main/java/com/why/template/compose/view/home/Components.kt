@@ -1,7 +1,17 @@
 package com.why.template.compose.view.home
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,7 +38,6 @@ fun helloText(name: String): AnnotatedString = buildAnnotatedString {
     append(" \uD83D\uDE01")
 }
 
-
 fun topAppBar() = @Composable {
     TopAppBar(
         elevation = 1.dp,
@@ -52,8 +61,7 @@ fun Greeting(name: String) {
             ) {
                 Text(text = helloText(name))
                 Spacer(modifier = Modifier.height(24.dp))
-                Button(
-                    onClick = { /*TODO: Navigation library*/ }) {
+                Button(onClick = { /*TODO: Navigation library*/ }) {
                     Text(text = "Navigate")
                 }
             }

@@ -12,4 +12,3 @@ val Blue700 = Color(0xff0288d1)
 val Blue900 = Color(0xff01579b)
 
 val Grey900 = Color(0xff202124)
-

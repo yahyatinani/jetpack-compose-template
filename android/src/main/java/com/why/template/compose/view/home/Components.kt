@@ -1,11 +1,14 @@
 package com.why.template.compose.view.home
 
+import android.content.res.Configuration
+import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -24,6 +27,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.theme.MyTheme
 
+fun topAppBar(text: String) = @Composable {
+    TopAppBar(
+        elevation = 1.dp,
+        title = {
+            Text(
+                text = text,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    )
+}
+
 @Composable
 fun helloText(name: String): AnnotatedString = buildAnnotatedString {
     append("Hello ")
@@ -38,31 +53,26 @@ fun helloText(name: String): AnnotatedString = buildAnnotatedString {
     append(" \uD83D\uDE01")
 }
 
-fun topAppBar() = @Composable {
-    TopAppBar(
-        elevation = 1.dp,
-        title = {
-            Text(
-                text = "Compose Template",
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    )
+@Composable
+fun Greeting(name: String) {
+    Text(text = helloText(name), modifier = Modifier.padding(24.dp))
 }
 
 @Composable
-fun Greeting(name: String) {
-    Scaffold(topBar = topAppBar()) {
-        Surface {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(text = helloText(name))
-                Spacer(modifier = Modifier.height(24.dp))
-                Button(onClick = { /*TODO: Navigation library*/ }) {
-                    Text(text = "Navigate")
+fun MyApp() {
+    MyTheme {
+        Scaffold(topBar = topAppBar("Compose Template")) {
+            Surface {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Greeting("Android ${Build.VERSION.SDK_INT}")
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Button(onClick = { /*TODO: Navigation library*/ }) {
+                        Text(text = "Navigate")
+                    }
                 }
             }
         }
@@ -78,15 +88,11 @@ fun Greeting(name: String) {
 @Composable
 @Preview
 fun GreetingPreview() {
-    MyTheme {
-        Greeting(name = "Jetpack Compose")
-    }
+    MyApp()
 }
 
 @Composable
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun GreetingDarkPreview() {
-    MyTheme(isDarkTheme = true) {
-        Greeting(name = "Jetpack Compose")
-    }
+    MyApp()
 }

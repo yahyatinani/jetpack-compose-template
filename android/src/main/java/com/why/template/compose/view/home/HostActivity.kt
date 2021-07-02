@@ -6,12 +6,11 @@ import androidx.activity.compose.setContent
 
 class HostActivity : ComponentActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MyApp()
+            HomePage()
         }
     }
 }

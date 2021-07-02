@@ -59,7 +59,7 @@ fun Greeting(name: String) {
 }
 
 @Composable
-fun MyApp() {
+fun HomePage() {
     MyTheme {
         Scaffold(topBar = topAppBar("Compose Template")) {
             Surface {
@@ -88,11 +88,11 @@ fun MyApp() {
 @Composable
 @Preview
 fun GreetingPreview() {
-    MyApp()
+    HomePage()
 }
 
 @Composable
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 fun GreetingDarkPreview() {
-    MyApp()
+    HomePage()
 }

@@ -16,19 +16,20 @@ import com.why.template.compose.theme.MyTheme
 import com.why.template.compose.view.home.topAppBar
 
 @Composable
+fun BackgroundImage(modifier: Modifier = Modifier) = Image(
+    modifier = modifier,
+    painter = painterResource(id = R.drawable.product_logo_compose_color_192),
+    contentDescription = "",
+    alpha = 0.05f
+)
+
+@Composable
 fun MyApp(topAppBarText: String = "Title", content: @Composable () -> Unit) {
     MyTheme {
         Scaffold(topBar = topAppBar(topAppBarText)) {
             Surface {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    Image(
-                        modifier = Modifier.align(Alignment.Center),
-                        painter = painterResource(
-                            id = R.drawable.product_logo_compose_color_192
-                        ),
-                        contentDescription = "",
-                        alpha = 0.05f
-                    )
+                    BackgroundImage(modifier = Modifier.align(Alignment.Center))
                     content()
                 }
             }

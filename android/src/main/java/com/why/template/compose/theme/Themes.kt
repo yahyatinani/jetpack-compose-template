@@ -7,7 +7,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightColors = lightColors(
+private val LightTheme = lightColors(
     primary = Blue700,
     primaryVariant = Blue900,
     onPrimary = Color.White,
@@ -17,25 +17,26 @@ private val LightColors = lightColors(
     error = Red800
 )
 
-private val DarkColors = darkColors(
+private val DarkTheme = darkColors(
+    surface = Grey900,
     primary = Blue300,
     primaryVariant = Blue700,
     secondary = Blue300,
     error = Red200
 )
 
-private fun getAppropriateColors(darkTheme: Boolean) = when {
-    darkTheme -> DarkColors
-    else -> LightColors
+private fun colors(darkTheme: Boolean) = when {
+    darkTheme -> DarkTheme
+    else -> LightTheme
 }
 
 @Composable
-fun TemplateTheme(
+fun MyTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colors = getAppropriateColors(isDarkTheme),
+        colors = colors(isDarkTheme),
         typography = TemplateTypography,
         shapes = MaterialTheme.shapes,
         content = content

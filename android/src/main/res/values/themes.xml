@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+
     <style name="Theme.Material.DayNight.NoActionBar" parent="Theme.AppCompat.Light.DarkActionBar" />
 
     <!-- TODO : Change the themes' names -->
-    <style name="Theme.Compose.Template" parent="Theme.Material.DayNight.NoActionBar">
+    <style name="Theme.Template.Main" parent="Theme.Material.DayNight.NoActionBar">
         <!-- TODO : Change the status bar color -->
         <item name="android:statusBarColor">@color/blue_900</item>
     </style>
 
-    <style name="Theme.Compose.Template.Splash" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
-        <item name="android:windowFullscreen">true</item>
+    <style name="Base.Theme.Template.Dark" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorBackground">@color/grey900</item>
+        <item name="android:colorPrimary">@color/grey900</item>
+        <item name="android:colorPrimaryDark">?colorPrimaryDark</item>
+        <item name="android:colorAccent">?colorAccent</item>
+
+        <item name="colorPrimary">@color/grey900</item>
+        <item name="colorPrimaryDark">@color/grey900</item>
+    </style>
+
+    <style name="Base.Theme.Template.Light" parent="@android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:colorPrimary">@color/white</item>
+        <item name="android:colorPrimaryDark">?colorPrimaryDark</item>
+        <item name="android:colorAccent">?colorAccent</item>
+
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+    </style>
+
+    <style name="Base.Theme.Template.DayNight" parent="Base.Theme.Template.Light" />
+
+
+    <style name="Theme.Template" parent="Base.Theme.Template.DayNight" />
+
+    <style name="Base.Theme.Template.Fullscreen" parent="Theme.Template">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Template.Fullscreen" parent="Base.Theme.Template.Fullscreen" />
+
+    <style name="Theme.Template.Fullscreen.Splash" parent="@style/Theme.Template.Fullscreen">
+        <item name="android:windowBackground">@drawable/launchscreen_compose</item>
     </style>
 </resources>

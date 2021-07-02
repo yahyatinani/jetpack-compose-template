@@ -1,17 +1,17 @@
-package com.why.template.compose.view
+package com.why.template.compose.view.home
 
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.why.template.compose.theme.TemplateTheme
+import com.why.template.compose.theme.MyTheme
 
-class MainActivity : ComponentActivity() {
+class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            TemplateTheme {
+            MyTheme {
                 Greeting("Android ${Build.VERSION.SDK_INT}")
             }
         }

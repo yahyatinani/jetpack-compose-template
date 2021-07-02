@@ -4,16 +4,32 @@ import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.theme.MyTheme
-import com.why.template.compose.view.home.topAppBar
+
+fun topAppBar(text: String) = @Composable {
+    TopAppBar(
+        elevation = 1.dp,
+        title = {
+            Text(
+                text = text,
+                modifier = Modifier.fillMaxWidth(),
+            )
+        }
+    )
+}
 
 @Composable
 fun BackgroundImage(modifier: Modifier = Modifier) = Image(
@@ -26,8 +42,8 @@ fun BackgroundImage(modifier: Modifier = Modifier) = Image(
 @Composable
 fun MyApp(topAppBarText: String = "Title", content: @Composable () -> Unit) {
     MyTheme {
-        Scaffold(topBar = topAppBar(topAppBarText)) {
-            Surface {
+        Scaffold(topBar = topAppBar(topAppBarText)) { innerPadding ->
+            Surface(modifier = Modifier.padding(innerPadding)) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     BackgroundImage(modifier = Modifier.align(Alignment.Center))
                     content()

@@ -39,7 +39,11 @@ fun helloText(name: String): AnnotatedString = buildAnnotatedString {
 
 @Composable
 fun Greeting(name: String) {
-    Text(text = helloText(name), modifier = Modifier.padding(24.dp))
+    Text(
+        modifier = Modifier
+            .padding(24.dp),
+        text = helloText(name)
+    )
 }
 
 @Composable

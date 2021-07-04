@@ -55,10 +55,13 @@ fun ConstraintLayoutContent2() {
             Text("Button 1")
         }
 
-        Text("Text", Modifier.constrainAs(text) {
-            top.linkTo(button1.bottom, margin = 16.dp)
-            centerAround(button1.end)
-        })
+        Text(
+            text = "Text",
+            modifier = Modifier.constrainAs(text) {
+                top.linkTo(button1.bottom, margin = 16.dp)
+                centerAround(button1.end)
+            }
+        )
 
         val barrier = createEndBarrier(button1, text)
         Button(
@@ -86,9 +89,6 @@ fun LargeConstraintLayout() {
                 width = Dimension.preferredWrapContent
             }
         )
-    }
-    BoxWithConstraints {
-
     }
 }
 

@@ -14,6 +14,8 @@ dependencies {
     implementation(Libs.Compose.viewModels)
     implementation(Libs.Compose.appcompat)
 
+    implementation(Libs.ConstraintLayout.compose)
+
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 

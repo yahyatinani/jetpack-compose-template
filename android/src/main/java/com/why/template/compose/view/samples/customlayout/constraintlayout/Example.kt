@@ -1,12 +1,17 @@
 package com.why.template.compose.view.samples.customlayout.constraintlayout
 
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import com.why.template.compose.view.common.MyApp
 
@@ -82,6 +87,45 @@ fun LargeConstraintLayout() {
             }
         )
     }
+    BoxWithConstraints {
+
+    }
+}
+
+private fun decoupledConstraints(margin: Dp): ConstraintSet = ConstraintSet {
+    val button = createRefFor("button")
+    val text = createRefFor("text")
+
+    constrain(button) {
+        top.linkTo(parent.top, margin = margin)
+    }
+    constrain(text) {
+        top.linkTo(button.bottom, margin = margin)
+    }
+}
+
+@Composable
+private fun BoxWithConstraintsScope.isPortrait() = maxWidth < maxHeight
+
+@Composable
+fun DecoupledConstraintLayout() {
+    BoxWithConstraints {
+        val constraints = when {
+            isPortrait() -> decoupledConstraints(margin = 16.dp)
+            else -> decoupledConstraints(margin = 32.dp)
+        }
+
+        ConstraintLayout(constraints) {
+            Button(
+                onClick = {},
+                modifier = Modifier.layoutId("button")
+            ) {
+                Text("Button")
+            }
+
+            Text("Text", Modifier.layoutId("text"))
+        }
+    }
 }
 
 @Composable
@@ -101,5 +145,13 @@ fun ConstraintLayoutContent2Preview() {
 fun LargeConstraintLayoutPreview() {
     MyApp {
         LargeConstraintLayout()
+    }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun DecoupledConstraintLayoutPreview() {
+    MyApp {
+        DecoupledConstraintLayout()
     }
 }

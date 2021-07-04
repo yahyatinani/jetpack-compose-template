@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import com.why.template.compose.view.common.MyApp
 
 @Composable
 fun ConstraintLayoutContent1() {
@@ -66,6 +68,21 @@ fun ConstraintLayoutContent2() {
     }
 }
 
+@Composable
+fun LargeConstraintLayout() {
+    ConstraintLayout {
+        val text = createRef()
+
+        val guideline = createGuidelineFromStart(fraction = 0.3f)
+        Text(
+            text = "This is a very very very very very very very long text",
+            modifier = Modifier.constrainAs(text) {
+                linkTo(start = guideline, end = parent.end)
+                width = Dimension.preferredWrapContent
+            }
+        )
+    }
+}
 
 @Composable
 @Preview(showBackground = true)
@@ -77,4 +94,12 @@ fun ConstraintLayoutContent1Preview() {
 @Preview(showBackground = true)
 fun ConstraintLayoutContent2Preview() {
     ConstraintLayoutContent2()
+}
+
+@Composable
+@Preview(showBackground = true)
+fun LargeConstraintLayoutPreview() {
+    MyApp {
+        LargeConstraintLayout()
+    }
 }

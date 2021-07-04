@@ -10,13 +10,12 @@ dependencies {
     implementation(Libs.Compose.material)
     implementation(Libs.Compose.iconsCore)
     implementation(Libs.Compose.iconsExt)
-    implementation(Libs.Compose.activity)
-    implementation(Libs.Compose.viewModels)
-    implementation(Libs.Compose.appcompat)
 
-    implementation(Libs.Navigation.compose)
-
-    implementation(Libs.ConstraintLayout.compose)
+    implementation(Libs.Androidx.appcompat)
+    implementation(Libs.Androidx.activityCompose)
+    implementation(Libs.Androidx.viewModelCompose)
+    implementation(Libs.Androidx.navigationCompose)
+    implementation(Libs.Androidx.constraintLayoutCompose)
 
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)

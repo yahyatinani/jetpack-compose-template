@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 
 @Composable
-fun ConstraintLayoutContent() {
+fun ConstraintLayoutContent1() {
     ConstraintLayout {
         // Create references for the composables to constrain
         val (button, text) = createRefs()
@@ -35,7 +35,46 @@ fun ConstraintLayoutContent() {
 }
 
 @Composable
+fun ConstraintLayoutContent2() {
+    ConstraintLayout {
+        val (button1, button2, text) = createRefs()
+
+        Button(
+            onClick = {},
+            modifier = Modifier.constrainAs(button1) {
+                top.linkTo(parent.top, margin = 16.dp)
+            }
+        ) {
+            Text("Button 1")
+        }
+
+        Text("Text", Modifier.constrainAs(text) {
+            top.linkTo(button1.bottom, margin = 16.dp)
+            centerAround(button1.end)
+        })
+
+        val barrier = createEndBarrier(button1, text)
+        Button(
+            onClick = {},
+            modifier = Modifier.constrainAs(button2) {
+                top.linkTo(parent.top, margin = 16.dp)
+                start.linkTo(barrier)
+            }
+        ) {
+            Text("Button 2")
+        }
+    }
+}
+
+
+@Composable
 @Preview(showBackground = true)
-fun ConstraintLayoutContentPreview() {
-    ConstraintLayoutContent()
+fun ConstraintLayoutContent1Preview() {
+    ConstraintLayoutContent1()
+}
+
+@Composable
+@Preview(showBackground = true)
+fun ConstraintLayoutContent2Preview() {
+    ConstraintLayoutContent2()
 }

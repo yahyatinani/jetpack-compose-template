@@ -41,6 +41,11 @@ object Libs {
             "androidx.constraintlayout:constraintlayout-compose:$version"
     }
 
+    object Navigation {
+        private const val version = "2.4.0-alpha03"
+        const val compose = "androidx.navigation:navigation-compose:$version"
+    }
+
     object LayoutInspector {
         const val uiTooling = Compose.uiTooling
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"

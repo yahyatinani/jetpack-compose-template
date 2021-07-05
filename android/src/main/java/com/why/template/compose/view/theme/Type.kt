@@ -1,4 +1,4 @@
-package com.why.template.compose.theme
+package com.why.template.compose.view.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

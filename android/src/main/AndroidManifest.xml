@@ -13,7 +13,7 @@
             android:name=".view.SplashActivity"
             android:theme="@style/Theme.Template.Fullscreen.Splash" />
 
-        <activity android:name=".view.home.HostActivity" />
+        <activity android:name=".view.HostActivity" />
 
         <activity-alias
             android:name="LauncherActivity"
@@ -28,6 +28,6 @@
         <activity-alias
             android:name="HomeActivity"
             android:exported="true"
-            android:targetActivity=".view.home.HostActivity" />
+            android:targetActivity=".view.HostActivity" />
     </application>
 </manifest>

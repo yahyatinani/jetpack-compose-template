@@ -17,7 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.theme.MyTheme
+import com.why.template.compose.view.theme.MyTheme
 
 fun topAppBar(text: String) = @Composable {
     TopAppBar(

@@ -29,7 +29,7 @@ fun AboutPageWithTheme() {
 
 @Composable
 @Preview(name = "AboutPage Preview - Light Mode")
-fun HomePagePreview() {
+fun AboutPagePreview() {
     AboutPageWithTheme()
 }
 
@@ -38,6 +38,6 @@ fun HomePagePreview() {
     name = "AboutPage Preview - Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
-fun HomePageDarkPreview() {
+fun AboutPageDarkPreview() {
     AboutPageWithTheme()
 }

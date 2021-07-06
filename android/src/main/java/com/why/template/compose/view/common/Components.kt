@@ -17,14 +17,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
+import com.why.template.compose.presentation.Db
 import com.why.template.compose.view.theme.MyTheme
 
-fun topAppBar(text: String) = @Composable {
+fun topAppBar() = @Composable {
     TopAppBar(
         elevation = 1.dp,
         title = {
             Text(
-                text = text,
+                text = Db.topBarTitle,
                 modifier = Modifier.fillMaxWidth(),
             )
         }
@@ -40,9 +41,9 @@ fun BackgroundImage(modifier: Modifier = Modifier) = Image(
 )
 
 @Composable
-fun MyApp(topAppBarText: String = "Title", content: @Composable () -> Unit) {
+fun MyApp(content: @Composable () -> Unit) {
     MyTheme {
-        Scaffold(topBar = topAppBar(topAppBarText)) { innerPadding ->
+        Scaffold(topBar = topAppBar()) { innerPadding ->
             Surface(modifier = Modifier.padding(innerPadding)) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     BackgroundImage(modifier = Modifier.align(Alignment.Center))

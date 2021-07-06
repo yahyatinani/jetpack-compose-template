@@ -12,7 +12,7 @@ class HostActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MyApp(topAppBarText = "Compose Template") {
+            MyApp {
                 HomePage()
             }
         }

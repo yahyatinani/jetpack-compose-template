@@ -23,6 +23,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
+import com.why.template.compose.presentation.EventBus
+import com.why.template.compose.presentation.NavigationEvent
+import com.why.template.compose.presentation.Routes
 import com.why.template.compose.presentation.updateTopBarTitle
 import com.why.template.compose.view.common.MyApp
 
@@ -59,7 +62,7 @@ fun HomePage() {
     ) {
         Greeting("Android ${Build.VERSION.SDK_INT}")
         Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = { /*TODO: Navigation library*/ }) {
+        Button(onClick = { EventBus.dispatch(NavigationEvent(Routes.ABOUT)) }) {
             Text(text = "Navigate")
         }
     }

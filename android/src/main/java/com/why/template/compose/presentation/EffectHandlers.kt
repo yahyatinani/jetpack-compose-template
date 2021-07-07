@@ -1,5 +1,9 @@
 package com.why.template.compose.presentation
 
 fun updateTopBarTitle(title: String) {
-    Db.topBarTitle = title
+    AppDb.topBarTitle = title
+}
+
+fun updateCurrentRoute(route: Routes) {
+    AppDb.currentRoute = route
 }

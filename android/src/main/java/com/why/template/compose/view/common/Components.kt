@@ -17,15 +17,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.presentation.Db
+import com.why.template.compose.presentation.AppDb
 import com.why.template.compose.view.theme.MyTheme
+
+fun topBarTitle(): String = AppDb.topBarTitle
 
 fun topAppBar() = @Composable {
     TopAppBar(
         elevation = 1.dp,
         title = {
             Text(
-                text = Db.topBarTitle,
+                text = topBarTitle(),
                 modifier = Modifier.fillMaxWidth(),
             )
         }

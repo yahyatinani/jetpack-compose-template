@@ -17,6 +17,8 @@ dependencies {
     implementation(Libs.Androidx.navigationCompose)
     implementation(Libs.Androidx.constraintLayoutCompose)
 
+    implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
+
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 

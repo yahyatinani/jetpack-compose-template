@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.why.template.compose.R
-import com.why.template.compose.presentation.updateTopBarTitle
+import com.why.template.compose.fx.updateTopBarTitle
 import com.why.template.compose.view.common.MyApp
 
 @Composable

@@ -1,11 +1,11 @@
 package com.why.template.compose.presentation
 
-enum class Routes {
+enum class Route {
     HOME,
     ABOUT;
 
     companion object {
-        fun toRoute(route: String?): Routes =
+        fun toRoute(route: String?): Route =
             when (route?.substringBefore("/")) {
                 HOME.name -> HOME
                 ABOUT.name -> ABOUT

@@ -1,4 +1,4 @@
-package com.why.template.compose.presentation
+package com.why.template.compose.event
 
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -17,4 +17,10 @@ class EventBus {
             publisher.onNext(event)
         }
     }
+}
+
+inline fun <reified T> event(): Observable<T> = EventBus.subscribe()
+
+fun dispatch(event: Any) {
+    EventBus.dispatch(event)
 }

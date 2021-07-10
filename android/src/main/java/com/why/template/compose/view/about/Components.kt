@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.why.template.compose.R
+import com.why.template.compose.db.appDb
 import com.why.template.compose.fx.updateTopBarTitle
 import com.why.template.compose.view.common.MyApp
 
@@ -25,16 +26,22 @@ fun AboutPage() {
     }
 }
 
+/*
+*
+* Previews
+*
+* */
+
 @Composable
-fun AboutPageWithTheme() {
-    MyApp {
+private fun AboutPageWithTheme() {
+    MyApp(appDb) {
         AboutPage()
     }
 }
 
 @Composable
 @Preview(name = "AboutPage Preview - Light Mode")
-fun AboutPagePreview() {
+private fun AboutPagePreview() {
     AboutPageWithTheme()
 }
 
@@ -43,6 +50,6 @@ fun AboutPagePreview() {
     name = "AboutPage Preview - Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
-fun AboutPageDarkPreview() {
+private fun AboutPageDarkPreview() {
     AboutPageWithTheme()
 }

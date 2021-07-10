@@ -10,11 +10,11 @@ import androidx.navigation.compose.rememberNavController
 import com.why.template.compose.db.appDb
 import com.why.template.compose.event.dispatch
 import com.why.template.compose.event.event
+import com.why.template.compose.fx.updateCurrentRoute
 import com.why.template.compose.presentation.NavigateToEvent
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.presentation.UpdateCurrentRouteEvent
 import com.why.template.compose.presentation.currentRoute
-import com.why.template.compose.fx.updateCurrentRoute
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.home.HomePage
 
@@ -24,7 +24,7 @@ private fun OnNavigateEventHandler() {
 
     DisposableEffect(navigatedEvent) {
         val disposable = navigatedEvent.subscribe {
-            val prevRoute = appDb.currentRoute.value
+            val prevRoute = appDb.currentRoute
             val currentRoute = it.route
             println("OnNavigate: $prevRoute to ${currentRoute.name}")
 

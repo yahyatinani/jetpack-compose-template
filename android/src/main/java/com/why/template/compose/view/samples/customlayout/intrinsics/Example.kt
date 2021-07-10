@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.why.template.compose.view.common.MyApp
+import com.why.template.compose.view.theme.MyTheme
 
 @Composable
 fun TwoTexts(modifier: Modifier = Modifier, text1: String, text2: String) {
@@ -49,7 +49,7 @@ fun TwoTexts(modifier: Modifier = Modifier, text1: String, text2: String) {
 @Preview
 @Composable
 fun TwoTextsPreview() {
-    MyApp {
+    MyTheme {
         Surface {
             TwoTexts(text1 = "Hi", text2 = "there")
         }

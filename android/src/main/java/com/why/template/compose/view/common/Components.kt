@@ -2,7 +2,6 @@ package com.why.template.compose.view.common
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,42 +12,50 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.presentation.topBarTitle
+import com.why.template.compose.db.AppDb
+import com.why.template.compose.db.appDb
 import com.why.template.compose.view.theme.MyTheme
 
-fun topAppBar() = @Composable {
+@Composable
+fun TopBar(title: String, elevation: Dp = 1.dp) {
     TopAppBar(
-        elevation = 1.dp,
+        elevation = elevation,
         title = {
             Text(
-                text = topBarTitle(),
-                modifier = Modifier.fillMaxWidth(),
+                text = title,
+                modifier = Modifier.fillMaxWidth()
             )
         }
     )
 }
 
 @Composable
-fun BackgroundImage(modifier: Modifier = Modifier) = Image(
-    modifier = modifier,
-    painter = painterResource(id = R.drawable.product_logo_compose_color_192),
-    contentDescription = "",
-    alpha = 0.05f
-)
+fun BgImage(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(R.drawable.product_logo_compose_color_192),
+        contentDescription = "",
+        modifier = modifier,
+        alignment = Alignment.Center,
+        contentScale = ContentScale.None,
+        alpha = 0.05f
+    )
+}
 
 @Composable
-fun MyApp(content: @Composable () -> Unit) {
+fun MyApp(db: AppDb = appDb, content: @Composable () -> Unit) {
     MyTheme {
-        Scaffold(topBar = topAppBar()) { innerPadding ->
+        Scaffold(
+            topBar = { TopBar(title = db.topBarTitle) }
+        ) { innerPadding ->
             Surface(modifier = Modifier.padding(innerPadding)) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    BackgroundImage(modifier = Modifier.align(Alignment.Center))
-                    content()
-                }
+                BgImage(modifier = Modifier.fillMaxSize())
+                content()
             }
         }
     }
@@ -63,7 +70,7 @@ fun MyApp(content: @Composable () -> Unit) {
 @Composable
 @Preview(name = "MyApp Preview - Light Mode")
 fun MyAppPreview() {
-    MyApp {}
+    MyApp(appDb) {}
 }
 
 @Composable
@@ -72,5 +79,5 @@ fun MyAppPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 fun MyAppDarkPreview() {
-    MyApp {}
+    MyApp(appDb) {}
 }

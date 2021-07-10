@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
-import com.why.template.compose.view.common.MyApp
+import com.why.template.compose.view.theme.MyTheme
 
 @Composable
 fun ConstraintLayoutContent1() {
@@ -143,7 +143,7 @@ fun ConstraintLayoutContent2Preview() {
 @Composable
 @Preview(showBackground = true)
 fun LargeConstraintLayoutPreview() {
-    MyApp {
+    MyTheme {
         LargeConstraintLayout()
     }
 }
@@ -151,7 +151,7 @@ fun LargeConstraintLayoutPreview() {
 @Composable
 @Preview(showBackground = true)
 fun DecoupledConstraintLayoutPreview() {
-    MyApp {
+    MyTheme {
         DecoupledConstraintLayout()
     }
 }

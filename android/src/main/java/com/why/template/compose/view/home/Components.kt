@@ -23,6 +23,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
+import com.why.template.compose.db.appDb
 import com.why.template.compose.event.EventBus.Companion.dispatch
 import com.why.template.compose.fx.updateTopBarTitle
 import com.why.template.compose.presentation.NavigateToEvent
@@ -75,15 +76,15 @@ fun HomePage() {
 * */
 
 @Composable
-fun HomePageWithTheme() {
-    MyApp {
+private fun HomePageWithTheme() {
+    MyApp(appDb) {
         HomePage()
     }
 }
 
 @Composable
 @Preview(name = "HomePage Preview - Light Mode")
-fun HomePagePreview() {
+private fun HomePagePreview() {
     HomePageWithTheme()
 }
 
@@ -92,6 +93,6 @@ fun HomePagePreview() {
     name = "HomePage Preview - Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
-fun HomePageDarkPreview() {
+private fun HomePageDarkPreview() {
     HomePageWithTheme()
 }

@@ -18,8 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.db.AppDb
-import com.why.template.compose.db.appDb
+import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.view.theme.MyTheme
 
 @Composable
@@ -48,11 +47,15 @@ fun BgImage(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun MyApp(db: AppDb = appDb, content: @Composable () -> Unit) {
+fun MyApp(
+    viewModel: MainViewModel,
+    content: @Composable () -> Unit
+) {
     MyTheme {
         Scaffold(
-            topBar = { TopBar(title = db.topBarTitle) }
+            topBar = { TopBar(title = viewModel.topBarTitle) }
         ) { innerPadding ->
+
             Surface(modifier = Modifier.padding(innerPadding)) {
                 BgImage(modifier = Modifier.fillMaxSize())
                 content()
@@ -70,7 +73,7 @@ fun MyApp(db: AppDb = appDb, content: @Composable () -> Unit) {
 @Composable
 @Preview(name = "MyApp Preview - Light Mode")
 fun MyAppPreview() {
-    MyApp(appDb) {}
+    MyApp(MainViewModel()) {}
 }
 
 @Composable
@@ -79,5 +82,5 @@ fun MyAppPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 fun MyAppDarkPreview() {
-    MyApp(appDb) {}
+    MyApp(MainViewModel()) {}
 }

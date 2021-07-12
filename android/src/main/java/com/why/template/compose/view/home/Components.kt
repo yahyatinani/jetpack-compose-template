@@ -23,9 +23,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.db.appDb
 import com.why.template.compose.event.EventBus.Companion.dispatch
-import com.why.template.compose.fx.updateTopBarTitle
+import com.why.template.compose.materialisedview.MainViewModel
+import com.why.template.compose.materialisedview.updateTopBarTitle
 import com.why.template.compose.presentation.NavigateToEvent
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
@@ -53,8 +53,13 @@ fun Greeting(name: String) {
 }
 
 @Composable
-fun HomePage() {
-    updateTopBarTitle(stringResource(R.string.top_bar_home_title))
+fun HomePage(viewModel: MainViewModel) {
+    dispatch(
+        updateTopBarTitle(
+            viewModel,
+            stringResource(R.string.top_bar_home_title)
+        )
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -77,8 +82,8 @@ fun HomePage() {
 
 @Composable
 private fun HomePageWithTheme() {
-    MyApp(appDb) {
-        HomePage()
+    MyApp(MainViewModel()) {
+        HomePage(MainViewModel())
     }
 }
 

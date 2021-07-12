@@ -10,13 +10,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.why.template.compose.R
-import com.why.template.compose.db.appDb
-import com.why.template.compose.fx.updateTopBarTitle
+import com.why.template.compose.event.dispatch
+import com.why.template.compose.materialisedview.MainViewModel
+import com.why.template.compose.materialisedview.updateTopBarTitle
 import com.why.template.compose.view.common.MyApp
 
 @Composable
-fun AboutPage() {
-    updateTopBarTitle(stringResource(R.string.top_bar_about_title))
+fun AboutPage(viewModel: MainViewModel) {
+    dispatch(
+        updateTopBarTitle(
+            viewModel,
+            stringResource(R.string.top_bar_about_title)
+        )
+    )
 
     Box(modifier = Modifier.fillMaxSize()) {
         Text(
@@ -34,8 +40,8 @@ fun AboutPage() {
 
 @Composable
 private fun AboutPageWithTheme() {
-    MyApp(appDb) {
-        AboutPage()
+    MyApp(MainViewModel()) {
+        AboutPage(MainViewModel())
     }
 }
 

@@ -83,19 +83,14 @@ private fun NavigationListener(navController: NavHostController) {
 class HostActivity : ComponentActivity() {
     private var viewModel by mutableStateOf(MainViewModel())
 
-    private fun update(vm: MainViewModel) {
-        viewModel = vm
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             val updateViewEvent = event<MainViewModel>()
-
             DisposableEffect(updateViewEvent) {
                 val disposable = updateViewEvent.subscribe {
-                    update(it)
+                    viewModel = it
                 }
 
                 onDispose {

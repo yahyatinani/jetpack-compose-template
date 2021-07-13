@@ -2,12 +2,8 @@ package com.why.template.compose.view.home
 
 import android.content.res.Configuration
 import android.os.Build
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import android.util.Log
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -23,9 +19,9 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.event.EventBus.Companion.dispatch
+import com.why.template.compose.event.eventBus
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.materialisedview.updateTopBarTitle
+import com.why.template.compose.materialisedview.pageViewModel
 import com.why.template.compose.presentation.NavigateToEvent
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
@@ -54,21 +50,21 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage(viewModel: MainViewModel) {
-    dispatch(
-        updateTopBarTitle(
-            viewModel,
-            stringResource(R.string.top_bar_home_title)
-        )
-    )
+    Log.i("received-home-vm ", "$viewModel")
+    val title = stringResource(R.string.top_bar_home_title)
+    eventBus.post(pageViewModel(viewModel, title, Route.HOME))
 
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Greeting("Android ${Build.VERSION.SDK_INT}")
+        val apiV = Build.VERSION.SDK_INT
+        Greeting("Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = { dispatch(NavigateToEvent(Route.ABOUT)) }) {
+        Button(onClick = {
+            eventBus.post(NavigateToEvent("${Route.ABOUT}/$apiV"))
+        }) {
             Text(text = "Navigate")
         }
     }

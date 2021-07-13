@@ -1,116 +1,88 @@
 package com.why.template.compose.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import com.why.template.compose.event.dispatch
-import com.why.template.compose.event.event
+import com.google.common.eventbus.Subscribe
+import com.why.template.compose.event.eventBus
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.materialisedview.updateCurrentRoute
 import com.why.template.compose.presentation.NavigateToEvent
 import com.why.template.compose.presentation.Route
-import com.why.template.compose.presentation.UpdateCurrentRouteEvent
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
 
-@Composable
-private fun UpdateCurrentRouteEventHandler(viewModel: MainViewModel) {
-    val updateCurrentRouteEvent = event<UpdateCurrentRouteEvent>()
+var viewModel by mutableStateOf(MainViewModel())
 
-    DisposableEffect(updateCurrentRouteEvent) {
-        val disposable = updateCurrentRouteEvent.subscribe {
-            val currentRoute = it.route
-            println("OnNavigate: to ${currentRoute.name}")
-
-            dispatch(updateCurrentRoute(viewModel, currentRoute))
-        }
-
-        onDispose {
-            println("onDispose: unsubscribe from NavigatedEvent")
-            disposable.dispose()
-        }
-    }
-}
-
-@Composable
-private fun NavigateToEventHandler(navController: NavHostController) {
-    val navigationEvent = event<NavigateToEvent>()
-
-    DisposableEffect(navController) {
-        val disposable = navigationEvent.subscribe {
-            println("NavigateToEvent: ${it.route.name}")
-            navController.navigate(it.route.name)
-        }
-
-        onDispose {
-            println("onDispose: unsubscribe from NavigateToEvent")
-            disposable.dispose()
-        }
-    }
-}
-
-@Composable
-private fun NavigationListener(navController: NavHostController) {
-    val listener = OnDestinationChangedListener { _, destination, _ ->
-        println("Dispatch UpdateCurrentRouteEvent: ${destination.route}")
-
-        dispatch(UpdateCurrentRouteEvent(Route.toRoute(destination.route)))
+data class EventsHandler(val navHostController: NavHostController) {
+    @Subscribe
+    fun navigateTo(route: Route) {
+        Log.i("go-to ->", route.name)
+        navHostController.navigate(route.name)
     }
 
-    DisposableEffect(navController) {
-        println("<< ADD navigation Listener >>")
-        navController.addOnDestinationChangedListener(listener)
+    @Subscribe
+    fun navigateTo(event: NavigateToEvent) {
+        Log.i("go-to ->", event.route)
+        navHostController.navigate(event.route)
+    }
 
-        onDispose {
-            println("<< REMOVE navigation Listener >>")
-
-            navController.removeOnDestinationChangedListener(listener)
-        }
+    @Subscribe
+    fun updateViewModel(vm: MainViewModel) {
+        Log.i("updateViewModel", "$vm")
+        viewModel = vm
     }
 }
 
 class HostActivity : ComponentActivity() {
-    private var viewModel by mutableStateOf(MainViewModel())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val updateViewEvent = event<MainViewModel>()
-            DisposableEffect(updateViewEvent) {
-                val disposable = updateViewEvent.subscribe {
-                    viewModel = it
-                }
+            val navController = rememberNavController()
+
+            DisposableEffect(navController) {
+                val eventHandler = EventsHandler(navController)
+                eventBus.register(eventHandler)
 
                 onDispose {
-                    disposable.dispose()
+                    Log.i("go-to ->", "<< REMOVE navigation Listener >>")
+                    eventBus.unregister(eventHandler)
                 }
             }
 
             MyApp(viewModel) {
-                val navController = rememberNavController()
                 NavHost(
                     navController = navController,
                     startDestination = viewModel.currentPage.name
                 ) {
                     composable(Route.HOME.name) { HomePage(viewModel) }
-                    composable(Route.ABOUT.name) { AboutPage(viewModel) }
+                    composable(
+                        route = "${Route.ABOUT.name}/{api-v}",
+                        arguments = listOf(
+                            navArgument("api-v") {
+                                type = NavType.IntType
+                            }
+                        )
+                    ) { entry ->
+                        AboutPage(
+                            viewModel = viewModel,
+                            apiVersion = entry.arguments?.getInt("api-v") ?: -1
+                        )
+                    }
                 }
-
-                UpdateCurrentRouteEventHandler(viewModel)
-                NavigateToEventHandler(navController)
-                NavigationListener(navController)
             }
         }
     }

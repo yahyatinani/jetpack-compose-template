@@ -7,8 +7,8 @@ data class MainViewModel(
     val currentPage: Route = Route.HOME
 )
 
-fun updateTopBarTitle(viewModel: MainViewModel, title: String): MainViewModel =
-    viewModel.copy(topBarTitle = title)
-
-fun updateCurrentRoute(viewModel: MainViewModel, route: Route): MainViewModel =
-    viewModel.copy(currentPage = route)
+fun pageViewModel(
+    viewModel: MainViewModel,
+    title: String,
+    route: Route
+): MainViewModel = viewModel.copy(currentPage = route, topBarTitle = title)

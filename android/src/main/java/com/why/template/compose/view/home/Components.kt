@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.event.eventBus
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.materialisedview.pageViewModel
-import com.why.template.compose.presentation.NavigateToEvent
+import com.why.template.compose.presentation.HomePageEvent
+import com.why.template.compose.presentation.NavigateEvent
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
 
@@ -51,8 +51,8 @@ fun Greeting(name: String) {
 @Composable
 fun HomePage(viewModel: MainViewModel) {
     Log.i("received-home-vm ", "$viewModel")
-    val title = stringResource(R.string.top_bar_home_title)
-    eventBus.post(pageViewModel(viewModel, title, Route.HOME))
+
+    eventBus.post(HomePageEvent(stringResource(R.string.top_bar_home_title)))
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -63,7 +63,7 @@ fun HomePage(viewModel: MainViewModel) {
         Greeting("Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
-            eventBus.post(NavigateToEvent("${Route.ABOUT}/$apiV"))
+            eventBus.post(NavigateEvent("${Route.ABOUT}/$apiV"))
         }) {
             Text(text = "Navigate")
         }

@@ -2,7 +2,8 @@ package com.why.template.compose.presentation
 
 enum class Route {
     HOME,
-    ABOUT;
+    ABOUT,
+    NONE;
 
     companion object {
         fun toRoute(route: String?): Route =

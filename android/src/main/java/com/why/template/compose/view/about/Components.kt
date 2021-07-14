@@ -14,15 +14,14 @@ import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.event.eventBus
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.materialisedview.pageViewModel
-import com.why.template.compose.presentation.Route
+import com.why.template.compose.presentation.AboutPageEvent
 import com.why.template.compose.view.common.MyApp
 
 @Composable
 fun AboutPage(viewModel: MainViewModel, apiVersion: Int = -1) {
     Log.i("received-about-vm ", "$viewModel")
-    val title = stringResource(R.string.top_bar_about_title)
-    eventBus.post(pageViewModel(viewModel, title, Route.ABOUT))
+
+    eventBus.post(AboutPageEvent(stringResource(R.string.top_bar_about_title)))
 
     Column(
         modifier = Modifier.fillMaxSize(),

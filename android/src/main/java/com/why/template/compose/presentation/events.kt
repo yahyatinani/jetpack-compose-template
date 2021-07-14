@@ -1,5 +1,7 @@
 package com.why.template.compose.presentation
 
-data class UpdateCurrentRouteEvent(val route: Route)
+data class NavigateEvent(val route: String)
 
-data class NavigateToEvent(val route: String)
+data class HomePageEvent(val title: String)
+
+data class AboutPageEvent(val title: String)

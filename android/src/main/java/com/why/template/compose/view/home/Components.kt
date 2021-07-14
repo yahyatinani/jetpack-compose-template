@@ -18,10 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.whyrising.y.concretions.vector.v
 import com.why.template.compose.R
+import com.why.template.compose.event.dispatch
 import com.why.template.compose.event.eventBus
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.presentation.HomePageEvent
 import com.why.template.compose.presentation.NavigateEvent
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
@@ -52,7 +53,9 @@ fun Greeting(name: String) {
 fun HomePage(viewModel: MainViewModel) {
     Log.i("received-home-vm ", "$viewModel")
 
-    eventBus.post(HomePageEvent(stringResource(R.string.top_bar_home_title)))
+//    eventBus.post(HomePageEvent(stringResource(R.string.top_bar_home_title)))
+
+    dispatch(v(":homePageEvent", stringResource(R.string.top_bar_home_title)))
 
     Column(
         modifier = Modifier.fillMaxSize(),

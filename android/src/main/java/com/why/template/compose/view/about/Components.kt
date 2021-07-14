@@ -11,17 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.whyrising.y.concretions.vector.v
 import com.why.template.compose.R
-import com.why.template.compose.event.eventBus
+import com.why.template.compose.event.dispatch
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.presentation.AboutPageEvent
 import com.why.template.compose.view.common.MyApp
 
 @Composable
 fun AboutPage(viewModel: MainViewModel, apiVersion: Int = -1) {
     Log.i("received-about-vm ", "$viewModel")
 
-    eventBus.post(AboutPageEvent(stringResource(R.string.top_bar_about_title)))
+//    eventBus.post(AboutPageEvent(stringResource(R.string.top_bar_about_title)))
+
+    dispatch(v(":aboutPageEvent", stringResource(R.string.top_bar_about_title)))
 
     Column(
         modifier = Modifier.fillMaxSize(),

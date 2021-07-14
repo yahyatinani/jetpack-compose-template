@@ -19,8 +19,8 @@ class EventBus {
     }
 }
 
-inline fun <reified T> event(): Observable<T> = EventBus.subscribe()
+//inline fun <reified T> event(): Observable<T> = EventBus.subscribe()
 
-fun dispatch(event: Any) {
-    EventBus.dispatch(event)
-}
+//fun dispatch(event: Any) {
+//    EventBus.dispatch(event)
+//}

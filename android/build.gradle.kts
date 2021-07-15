@@ -24,7 +24,8 @@ dependencies {
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 
-    implementation(Libs.Kotlinx.coroutines)
+    implementation(Libs.Coroutines.core)
+    implementation(Libs.Coroutines.android)
 
     debugImplementation(Libs.LayoutInspector.uiTooling)
     debugImplementation(Libs.LayoutInspector.reflect)
@@ -33,8 +34,7 @@ dependencies {
     testImplementation(Libs.Kotest.assertions)
     testImplementation(Libs.Kotest.property)
 
-    testImplementation(Libs.Kotlinx.coroutinesTest)
-
+    testImplementation(Libs.Coroutines.coroutinesTest)
     testImplementation(Libs.Compose.uiTestJUnit)
 }
 

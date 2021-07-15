@@ -65,12 +65,12 @@ object Libs {
         const val collections = "$group:y-collections:$version"
     }
 
-    object Kotlinx {
+    object Coroutines {
         private const val group = "org.jetbrains.kotlinx"
         private const val version = "1.5.1"
 
-        const val coroutines = "$group:kotlinx-coroutines-android:$version"
-
+        const val core = "$group:kotlinx-coroutines-core:$version"
+        const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
     }
 }

@@ -72,5 +72,7 @@ object Libs {
         const val core = "$group:kotlinx-coroutines-core:$version"
         const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
+
+        const val vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     }
 }

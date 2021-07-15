@@ -26,6 +26,7 @@ dependencies {
 
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)
+    implementation(Libs.Coroutines.vm)
 
     debugImplementation(Libs.LayoutInspector.uiTooling)
     debugImplementation(Libs.LayoutInspector.reflect)

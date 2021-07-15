@@ -18,7 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.whyrising.y.concretions.vector.v
 import com.why.template.compose.R
 import com.why.template.compose.event.dispatch
 import com.why.template.compose.event.eventBus
@@ -55,7 +54,7 @@ fun HomePage(viewModel: MainViewModel) {
 
 //    eventBus.post(HomePageEvent(stringResource(R.string.top_bar_home_title)))
 
-    dispatch(v(":homePageEvent", stringResource(R.string.top_bar_home_title)))
+    dispatch(arrayListOf(":homePageEvent", stringResource(R.string.top_bar_home_title)))
 
     Column(
         modifier = Modifier.fillMaxSize(),

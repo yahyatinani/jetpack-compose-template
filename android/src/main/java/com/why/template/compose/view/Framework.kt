@@ -4,15 +4,15 @@ import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import com.google.common.eventbus.Subscribe
-import com.why.template.compose.event.dispatch
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.materialisedview.pageViewModel
-import com.why.template.compose.presentation.AboutPageEvent
-import com.why.template.compose.presentation.HomePageEvent
 import com.why.template.compose.presentation.NavigateEvent
 import com.why.template.compose.presentation.Route
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
 var viewModel by mutableStateOf(MainViewModel())
@@ -40,7 +40,7 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
     fxHandlers[id] = handler
 }
 
-data class Framework(val navHostController: NavHostController) {
+data class Framework(val navHostController: NavHostController) : ViewModel() {
     init {
         regFx(":db") { value ->
             if (viewModel == (value as MainViewModel)) return@regFx
@@ -52,22 +52,28 @@ data class Framework(val navHostController: NavHostController) {
 
     @Subscribe
     fun dispatch(vec: ArrayList<Any>) {
-        if (vec.isEmpty()) return
+        val channel = Channel<Int>()
+        viewModelScope.launch {
+            // this might be heavy CPU-consuming computation or async logic, we'll just send five squares
+//            for (x in 1..5) channel.send(x * x)
 
-        val id = vec[0]
-        val eventHandler: Any? = dbEvent[id]
+            if (vec.isEmpty()) return@launch
 
-        if (eventHandler != null) {
-            val function =
-                eventHandler as (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
+            val id = vec[0]
+            val eventHandler: Any? = dbEvent[id]
 
-            val newVm = function(viewModel.copy(), vec)
+            if (eventHandler != null) {
+                val function =
+                    eventHandler as (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
 
-            val fxHandler: Any? = fxHandlers[":db"]
-            val fx = fxHandler as (value: Any) -> Unit
-            fx(newVm)
-        } else {
-            Log.e("all", "Event handler id not found")
+                val newVm = function(viewModel.copy(), vec)
+
+                val fxHandler: Any? = fxHandlers[":db"]
+                val fx = fxHandler as (value: Any) -> Unit
+                fx(newVm)
+            } else {
+                Log.e("all", "Event handler id not found")
+            }
         }
     }
 
@@ -81,25 +87,5 @@ data class Framework(val navHostController: NavHostController) {
     fun navigateTo(event: NavigateEvent) {
         Log.i("go-to ->", event.route)
         navHostController.navigate(event.route)
-    }
-
-//    @Subscribe
-//    fun updateViewModel(vm: MainViewModel) {
-//        if (viewModel == vm) return
-//
-//        Log.i("updateViewModel", "$vm")
-//        viewModel = vm
-//    }
-
-    @Subscribe
-    fun homePageEvent(event: HomePageEvent) {
-        val vm = pageViewModel(viewModel, event.title, Route.HOME)
-        dispatch(vm)
-    }
-
-    @Subscribe
-    fun aboutPageEvent(event: AboutPageEvent) {
-        val vm = pageViewModel(viewModel, event.title, Route.ABOUT)
-        dispatch(vm)
     }
 }

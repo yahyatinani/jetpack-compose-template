@@ -18,10 +18,12 @@ import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
 
 fun pageViewModel(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
-    val topBarTitle = args[1] as String
-    val currentPage = args[2] as Route
+    val (_, topBarTitle, currentPage) = args
 
-    return vm.copy(topBarTitle = topBarTitle, currentPage = currentPage)
+    return vm.copy(
+        topBarTitle = topBarTitle as String,
+        currentPage = currentPage as Route
+    )
 }
 
 class HostActivity : ComponentActivity() {

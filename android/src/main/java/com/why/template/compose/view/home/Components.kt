@@ -54,7 +54,13 @@ fun HomePage(viewModel: MainViewModel) {
 
 //    eventBus.post(HomePageEvent(stringResource(R.string.top_bar_home_title)))
 
-    dispatch(arrayListOf(":homePageEvent", stringResource(R.string.top_bar_home_title)))
+    dispatch(
+        arrayListOf(
+            ":pageViewModelEvent",
+            stringResource(R.string.top_bar_home_title),
+            Route.HOME
+        )
+    )
 
     Column(
         modifier = Modifier.fillMaxSize(),

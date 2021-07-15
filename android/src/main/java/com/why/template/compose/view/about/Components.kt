@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.event.dispatch
 import com.why.template.compose.materialisedview.MainViewModel
+import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
 
 @Composable
@@ -24,8 +25,9 @@ fun AboutPage(viewModel: MainViewModel, apiVersion: Int = -1) {
 
     dispatch(
         arrayListOf(
-            ":aboutPageEvent",
-            stringResource(R.string.top_bar_about_title)
+            ":pageViewModelEvent",
+            stringResource(R.string.top_bar_about_title),
+            Route.ABOUT
         )
     )
 

@@ -17,16 +17,11 @@ import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
 
-fun homePageVm(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
+fun pageViewModel(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
     val topBarTitle = args[1] as String
+    val currentPage = args[2] as Route
 
-    return vm.copy(topBarTitle = topBarTitle, currentPage = Route.HOME)
-}
-
-fun aboutPageVm(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
-    val topBarTitle = args[1] as String
-
-    return vm.copy(topBarTitle = topBarTitle, currentPage = Route.ABOUT)
+    return vm.copy(topBarTitle = topBarTitle, currentPage = currentPage)
 }
 
 class HostActivity : ComponentActivity() {
@@ -34,8 +29,7 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb(":homePageEvent", ::homePageVm)
-        regEventDb(":aboutPageEvent", ::aboutPageVm)
+        regEventDb(":pageViewModelEvent", ::pageViewModel)
 
         setContent {
             val navController = rememberNavController()

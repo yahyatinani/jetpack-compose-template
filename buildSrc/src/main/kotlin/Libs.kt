@@ -4,7 +4,7 @@ object Libs {
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.0-beta09"
+        const val version = "1.0.0-rc01"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -67,7 +67,7 @@ object Libs {
 
     object Kotlinx {
         private const val group = "org.jetbrains.kotlinx"
-        private const val version = "1.5.0"
+        private const val version = "1.5.1"
 
         const val coroutines = "$group:kotlinx-coroutines-android:$version"
 

@@ -9,7 +9,7 @@ object Libs {
         const val ui = "$gr.ui:ui:$version"
 
         // Tooling support (Previews, etc.)
-        const val uiTooling = "$gr.ui:ui-tooling:$version"
+        const val uiTooling = "$gr.ui:ui-tooling:1.0.0-beta09"
 
         // Foundation (Border, Background, Box, Image, shapes, animations, etc.)
         const val foundation = "$gr.foundation:foundation:$version"

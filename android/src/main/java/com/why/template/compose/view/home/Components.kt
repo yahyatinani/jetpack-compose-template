@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 package com.why.template.compose.view.home
 
 import android.content.res.Configuration
@@ -20,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.event.dispatch
-import com.why.template.compose.event.eventBus
 import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.presentation.NavigateEvent
 import com.why.template.compose.presentation.Route
@@ -52,8 +53,6 @@ fun Greeting(name: String) {
 fun HomePage(viewModel: MainViewModel) {
     Log.i("received-home-vm ", "$viewModel")
 
-//    eventBus.post(HomePageEvent(stringResource(R.string.top_bar_home_title)))
-
     dispatch(
         arrayListOf(
             ":pageViewModelEvent",
@@ -68,10 +67,10 @@ fun HomePage(viewModel: MainViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val apiV = Build.VERSION.SDK_INT
-        Greeting("Android $apiV")
+        Greeting(name = "Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
-            eventBus.post(NavigateEvent("${Route.ABOUT}/$apiV"))
+            dispatch(NavigateEvent("${Route.ABOUT}/$apiV"))
         }) {
             Text(text = "Navigate")
         }

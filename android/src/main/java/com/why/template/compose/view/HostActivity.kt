@@ -26,6 +26,7 @@ fun pageViewModel(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
     )
 }
 
+@Suppress("UnstableApiUsage")
 class HostActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

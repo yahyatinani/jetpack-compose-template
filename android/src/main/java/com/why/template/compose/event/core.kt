@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 package com.why.template.compose.event
 
 import com.google.common.eventbus.EventBus

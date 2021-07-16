@@ -40,6 +40,7 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
     fxHandlers[id] = handler
 }
 
+@Suppress("UnstableApiUsage")
 data class Framework(val navHostController: NavHostController) : ViewModel() {
     init {
         regFx(":db") { value ->
@@ -53,18 +54,18 @@ data class Framework(val navHostController: NavHostController) : ViewModel() {
     @Subscribe
     fun dispatch(vec: ArrayList<Any>) {
         val channel = Channel<Int>()
+
+        if (vec.isEmpty()) return
+        val eventId = vec[0]
+
         viewModelScope.launch {
-            // this might be heavy CPU-consuming computation or async logic, we'll just send five squares
-//            for (x in 1..5) channel.send(x * x)
+            // this might be heavy CPU-consuming computation or async logic,
+            // we'll just send five squares for (x in 1..5) channel.send(x * x)
+            val eventDb: Any? = dbEvent[eventId]
 
-            if (vec.isEmpty()) return@launch
-
-            val id = vec[0]
-            val eventHandler: Any? = dbEvent[id]
-
-            if (eventHandler != null) {
+            if (eventDb != null) {
                 val function =
-                    eventHandler as (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
+                    eventDb as (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
 
                 val newVm = function(viewModel.copy(), vec)
 

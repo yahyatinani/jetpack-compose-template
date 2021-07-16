@@ -21,8 +21,6 @@ import com.why.template.compose.view.common.MyApp
 fun AboutPage(viewModel: MainViewModel, apiVersion: Int = -1) {
     Log.i("received-about-vm ", "$viewModel")
 
-//    eventBus.post(AboutPageEvent(stringResource(R.string.top_bar_about_title)))
-
     dispatch(
         arrayListOf(
             ":pageViewModelEvent",

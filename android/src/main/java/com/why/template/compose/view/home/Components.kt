@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.event.dispatch
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.presentation.NavigateEvent
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
 
@@ -70,7 +69,7 @@ fun HomePage(viewModel: MainViewModel) {
         Greeting(name = "Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = {
-            dispatch(NavigateEvent("${Route.ABOUT}/$apiV"))
+            dispatch(arrayListOf(":navigate", "${Route.ABOUT}/$apiV"))
         }) {
             Text(text = "Navigate")
         }

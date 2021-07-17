@@ -6,11 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavHostController
 import com.google.common.eventbus.Subscribe
 import com.why.template.compose.materialisedview.MainViewModel
-import com.why.template.compose.presentation.NavigateEvent
-import com.why.template.compose.presentation.Route
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
@@ -20,6 +17,7 @@ var viewModel by mutableStateOf(MainViewModel())
 
 val dbEvent = ConcurrentHashMap<Any, Any>()
 val fxEvent = ConcurrentHashMap<Any, Any>()
+
 val fxHandlers = ConcurrentHashMap<Any, Any>()
 
 fun regEventFx(
@@ -41,7 +39,7 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
 }
 
 @Suppress("UnstableApiUsage")
-data class Framework(val navHostController: NavHostController) : ViewModel() {
+class Framework : ViewModel() {
     init {
         regFx(":db") { value ->
             if (viewModel == (value as MainViewModel)) return@regFx
@@ -64,29 +62,37 @@ data class Framework(val navHostController: NavHostController) : ViewModel() {
             val eventDb: Any? = dbEvent[eventId]
 
             if (eventDb != null) {
-                val function =
-                    eventDb as (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
+                val function = eventDb
+                        as (MainViewModel, ArrayList<Any>) -> MainViewModel
 
                 val newVm = function(viewModel.copy(), vec)
 
                 val fxHandler: Any? = fxHandlers[":db"]
                 val fx = fxHandler as (value: Any) -> Unit
                 fx(newVm)
+
+                return@launch
+            }
+
+            val fxEvent: Any? = fxEvent[eventId]
+
+            if (fxEvent != null) {
+                val function = fxEvent
+                        as (Map<Any, Any>, ArrayList<Any>) -> Map<Any, Any>
+
+                val fxMap = function(mapOf(), vec)
+                val fxVec = fxMap[":fx"] as ArrayList<ArrayList<Any>>
+                fxVec.forEach { effectVec ->
+                    val id = effectVec[0]
+                    val value = effectVec[1]
+                    val fx = fxHandlers[id] as (value: Any) -> Unit
+                    fx(value)
+                }
+
+                return@launch
             } else {
                 Log.e("all", "Event handler id not found")
             }
         }
-    }
-
-    @Subscribe
-    fun navigateTo(route: Route) {
-        Log.i("go-to ->", route.name)
-        navHostController.navigate(route.name)
-    }
-
-    @Subscribe
-    fun navigateTo(event: NavigateEvent) {
-        Log.i("go-to ->", event.route)
-        navHostController.navigate(event.route)
     }
 }

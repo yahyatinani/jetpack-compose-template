@@ -31,17 +31,29 @@ class HostActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         regEventDb(":pageViewModelEvent", ::pageViewModel)
 
         setContent {
             val navController = rememberNavController()
+            regFx(":navigate!") { value ->
+                navController.navigate(value as String)
+            }
+
+            regEventFx(":navigate") { _, vec ->
+                val route = vec[1]
+                mapOf(
+                    ":fx" to arrayListOf(
+                        arrayListOf(":navigate!", route)
+                    )
+                )
+            }
+
             DisposableEffect(navController) {
-                val fxHandler = Framework(navController)
+                val fxHandler = Framework()
                 eventBus.register(fxHandler)
 
                 onDispose {
-                    Log.i("go-to ->", "<< REMOVE navigation Listener >>")
+                    Log.i("onDispose", "Framework")
                     eventBus.unregister(fxHandler)
                 }
             }

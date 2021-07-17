@@ -51,7 +51,7 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage() {
-    val vm = subscribe<MainViewModel>(arrayListOf(":vm"), null)
+    val vm = subscribe<MainViewModel>(arrayListOf(":vm"))
     Log.i("received-home-vm ", "$vm")
 
     dispatch(
@@ -70,6 +70,17 @@ fun HomePage() {
         val apiV = Build.VERSION.SDK_INT
         Greeting(name = "Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
+        Text(text = subscribe<String>(arrayListOf(":counter")))
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(onClick = {
+            dispatch(arrayListOf(":inc", "${Route.ABOUT}/$apiV"))
+        }) {
+            Text(text = "Increase")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         Button(onClick = {
             dispatch(arrayListOf(":navigate", "${Route.ABOUT}/$apiV"))
         }) {

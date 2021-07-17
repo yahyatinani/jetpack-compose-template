@@ -31,12 +31,47 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb(":pageViewModelEvent", ::pageViewModel)
         val fxHandler = Framework()
 
+        regEventDb(":pageViewModelEvent", ::pageViewModel)
+        
+        regEventDb(":inc") { vm, _ ->
+            vm.copy(counter = vm.counter + 1)
+        }
+
+        regEventFx(":navigate") { _, vec ->
+            val route = vec[1]
+            mapOf(
+                ":fx" to arrayListOf(
+                    arrayListOf(":navigate!", route)
+                )
+            )
+        }
+
+        regSub(":get-title") { vm, _ ->
+            Log.i(":get-title", "Ran $vm")
+            vm.topBarTitle
+        }
+
+        regSub(
+            queryId = ":uppercase-title",
+            inputFn = {
+                subscribe(arrayListOf(":get-title"))
+            }) { title, _ ->
+            val uppercase = (title as String).uppercase()
+            Log.i(":uppercase-title: ", uppercase)
+            uppercase
+        }
+
         setContent {
-            DisposableEffect(fxHandler) {
+            val navController = rememberNavController()
+
+            DisposableEffect(navController) {
                 eventBus.register(fxHandler)
+
+                regFx(":navigate!") { value ->
+                    navController.navigate(value as String)
+                }
 
                 onDispose {
                     Log.i("onDispose", "Framework")
@@ -44,30 +79,7 @@ class HostActivity : ComponentActivity() {
                 }
             }
 
-            val navController = rememberNavController()
-
-            regFx(":navigate!") { value ->
-                navController.navigate(value as String)
-            }
-
-            regEventFx(":navigate") { _, vec ->
-                val route = vec[1]
-                mapOf(
-                    ":fx" to arrayListOf(
-                        arrayListOf(":navigate!", route)
-                    )
-                )
-            }
-
-            regSub(":get-title") { vm, _ ->
-                vm.topBarTitle
-            }
-
-            regSub(":vm") { vm, _ ->
-                vm
-            }
-
-            MyApp(title = subscribe(arrayListOf(":get-title"))) {
+            MyApp(title = subscribe(arrayListOf(":uppercase-title"))) {
                 NavHost(
                     navController = navController,
                     startDestination = Route.HOME.name

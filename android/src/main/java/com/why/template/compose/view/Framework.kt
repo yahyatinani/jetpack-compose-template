@@ -14,59 +14,87 @@ import java.util.concurrent.ConcurrentHashMap
 
 private var viewModel by mutableStateOf(MainViewModel())
 
+private fun mainViewModel() = viewModel.copy()
+
 val dbEvent = ConcurrentHashMap<Any, Any>()
 val fxEvent = ConcurrentHashMap<Any, Any>()
 
 val fxHandlers = ConcurrentHashMap<Any, Any>()
 val queryFns = ConcurrentHashMap<Any, Any>()
+val memSubComp = ConcurrentHashMap<Any, Any>()
 
 fun regEventFx(
     id: Any,
     handler: (cofx: Map<Any, Any>, vec: ArrayList<Any>) -> Map<Any, Any>
 ) {
+    Log.i("regEventFx", "$id")
+    if (fxEvent[id] != null)
+        Log.w("regEventFx: ", "overwriting handler for: $id")
+
     fxEvent[id] = handler
+
 }
 
 fun regEventDb(
     id: Any,
     handler: (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
 ) {
+    Log.i("regEventDb", "$id")
+
+    if (dbEvent[id] != null)
+        Log.w("regEventDb: ", "overwriting handler for: $id")
     dbEvent[id] = handler
 }
 
 fun regFx(id: Any, handler: (value: Any) -> Unit) {
+    Log.i("regFx", "$id")
+
+    if (dbEvent[id] != null)
+        Log.w("regFx: ", "overwriting handler for: $id")
     fxHandlers[id] = handler
 }
 
 fun regSub(
     queryId: Any,
-    inputsFn: (vm: MainViewModel, qvec: ArrayList<Any>) -> Any
+    computationFn: (vm: MainViewModel, queryVec: ArrayList<Any>) -> Any,
 ) {
-    queryFns[queryId] = inputsFn
+    queryFns[queryId] = computationFn
+}
+
+fun regSub(
+    queryId: Any,
+    inputFn: (queryVec: ArrayList<Any>) -> Any,
+    computationFn: (input: Any, queryVec: ArrayList<Any>) -> Any,
+) {
+    queryFns[queryId] = arrayOf(inputFn, computationFn)
 }
 
 fun <T> subscribe(qvec: ArrayList<Any>): T {
     val id = qvec[0]
 
-    return when (val queryFn = queryFns[id]) {
+    return when (val r = queryFns[id]) {
         null -> throw IllegalArgumentException(
             "No query function was found for the given id: `$id`"
         )
-        else -> {
-            val function = queryFn as (MainViewModel, ArrayList<Any>) -> Any
-            function(viewModel.copy(), qvec) as T
+        is Array<*> -> {
+            val inputFn = r[0] as (ArrayList<Any>) -> Any
+            val computationFn = r[1] as (Any, ArrayList<Any>) -> Any
+
+            // TODO: Implement input with [v1 v2] return
+            val input = inputFn(qvec)
+            val cache = memSubComp[input]
+
+            if (cache == null) {
+                val computation = computationFn(input, qvec)
+                memSubComp[input] = computation
+                computation as T
+            } else {
+                cache as T
+            }
         }
-    }
-}
-
-fun <T> subscribe(qvec: ArrayList<Any>, default: T?): T? {
-    val id = qvec[0]
-
-    return when (val queryFn = queryFns[id]) {
-        null -> default
         else -> {
-            val function = queryFn as (MainViewModel, ArrayList<Any>) -> Any
-            function(viewModel.copy(), qvec) as T
+            val function = r as (MainViewModel, ArrayList<Any>) -> Any
+            function(mainViewModel(), qvec) as T
         }
     }
 }
@@ -80,6 +108,12 @@ class Framework : ViewModel() {
             Log.i("updateViewModel", "$value")
             viewModel = value
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        Log.i("onCleared", "onCleared")
     }
 
     @Subscribe
@@ -123,12 +157,9 @@ class Framework : ViewModel() {
                 }
 
                 return@launch
-            } else {
-                Log.e("all", "Event handler id not found")
-                throw IllegalArgumentException(
-                    "Event handler not found for id: $eventId"
-                )
-            }
+            } else throw IllegalArgumentException(
+                "Event handler not found for id: $eventId"
+            )
         }
     }
 }

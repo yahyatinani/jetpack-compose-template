@@ -20,7 +20,7 @@ import com.why.template.compose.view.subscribe
 
 @Composable
 fun AboutPage(apiVersion: Int = -1) {
-    val vm = subscribe<MainViewModel>(arrayListOf(":vm"), null)
+    val vm = subscribe<MainViewModel>(arrayListOf(":vm"))
     Log.i("received-about-vm ", "$vm")
 
     dispatch(

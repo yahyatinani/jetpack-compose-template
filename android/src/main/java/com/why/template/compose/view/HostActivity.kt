@@ -59,7 +59,7 @@ class HostActivity : ComponentActivity() {
                 )
             }
 
-            regSub(":pageTitle") { vm, _ ->
+            regSub(":get-title") { vm, _ ->
                 vm.topBarTitle
             }
 
@@ -67,7 +67,7 @@ class HostActivity : ComponentActivity() {
                 vm
             }
 
-            MyApp(title = subscribe(arrayListOf(":pageTitle"))) {
+            MyApp(title = subscribe(arrayListOf(":get-title"))) {
                 NavHost(
                     navController = navController,
                     startDestination = Route.HOME.name

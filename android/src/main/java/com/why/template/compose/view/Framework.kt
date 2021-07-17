@@ -38,8 +38,11 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
     fxHandlers[id] = handler
 }
 
-fun regSub(id: Any, queryFn: (vm: MainViewModel, qvec: ArrayList<Any>) -> Any) {
-    queryFns[id] = queryFn
+fun regSub(
+    queryId: Any,
+    inputsFn: (vm: MainViewModel, qvec: ArrayList<Any>) -> Any
+) {
+    queryFns[queryId] = inputsFn
 }
 
 fun <T> subscribe(qvec: ArrayList<Any>): T {

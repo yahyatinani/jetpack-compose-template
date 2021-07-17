@@ -25,6 +25,7 @@ import com.why.template.compose.event.dispatch
 import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
+import com.why.template.compose.view.subscribe
 
 @Composable
 fun helloText(name: String): AnnotatedString = buildAnnotatedString {
@@ -49,8 +50,9 @@ fun Greeting(name: String) {
 }
 
 @Composable
-fun HomePage(viewModel: MainViewModel) {
-    Log.i("received-home-vm ", "$viewModel")
+fun HomePage() {
+    val vm = subscribe<MainViewModel>(arrayListOf(":vm"), null)
+    Log.i("received-home-vm ", "$vm")
 
     dispatch(
         arrayListOf(
@@ -84,8 +86,8 @@ fun HomePage(viewModel: MainViewModel) {
 
 @Composable
 private fun HomePageWithTheme() {
-    MyApp(MainViewModel()) {
-        HomePage(MainViewModel())
+    MyApp("Title") {
+        HomePage()
     }
 }
 

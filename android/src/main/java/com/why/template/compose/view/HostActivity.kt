@@ -28,13 +28,24 @@ fun pageViewModel(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
 
 @Suppress("UnstableApiUsage")
 class HostActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         regEventDb(":pageViewModelEvent", ::pageViewModel)
+        val fxHandler = Framework()
 
         setContent {
+            DisposableEffect(fxHandler) {
+                eventBus.register(fxHandler)
+
+                onDispose {
+                    Log.i("onDispose", "Framework")
+                    eventBus.unregister(fxHandler)
+                }
+            }
+
             val navController = rememberNavController()
+
             regFx(":navigate!") { value ->
                 navController.navigate(value as String)
             }
@@ -48,23 +59,21 @@ class HostActivity : ComponentActivity() {
                 )
             }
 
-            DisposableEffect(navController) {
-                val fxHandler = Framework()
-                eventBus.register(fxHandler)
-
-                onDispose {
-                    Log.i("onDispose", "Framework")
-                    eventBus.unregister(fxHandler)
-                }
+            regSub(":pageTitle") { vm, _ ->
+                vm.topBarTitle
             }
 
-            MyApp(viewModel) {
+            regSub(":vm") { vm, _ ->
+                vm
+            }
+
+            MyApp(title = subscribe(arrayListOf(":pageTitle"))) {
                 NavHost(
                     navController = navController,
                     startDestination = Route.HOME.name
                 ) {
                     composable(Route.HOME.name) {
-                        HomePage(viewModel)
+                        HomePage()
                     }
 
                     composable(
@@ -76,7 +85,6 @@ class HostActivity : ComponentActivity() {
                         )
                     ) { entry ->
                         AboutPage(
-                            viewModel = viewModel,
                             apiVersion = entry.arguments?.getInt("api-v") ?: -1
                         )
                     }

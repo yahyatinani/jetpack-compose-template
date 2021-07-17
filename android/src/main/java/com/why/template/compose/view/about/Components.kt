@@ -16,10 +16,12 @@ import com.why.template.compose.event.dispatch
 import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
+import com.why.template.compose.view.subscribe
 
 @Composable
-fun AboutPage(viewModel: MainViewModel, apiVersion: Int = -1) {
-    Log.i("received-about-vm ", "$viewModel")
+fun AboutPage(apiVersion: Int = -1) {
+    val vm = subscribe<MainViewModel>(arrayListOf(":vm"), null)
+    Log.i("received-about-vm ", "$vm")
 
     dispatch(
         arrayListOf(
@@ -51,8 +53,8 @@ fun AboutPage(viewModel: MainViewModel, apiVersion: Int = -1) {
 
 @Composable
 private fun AboutPageWithTheme() {
-    MyApp(MainViewModel()) {
-        AboutPage(MainViewModel())
+    MyApp("Title") {
+        AboutPage()
     }
 }
 

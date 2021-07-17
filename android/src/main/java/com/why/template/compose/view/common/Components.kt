@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.view.theme.MyTheme
 
 @Composable
@@ -48,12 +47,12 @@ fun BgImage(modifier: Modifier = Modifier) {
 
 @Composable
 fun MyApp(
-    viewModel: MainViewModel,
+    title: String,
     content: @Composable () -> Unit
 ) {
     MyTheme {
         Scaffold(
-            topBar = { TopBar(title = viewModel.topBarTitle) }
+            topBar = { TopBar(title = title) }
         ) { innerPadding ->
 
             Surface(modifier = Modifier.padding(innerPadding)) {
@@ -73,7 +72,7 @@ fun MyApp(
 @Composable
 @Preview(name = "MyApp Preview - Light Mode")
 fun MyAppPreview() {
-    MyApp(MainViewModel()) {}
+    MyApp(title = "Title") {}
 }
 
 @Composable
@@ -82,5 +81,5 @@ fun MyAppPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 fun MyAppDarkPreview() {
-    MyApp(MainViewModel()) {}
+    MyApp(title = "Title") {}
 }

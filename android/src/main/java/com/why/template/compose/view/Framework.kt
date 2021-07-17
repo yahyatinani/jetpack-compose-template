@@ -12,13 +12,13 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentHashMap
 
-var viewModel by mutableStateOf(MainViewModel())
-    private set
+private var viewModel by mutableStateOf(MainViewModel())
 
 val dbEvent = ConcurrentHashMap<Any, Any>()
 val fxEvent = ConcurrentHashMap<Any, Any>()
 
 val fxHandlers = ConcurrentHashMap<Any, Any>()
+val queryFns = ConcurrentHashMap<Any, Any>()
 
 fun regEventFx(
     id: Any,
@@ -36,6 +36,36 @@ fun regEventDb(
 
 fun regFx(id: Any, handler: (value: Any) -> Unit) {
     fxHandlers[id] = handler
+}
+
+fun regSub(id: Any, queryFn: (vm: MainViewModel, qvec: ArrayList<Any>) -> Any) {
+    queryFns[id] = queryFn
+}
+
+fun <T> subscribe(qvec: ArrayList<Any>): T {
+    val id = qvec[0]
+
+    return when (val queryFn = queryFns[id]) {
+        null -> throw IllegalArgumentException(
+            "No query function was found for the given id: `$id`"
+        )
+        else -> {
+            val function = queryFn as (MainViewModel, ArrayList<Any>) -> Any
+            function(viewModel.copy(), qvec) as T
+        }
+    }
+}
+
+fun <T> subscribe(qvec: ArrayList<Any>, default: T?): T? {
+    val id = qvec[0]
+
+    return when (val queryFn = queryFns[id]) {
+        null -> default
+        else -> {
+            val function = queryFn as (MainViewModel, ArrayList<Any>) -> Any
+            function(viewModel.copy(), qvec) as T
+        }
+    }
 }
 
 @Suppress("UnstableApiUsage")
@@ -74,10 +104,10 @@ class Framework : ViewModel() {
                 return@launch
             }
 
-            val fxEvent: Any? = fxEvent[eventId]
+            val eventFx: Any? = fxEvent[eventId]
 
-            if (fxEvent != null) {
-                val function = fxEvent
+            if (eventFx != null) {
+                val function = eventFx
                         as (Map<Any, Any>, ArrayList<Any>) -> Map<Any, Any>
 
                 val fxMap = function(mapOf(), vec)
@@ -92,6 +122,9 @@ class Framework : ViewModel() {
                 return@launch
             } else {
                 Log.e("all", "Event handler id not found")
+                throw IllegalArgumentException(
+                    "Event handler not found for id: $eventId"
+                )
             }
         }
     }

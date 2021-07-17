@@ -117,7 +117,7 @@ class Framework : ViewModel() {
     }
 
     @Subscribe
-    fun dispatch(vec: ArrayList<Any>) {
+    fun receive(vec: ArrayList<Any>) {
         val channel = Channel<Int>()
 
         if (vec.isEmpty()) return

@@ -19,8 +19,6 @@ dependencies {
 
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
-    implementation("com.google.guava:guava:30.1.1-jre")
-
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 

@@ -12,15 +12,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.event.dispatch
-import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.presentation.Route
+import com.why.template.compose.recompose.db.MainViewModel
+import com.why.template.compose.recompose.dispatch
+import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.common.MyApp
-import com.why.template.compose.view.subscribe
 
 @Composable
 fun AboutPage(apiVersion: Int = -1) {
-    val vm = subscribe<MainViewModel>(arrayListOf(":vm"))
+    val vm = subscribe<MainViewModel>(arrayListOf(":app-state"))
     Log.i("received-about-vm ", "$vm")
 
     dispatch(

@@ -10,9 +10,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import com.why.template.compose.event.eventBus
-import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.presentation.Route
+import com.why.template.compose.recompose.*
+import com.why.template.compose.recompose.db.MainViewModel
+import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
@@ -31,10 +32,8 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val fxHandler = Framework()
-
         regEventDb(":pageViewModelEvent", ::pageViewModel)
-        
+
         regEventDb(":inc") { vm, _ ->
             vm.copy(counter = vm.counter + 1)
         }
@@ -67,7 +66,7 @@ class HostActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             DisposableEffect(navController) {
-                eventBus.register(fxHandler)
+                val fxHandler = Framework()
 
                 regFx(":navigate!") { value ->
                     navController.navigate(value as String)
@@ -75,7 +74,7 @@ class HostActivity : ComponentActivity() {
 
                 onDispose {
                     Log.i("onDispose", "Framework")
-                    eventBus.unregister(fxHandler)
+                    fxHandler.halt()
                 }
             }
 

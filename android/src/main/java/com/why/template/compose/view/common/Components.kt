@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.view.regSub
+import com.why.template.compose.recompose.regSub
 import com.why.template.compose.view.theme.MyTheme
 
 @Composable
@@ -61,7 +61,7 @@ fun MyApp(
                 regSub(":counter") { vm, _ ->
                     vm.counter.toString()
                 }
-                regSub(":vm") { vm, _ ->
+                regSub(":app-state") { vm, _ ->
                     vm
                 }
                 content()

@@ -21,11 +21,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
-import com.why.template.compose.event.dispatch
-import com.why.template.compose.materialisedview.MainViewModel
 import com.why.template.compose.presentation.Route
+import com.why.template.compose.recompose.db.MainViewModel
+import com.why.template.compose.recompose.dispatch
+import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.common.MyApp
-import com.why.template.compose.view.subscribe
 
 @Composable
 fun helloText(name: String): AnnotatedString = buildAnnotatedString {
@@ -51,7 +51,7 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage() {
-    val vm = subscribe<MainViewModel>(arrayListOf(":vm"))
+    val vm = subscribe<MainViewModel>(arrayListOf(":app-state"))
     Log.i("received-home-vm ", "$vm")
 
     dispatch(
@@ -70,7 +70,9 @@ fun HomePage() {
         val apiV = Build.VERSION.SDK_INT
         Greeting(name = "Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
+
         Text(text = subscribe<String>(arrayListOf(":counter")))
+
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
@@ -82,7 +84,12 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
-            dispatch(arrayListOf(":navigate", "${Route.ABOUT}/$apiV"))
+            dispatch(
+                arrayListOf(
+                    ":navigate",
+                    "${Route.ABOUT}/$apiV"
+                )
+            )
         }) {
             Text(text = "Navigate")
         }

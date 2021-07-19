@@ -1,4 +1,4 @@
-package com.why.template.compose.materialisedview
+package com.why.template.compose.recompose.db
 
 import com.why.template.compose.presentation.Route
 

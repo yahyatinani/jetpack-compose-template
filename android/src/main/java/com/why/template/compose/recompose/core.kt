@@ -122,26 +122,31 @@ class Framework : ViewModel() {
         }
 
     fun halt() {
+        Log.i("halt: ", "event receiver")
         receiver.dispose()
     }
 
     override fun onCleared() {
         super.onCleared()
 
+        Log.i("onCleared", "Resources released")
         halt()
     }
 
     companion object {
-        val publisher: PublishSubject<Any> = PublishSubject.create()
 
-        inline fun <reified T> subscribe(): Observable<T> = publisher.filter {
-            it is T
-        }.map {
-            it as T
-        }
     }
 }
 
+val publisher: PublishSubject<Any> = PublishSubject.create()
+
+inline fun <reified T> subscribe(): Observable<T> = publisher.filter {
+    it is T
+}.map {
+    it as T
+}
+
 fun dispatch(event: Any) {
-    Framework.publisher.onNext(event)
+    Log.i("dispatch", "$event")
+    publisher.onNext(event)
 }

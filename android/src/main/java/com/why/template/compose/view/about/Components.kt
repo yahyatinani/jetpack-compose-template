@@ -1,7 +1,6 @@
 package com.why.template.compose.view.about
 
 import android.content.res.Configuration
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,16 +12,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.presentation.Route
-import com.why.template.compose.recompose.db.MainViewModel
 import com.why.template.compose.recompose.dispatch
-import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.common.MyApp
 
 @Composable
 fun AboutPage(apiVersion: Int = -1) {
-    val vm = subscribe<MainViewModel>(arrayListOf(":app-state"))
-    Log.i("received-about-vm ", "$vm")
-
     dispatch(
         arrayListOf(
             ":pageViewModelEvent",
@@ -53,7 +47,7 @@ fun AboutPage(apiVersion: Int = -1) {
 
 @Composable
 private fun AboutPageWithTheme() {
-    MyApp("Title") {
+    MyApp {
         AboutPage()
     }
 }

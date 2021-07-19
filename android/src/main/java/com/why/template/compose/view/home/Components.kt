@@ -1,10 +1,7 @@
-@file:Suppress("UnstableApiUsage")
-
 package com.why.template.compose.view.home
 
 import android.content.res.Configuration
 import android.os.Build
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -22,7 +19,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.presentation.Route
-import com.why.template.compose.recompose.db.MainViewModel
 import com.why.template.compose.recompose.dispatch
 import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.common.MyApp
@@ -51,9 +47,6 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage() {
-    val vm = subscribe<MainViewModel>(arrayListOf(":app-state"))
-    Log.i("received-home-vm ", "$vm")
-
     dispatch(
         arrayListOf(
             ":pageViewModelEvent",
@@ -76,7 +69,7 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
-            dispatch(arrayListOf(":inc", "${Route.ABOUT}/$apiV"))
+            dispatch(arrayListOf(":inc"))
         }) {
             Text(text = "Increase")
         }
@@ -104,7 +97,7 @@ fun HomePage() {
 
 @Composable
 private fun HomePageWithTheme() {
-    MyApp("Title") {
+    MyApp {
         HomePage()
     }
 }

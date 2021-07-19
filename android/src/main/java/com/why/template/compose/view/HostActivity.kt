@@ -27,8 +27,16 @@ fun pageViewModel(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
     )
 }
 
-@Suppress("UnstableApiUsage")
 class HostActivity : ComponentActivity() {
+    private val fxHandler = Framework()
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.i("onDispose", "Framework")
+        fxHandler.halt()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,7 +56,7 @@ class HostActivity : ComponentActivity() {
         }
 
         regSub(":get-title") { vm, _ ->
-            Log.i(":get-title", "Ran $vm")
+            Log.i(":get-title", "from $vm")
             vm.topBarTitle
         }
 
@@ -58,7 +66,7 @@ class HostActivity : ComponentActivity() {
                 subscribe(arrayListOf(":get-title"))
             }) { title, _ ->
             val uppercase = (title as String).uppercase()
-            Log.i(":uppercase-title: ", uppercase)
+            Log.i(":uppercase-title", uppercase)
             uppercase
         }
 
@@ -66,24 +74,22 @@ class HostActivity : ComponentActivity() {
             val navController = rememberNavController()
 
             DisposableEffect(navController) {
-                val fxHandler = Framework()
-
                 regFx(":navigate!") { value ->
                     navController.navigate(value as String)
                 }
 
                 onDispose {
-                    Log.i("onDispose", "Framework")
-                    fxHandler.halt()
+
                 }
             }
 
-            MyApp(title = subscribe(arrayListOf(":uppercase-title"))) {
+            MyApp(topBarTitle = subscribe(arrayListOf(":uppercase-title"))) {
                 NavHost(
                     navController = navController,
                     startDestination = Route.HOME.name
                 ) {
                     composable(Route.HOME.name) {
+                        Log.i("NavHost", "HomePage")
                         HomePage()
                     }
 

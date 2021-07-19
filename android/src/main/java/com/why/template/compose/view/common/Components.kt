@@ -48,21 +48,22 @@ fun BgImage(modifier: Modifier = Modifier) {
 
 @Composable
 fun MyApp(
-    title: String,
+    topBarTitle: String = "title",
     content: @Composable () -> Unit
 ) {
     MyTheme {
         Scaffold(
-            topBar = { TopBar(title = title) }
+            topBar = {
+                TopBar(title = topBarTitle)
+            }
         ) { innerPadding ->
-
             Surface(modifier = Modifier.padding(innerPadding)) {
                 BgImage(modifier = Modifier.fillMaxSize())
                 regSub(":counter") { vm, _ ->
                     vm.counter.toString()
                 }
-                regSub(":app-state") { vm, _ ->
-                    vm
+                regSub(":current-page") { vm, _ ->
+                    vm.currentPage
                 }
                 content()
             }
@@ -79,7 +80,7 @@ fun MyApp(
 @Composable
 @Preview(name = "MyApp Preview - Light Mode")
 fun MyAppPreview() {
-    MyApp(title = "Title") {}
+    MyApp {}
 }
 
 @Composable
@@ -88,5 +89,5 @@ fun MyAppPreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 fun MyAppDarkPreview() {
-    MyApp(title = "Title") {}
+    MyApp {}
 }

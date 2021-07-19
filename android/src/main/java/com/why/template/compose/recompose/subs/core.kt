@@ -22,12 +22,13 @@ fun <T> subscribe(qvec: ArrayList<Any>): T {
             val cache = memSubComp[input]
 
             if (cache == null) {
+                Log.i("input", "$input")
                 val computation = computationFn(input, qvec)
 
-                Log.i("input: ", "$input")
                 memSubComp[input] = computation
                 computation as T
             } else {
+                Log.i("cache", "$cache")
                 cache as T
             }
         }

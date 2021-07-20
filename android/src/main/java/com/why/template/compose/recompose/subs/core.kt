@@ -2,7 +2,7 @@ package com.why.template.compose.recompose.subs
 
 import android.util.Log
 import com.why.template.compose.recompose.db.MainViewModel
-import com.why.template.compose.recompose.db.appState
+import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.memSubComp
 import com.why.template.compose.recompose.queryFns
 
@@ -34,7 +34,7 @@ fun <T> subscribe(qvec: ArrayList<Any>): T {
         }
         else -> {
             val function = r as (MainViewModel, ArrayList<Any>) -> Any
-            function(appState, qvec) as T
+            function(appDb, qvec) as T
         }
     }
 }

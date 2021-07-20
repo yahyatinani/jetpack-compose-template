@@ -1,13 +1,14 @@
 package com.why.template.compose.recompose
 
 import android.util.Log
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.why.template.compose.recompose.Context.*
 import com.why.template.compose.recompose.Interceptor.*
 import com.why.template.compose.recompose.db.MainViewModel
 import com.why.template.compose.recompose.db.appDb
-import com.why.template.compose.recompose.db.appState
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -18,6 +19,7 @@ val dbEvent = ConcurrentHashMap<Any, Any>()
 val fxEvent = ConcurrentHashMap<Any, Any>()
 
 val fxHandlers = ConcurrentHashMap<Any, Any>()
+val cofxHandlers = ConcurrentHashMap<Any, Any>()
 val queryFns = ConcurrentHashMap<Any, Any>()
 val memSubComp = ConcurrentHashMap<Any, Any>()
 
@@ -46,17 +48,30 @@ fun regEventFx(
 
 }
 
+private fun flatten(interceptors: ArrayList<Any>) =
+    interceptors.flatMap { element: Any ->
+        when (element) {
+            is ArrayList<*> -> element as ArrayList<Map<Interceptor, Any>>
+            else -> arrayListOf(element as Map<Interceptor, Any>)
+        }
+    }
+
 /***
  * Associate the given event `id` with the given collection of `interceptors`.
  */
 fun register(id: Any, interceptors: ArrayList<Any>) {
-    TODO()
+    val flatInterceptors = flatten(interceptors)
+
+    if (dbEvent[id] != null)
+        Log.w("regEventDb: ", "overwriting handler for: $id")
+
+    dbEvent[id] = flatInterceptors
 }
 
 fun toInterceptor(
     id: Any,
-    before: (context: Map<Any, Any>) -> Any = {},
-    after: (context: Map<Any, Any>) -> Any = {}
+    before: (context: Map<Context, Any>) -> Any = { it },
+    after: (context: Map<Context, Any>) -> Any = { it }
 ): Map<Interceptor, Any> = mapOf(
     Id to id,
     Before to before,
@@ -80,15 +95,17 @@ fun dbHandlerToInterceptor(
     handlerFn: (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
 ): Map<Interceptor, Any> = toInterceptor(
     id = ":db-handler",
-    before = { context: Map<Any, Any> ->
+    before = { context: Map<Context, Any> ->
         val cofx = context[Coeffects] as Map<*, *>
-        val db = cofx[Db] as MainViewModel
+        val oldDb = cofx[Db] as MainViewModel
         val event = cofx[Event] as ArrayList<Any>
 
-        val newDb = handlerFn(db, event)
+        val newDb = handlerFn(oldDb, event)
 
-        val newContext = cofx.plus(Db to newDb).let { newCofx ->
-            context.plus(Coeffects to newCofx)
+        val fx = context[Effects] as Map<*, *>
+
+        val newContext = fx.plus(Db to newDb).let { newFx ->
+            context.plus(Effects to newFx)
         }
 
         newContext
@@ -97,13 +114,17 @@ fun dbHandlerToInterceptor(
 
 val doFx: Map<Interceptor, Any> = toInterceptor(
     id = ":do-fx",
-    after = { context: Map<Any, Any> ->
+    after = { context: Map<Context, Any> ->
         val effects = context[Effects] as Map<*, *>
         val effectsWithoutDb = effects.minus(Db)
 
         val newDb = effects[Db] as MainViewModel?
         if (newDb != null) {
-            val fxFn = fxHandlers[":db"] as (value: Any) -> Unit
+            val fxFn = fxHandlers[Db] as (value: Any) -> Unit
+            Log.i(
+                "doFx",
+                "$newDb"
+            )
             fxFn(newDb)
         }
 
@@ -121,6 +142,23 @@ val doFx: Map<Interceptor, Any> = toInterceptor(
     }
 )
 
+fun injectCofx(id: Any): Any {
+    return toInterceptor(
+        id = Coeffects,
+        before = { context ->
+            val handler = cofxHandlers[id] as ((Any) -> Any)?
+            if (handler != null) {
+                val newCofx = handler(context[Coeffects] ?: mapOf<Any, Any>())
+
+                val newContext = context.plus(Coeffects to newCofx)
+                newContext
+            } else Log.e("injectCofx", "No cofx handler registered for $id")
+        }
+    )
+}
+
+val injectDb = injectCofx(id = Db)
+
 /**
  * Register the given event `handler` (function) for the given `id`.
  */
@@ -129,15 +167,14 @@ fun regEventDb(
     interceptors: ArrayList<Any>,
     handler: (vm: MainViewModel, vec: ArrayList<Any>) -> MainViewModel
 ) {
-//    Log.i("regEventDb", "$id")
-//
-//    if (dbEvent[id] != null)
-//        Log.w("regEventDb: ", "overwriting handler for: $id")
-//    dbEvent[id] = handler
-
     register(
-        id,
-        arrayListOf(doFx, interceptors, dbHandlerToInterceptor(handler))
+        id = id,
+        interceptors = arrayListOf(
+            injectDb,
+            doFx,
+            interceptors,
+            dbHandlerToInterceptor(handler)
+        )
     )
 }
 
@@ -154,6 +191,15 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
     if (dbEvent[id] != null)
         Log.w("regFx: ", "overwriting handler for: $id")
     fxHandlers[id] = handler
+}
+
+fun regCofx(id: Any, handler: (coeffects: Map<Any, Any>) -> Map<Any, Any>) {
+    Log.i("regCofx", "$id")
+
+    if (cofxHandlers[id] != null)
+        Log.w("regCofx: ", "overwriting handler for: $id")
+
+    cofxHandlers[id] = handler
 }
 
 fun regSub(
@@ -173,34 +219,57 @@ fun regSub(
 
 class Framework : ViewModel() {
     init {
-        println("init: $appDb")
-        regFx(":db") { value ->
-            if (appState == (value as MainViewModel)) return@regFx
+        regCofx(id = Db) { coeffects ->
+            coeffects.plus(Db to appDb)
+        }
+
+        regFx(id = Db) { value ->
+            if (appDb == (value as MainViewModel)) return@regFx
 
             Log.i("update appState", "$value")
-            appState = value
+            appDb = value
         }
     }
 
-    private val receiver: Disposable =
-        subscribe<ArrayList<Any>>().subscribe { vec ->
-            if (vec.isEmpty()) return@subscribe
+    private fun freshContext(event: Any) = mapOf(
+        Coeffects to mapOf<Any, Any>(Event to event),
+        Effects to mapOf()
+    )
 
-            val eventId = vec[0]
+    private val receiver: Disposable =
+        subscribe<ArrayList<Any>>().subscribe { eventVec ->
+            if (eventVec.isEmpty()) return@subscribe
+
+            val eventId = eventVec[0]
 
             viewModelScope.launch {
-                // this might be heavy CPU-consuming computation or async logic
-                val eventDb: Any? = dbEvent[eventId]
+                val eventHandler: Any? = dbEvent[eventId]
 
-                if (eventDb != null) {
-                    val function = eventDb
-                            as (MainViewModel, ArrayList<Any>) -> MainViewModel
+                if (eventHandler != null) {
+                    val interceptors = eventHandler
+                            as List<Map<Interceptor, Any>>
 
-                    val newAppDb = function(appState, vec)
+                    val context1 =
+                        interceptors.fold(freshContext(eventVec)) { context, interceptor ->
+                            Log.i("interceptors:Before", "from $context")
+                            val beforeFn = interceptor[Before]
+                                    as (Map<Context, Any>) -> Any
+                            val newContext = beforeFn(context)
 
-                    val fxHandler: Any? = fxHandlers[":db"]
-                    val fx = fxHandler as (value: Any) -> Unit
-                    fx(newAppDb)
+                            newContext as Map<Context, Map<Any, Any>>
+                        }
+
+                    // TODO: Optimize this using stack and queue
+                    interceptors.foldRight(context1) { interceptor, context ->
+                        Log.i("interceptors:After", "from $context")
+                        val afterFn = interceptor[After]
+                                as (Map<Context, Any>) -> Any
+
+                        val newContext = afterFn(context)
+                        if (newContext is Map<*, *>)
+                            newContext as Map<Context, Map<Any, Any>>
+                        else context1
+                    }
 
                     return@launch
                 }
@@ -211,7 +280,7 @@ class Framework : ViewModel() {
                     val function = eventFx
                             as (Map<Any, Any>, ArrayList<Any>) -> Map<Any, Any>
 
-                    val fxMap = function(mapOf(), vec)
+                    val fxMap = function(mapOf(), eventVec)
                     val fxVec = fxMap[":fx"] as ArrayList<ArrayList<Any>>
                     fxVec.forEach { effectVec ->
                         val id = effectVec[0]
@@ -252,3 +321,16 @@ fun dispatch(event: Any) {
     Log.i("dispatch", "$event")
     publisher.onNext(event)
 }
+
+@Composable
+fun DispatchOnce(event: Any) {
+    LaunchedEffect(true) {
+        dispatch(event)
+    }
+}
+
+fun event(id: Any, vararg args: Any) = arrayListOf(
+    id,
+    *args
+)
+

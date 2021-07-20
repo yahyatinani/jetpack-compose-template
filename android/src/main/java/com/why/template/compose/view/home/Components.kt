@@ -19,7 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.presentation.Route
+import com.why.template.compose.recompose.DispatchOnce
 import com.why.template.compose.recompose.dispatch
+import com.why.template.compose.recompose.event
 import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.common.MyApp
 
@@ -47,13 +49,8 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage() {
-    dispatch(
-        arrayListOf(
-            ":pageViewModelEvent",
-            stringResource(R.string.top_bar_home_title),
-            Route.HOME
-        )
-    )
+    val title = stringResource(R.string.top_bar_home_title)
+    DispatchOnce(event(id = ":pageViewModelEvent", title, Route.HOME))
 
     Column(
         modifier = Modifier.fillMaxSize(),

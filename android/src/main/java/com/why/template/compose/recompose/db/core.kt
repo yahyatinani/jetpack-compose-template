@@ -14,12 +14,12 @@ import androidx.compose.runtime.mutableStateOf
  * Updates via event handlers.
  *
  * */
-val appDb = mutableStateOf(MainViewModel())
+private val appdb = mutableStateOf(MainViewModel())
 
-var appState: MainViewModel
+var appDb: MainViewModel
     get() {
-        return appDb.value.copy()
+        return appdb.value.copy()
     }
     set(value) {
-        appDb.value = value
+        appdb.value = value
     }

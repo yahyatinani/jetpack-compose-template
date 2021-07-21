@@ -38,7 +38,7 @@ enum class Context {
  */
 
 /*
--------------- Events ---------------------------------------------------
+-- Events ---------------------------------------------------
  */
 /**
  * Register the given event `handler` (function) for the given `id`.
@@ -79,7 +79,7 @@ fun regEventFx(
 }
 
 /*
----------------------- subscriptions ---------------------
+-- subscriptions ---------------------
  */
 fun <T> regSub(
     queryId: Any,
@@ -100,7 +100,7 @@ fun <T> subscribe(qvec: ArrayList<Any>): T {
     return com.why.template.compose.recompose.subs.subscribe<T>(qvec)
 }
 /*
---------------------- effects ---------------------------------
+-- effects ---------------------------------
  */
 
 /**
@@ -114,7 +114,7 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
 }
 
 /*
---------------------- Framework ------------------------------
+-- Framework ------------------------------
  */
 
 class Framework : ViewModel() {

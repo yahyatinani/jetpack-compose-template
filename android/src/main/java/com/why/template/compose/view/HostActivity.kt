@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +18,18 @@ import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
 
+fun pageInfoHandler(
+    db: MainViewModel?,
+    vec: ArrayList<Any>
+): MainViewModel {
+    val (_, topBarTitle, currentPage) = vec
+
+    return db!!.copy(
+        topBarTitle = topBarTitle as String,
+        currentPage = currentPage as Route
+    )
+}
+
 class HostActivity : ComponentActivity() {
     private val fxHandler = Framework()
 
@@ -26,18 +38,6 @@ class HostActivity : ComponentActivity() {
 
         Log.i("onDispose", "Framework")
         fxHandler.halt()
-    }
-
-    fun pageInfoHandler(
-        db: MainViewModel?,
-        vec: ArrayList<Any>
-    ): MainViewModel {
-        val (_, topBarTitle, currentPage) = vec
-
-        return db!!.copy(
-            topBarTitle = topBarTitle as String,
-            currentPage = currentPage as Route
-        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +59,7 @@ class HostActivity : ComponentActivity() {
             val route = vec[1]
             mapOf(
                 ":fx" to arrayListOf(
-                    arrayListOf(":navigate!", route)
+                    event(":navigate!", route)
                 )
             )
         }
@@ -72,7 +72,7 @@ class HostActivity : ComponentActivity() {
         regSub(
             queryId = ":uppercase-title",
             inputFn = {
-                subscribe(arrayListOf(":get-title"))
+                subscribe(event(":get-title"))
             }) { title, _ ->
             val uppercase = (title as String).uppercase()
             Log.i(":uppercase-title", uppercase)
@@ -82,17 +82,13 @@ class HostActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
 
-            DisposableEffect(navController) {
+            LaunchedEffect(navController) {
                 regFx(":navigate!") { value ->
                     navController.navigate(value as String)
                 }
-
-                onDispose {
-
-                }
             }
 
-            MyApp(topBarTitle = subscribe(arrayListOf(":uppercase-title"))) {
+            MyApp(topBarTitle = subscribe(event(":uppercase-title"))) {
                 NavHost(
                     navController = navController,
                     startDestination = Route.HOME.name

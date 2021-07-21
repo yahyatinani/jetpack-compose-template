@@ -66,7 +66,7 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
-            dispatch(arrayListOf(":inc"))
+            dispatch(event(":inc"))
         }) {
             Text(text = "Increase")
         }
@@ -74,12 +74,7 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
-            dispatch(
-                arrayListOf(
-                    ":navigate",
-                    "${Route.ABOUT}/$apiV"
-                )
-            )
+            dispatch(event(":navigate", "${Route.ABOUT}/$apiV"))
         }) {
             Text(text = "Navigate")
         }

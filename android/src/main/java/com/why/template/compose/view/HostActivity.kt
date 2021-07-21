@@ -59,7 +59,8 @@ class HostActivity : ComponentActivity() {
             val route = vec[1]
             mapOf(
                 ":fx" to arrayListOf(
-                    event(":navigate!", route)
+                    event(":navigate!", route),
+                    event(":print!", "I'm currently in About page. yeeeeeah")
                 )
             )
         }
@@ -85,6 +86,10 @@ class HostActivity : ComponentActivity() {
             LaunchedEffect(navController) {
                 regFx(":navigate!") { value ->
                     navController.navigate(value as String)
+                }
+
+                regFx(":print!") { value ->
+                    Log.e(":print!", value.toString())
                 }
             }
 

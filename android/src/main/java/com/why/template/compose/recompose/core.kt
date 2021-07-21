@@ -12,6 +12,7 @@ import com.why.template.compose.recompose.events.register
 import com.why.template.compose.recompose.fx.doFx
 import com.why.template.compose.recompose.registrar.*
 import com.why.template.compose.recompose.stdinterceptors.dbHandlerToInterceptor
+import com.why.template.compose.recompose.stdinterceptors.fxHandlerToInterceptor
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
@@ -69,13 +70,25 @@ inline fun <reified T> regEventDb(
 
 fun regEventFx(
     id: Any,
-    handler: (cofx: Map<Any, Any>, vec: ArrayList<Any>) -> Map<Any, Any>
+    interceptors: ArrayList<Any>,
+    handler: (cofx: Map<Any, Any>, event: ArrayList<Any>) -> Map<Any, Any>
 ) {
-    Log.i("regEventFx", "$id")
-    if (fxEvent[id] != null)
-        Log.w("regEventFx: ", "overwriting handler for: $id")
+    register(
+        id = id,
+        interceptors = arrayListOf(
+            injectDb,
+            doFx,
+            interceptors,
+            fxHandlerToInterceptor(handler)
+        )
+    )
+}
 
-    fxEvent[id] = handler
+fun regEventFx(
+    id: Any,
+    handler: (cofx: Map<Any, Any>, event: ArrayList<Any>) -> Map<Any, Any>
+) {
+    regEventFx(id, arrayListOf(), handler)
 }
 
 /*

@@ -1,9 +1,8 @@
 package com.why.template.compose.recompose.fx
 
 import android.util.Log
-import com.why.template.compose.recompose.Context
-import com.why.template.compose.recompose.Context.Db
-import com.why.template.compose.recompose.Context.Effects
+import com.why.template.compose.recompose.Keys
+import com.why.template.compose.recompose.Keys.*
 import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.db.reset
 import com.why.template.compose.recompose.interceptor.Interceptor
@@ -26,14 +25,14 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
  */
 
 val doFx: Map<Interceptor, Any> = toInterceptor(
-    id = ":do-fx",
-    after = { context: Map<Context, Any> ->
-        val effects = context[Effects] as Map<Any, Any>
-        val effectsWithoutDb: Map<Any, Any> = effects.minus(Db)
+    id = dofx,
+    after = { keys: Map<Keys, Any> ->
+        val effects = keys[effects] as Map<Any, Any>
+        val effectsWithoutDb: Map<Any, Any> = effects.minus(db)
 
-        val newDb = effects[Db]
+        val newDb = effects[db]
         if (newDb != null) {
-            val fxFn = fxHandlers[Db] as (value: Any) -> Unit
+            val fxFn = fxHandlers[db] as (value: Any) -> Unit
             Log.i(
                 "doFx",
                 "$newDb"
@@ -58,7 +57,7 @@ val doFx: Map<Interceptor, Any> = toInterceptor(
 /*
 -- Builtin Effect Handlers ----------------------------------------------------
  */
-val fx1: Unit = regFx(id = ":fx") { listOfEffects: Any ->
+val fx1: Unit = regFx(id = fx) { listOfEffects: Any ->
     if (listOfEffects !is List<*>) {
         Log.e(
             "regFx",
@@ -71,7 +70,7 @@ val fx1: Unit = regFx(id = ":fx") { listOfEffects: Any ->
         effects.forEach { effect: List<Any> ->
             val (effectKey, effectValue) = effect
 
-            if (effectKey == Db)
+            if (effectKey == db)
                 Log.w("regFx", "\":fx\" effect should not contain a :db effect")
 
             val fxFn = fxHandlers[effectKey] as ((value: Any) -> Unit)?
@@ -87,7 +86,7 @@ val fx1: Unit = regFx(id = ":fx") { listOfEffects: Any ->
     }
 }
 
-val fx2: Unit = regFx(id = Db) { value ->
+val fx2: Unit = regFx(id = db) { value ->
     when {
         appDb != value -> reset(value)
         else -> Log.i("regFx", "Same appDb value")

@@ -1,7 +1,7 @@
 package com.why.template.compose.recompose.stdinterceptors
 
-import com.why.template.compose.recompose.Context
-import com.why.template.compose.recompose.Context.*
+import com.why.template.compose.recompose.Keys
+import com.why.template.compose.recompose.Keys.*
 import com.why.template.compose.recompose.interceptor.Interceptor
 import com.why.template.compose.recompose.interceptor.toInterceptor
 
@@ -18,20 +18,20 @@ inline fun <reified T> dbHandlerToInterceptor(
     crossinline handlerFn: (db: T?, vec: ArrayList<Any>) -> T
 ): Map<Interceptor, Any> = toInterceptor(
     id = ":db-handler",
-    before = { context: Map<Context, Any> ->
-        val cofx = context[Coeffects] as Map<*, *>
-        val oldDb = cofx[Db]
-        val event = cofx[Event] as ArrayList<Any>
+    before = { keys: Map<Keys, Any> ->
+        val cofx = keys[coeffects] as Map<*, *>
+        val oldDb = cofx[db]
+        val event = cofx[event] as ArrayList<Any>
 
         val newDb: T = when {
             appDbNotInitialized(oldDb) -> handlerFn(null, event)
             else -> handlerFn(oldDb as T, event)
         }
 
-        val fx = context[Effects] as Map<*, *>
+        val fx = keys[effects] as Map<*, *>
 
-        val newContext = fx.plus(Db to newDb).let { newFx ->
-            context.plus(Effects to newFx)
+        val newContext = fx.plus(db to newDb).let { newFx ->
+            keys.plus(effects to newFx)
         }
 
         newContext
@@ -43,12 +43,12 @@ fun fxHandlerToInterceptor(
 ): Any = toInterceptor(
     id = ":fx-handler",
     before = { context ->
-        val cofx = context[Coeffects] as Map<Any, Any>
-        val event = cofx[Event] as ArrayList<Any>
+        val cofx = context[coeffects] as Map<Any, Any>
+        val event = cofx[event] as ArrayList<Any>
 
         val fxData = handlerFn(cofx, event)
 
-        val newContext = context.plus(Effects to fxData)
+        val newContext = context.plus(effects to fxData)
 
         newContext
     }

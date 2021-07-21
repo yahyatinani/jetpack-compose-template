@@ -1,5 +1,6 @@
 package com.why.template.compose.recompose.events
 
+import com.why.template.compose.recompose.Keys.fx
 import com.why.template.compose.recompose.interceptor.Interceptor
 import com.why.template.compose.recompose.interceptor.execute
 import com.why.template.compose.recompose.registrar.*
@@ -43,7 +44,7 @@ fun handle(eventVec: ArrayList<Any>) {
                 as (Map<Any, Any>, ArrayList<Any>) -> Map<Any, Any>
 
         val fxMap = function(mapOf(), eventVec)
-        val fxVec = fxMap[":fx"] as ArrayList<ArrayList<Any>>
+        val fxVec = fxMap[fx] as ArrayList<ArrayList<Any>>
         fxVec.forEach { effectVec ->
             val id = effectVec[0]
             val value = effectVec[1]

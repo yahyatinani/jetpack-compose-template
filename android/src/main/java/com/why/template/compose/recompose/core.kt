@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.why.template.compose.recompose.Context.*
+import com.why.template.compose.recompose.Keys.*
 import com.why.template.compose.recompose.cofx.injectDb
 import com.why.template.compose.recompose.events.handle
 import com.why.template.compose.recompose.events.register
@@ -16,13 +16,6 @@ import com.why.template.compose.recompose.stdinterceptors.fxHandlerToInterceptor
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 import kotlinx.coroutines.launch
-
-enum class Context {
-    Effects,
-    Coeffects,
-    Db,
-    Event
-}
 
 /**
  * Context:

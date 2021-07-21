@@ -1,8 +1,8 @@
 package com.why.template.compose.recompose.cofx
 
 import android.util.Log
-import com.why.template.compose.recompose.Context
-import com.why.template.compose.recompose.Context.Db
+import com.why.template.compose.recompose.Keys
+import com.why.template.compose.recompose.Keys.db
 import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.interceptor.toInterceptor
 import com.why.template.compose.recompose.registrar.Kinds
@@ -23,14 +23,14 @@ fun regCofx(id: Any, handler: (coeffects: Map<Any, Any>) -> Any) {
  */
 fun injectCofx(id: Any): Any {
     return toInterceptor(
-        id = Context.Coeffects,
+        id = Keys.coeffects,
         before = { context ->
             val handler = cofxHandlers[id] as ((Any) -> Any)?
             if (handler != null) {
                 val newCofx =
-                    handler(context[Context.Coeffects] ?: mapOf<Any, Any>())
+                    handler(context[Keys.coeffects] ?: mapOf<Any, Any>())
 
-                val newContext = context.plus(Context.Coeffects to newCofx)
+                val newContext = context.plus(Keys.coeffects to newCofx)
                 newContext
             } else Log.e("injectCofx", "No cofx handler registered for $id")
         }
@@ -42,12 +42,12 @@ fun injectCofx(id: Any): Any {
  */
 
 // Because this interceptor is used so much, we reify it
-val injectDb = injectCofx(id = Db)
+val injectDb = injectCofx(id = db)
 
 /*
  Adds to coeffects the value in `appDdb`, under the key `Db`
  */
-val cofx1 = regCofx(id = Db) { coeffects ->
+val cofx1 = regCofx(id = db) { coeffects ->
     Log.e("regCofx", "Db")
-    coeffects.plus(Db to appDb())
+    coeffects.plus(db to appDb())
 }

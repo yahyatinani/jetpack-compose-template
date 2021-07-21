@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.recompose.*
+import com.why.template.compose.recompose.Keys.fx
 import com.why.template.compose.recompose.events.event
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
@@ -58,7 +59,7 @@ class HostActivity : ComponentActivity() {
         regEventFx(":navigate") { _, vec ->
             val route = vec[1]
             mapOf(
-                ":fx" to arrayListOf(
+                fx to arrayListOf(
                     event(":navigate!", route),
                     event(":print!", "I'm currently in About page. yeeeeeah")
                 )

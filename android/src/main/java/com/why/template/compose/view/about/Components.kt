@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.recompose.DispatchOnce
-import com.why.template.compose.recompose.event
+import com.why.template.compose.recompose.events.event
 import com.why.template.compose.view.common.MyApp
 
 @Composable
 fun AboutPage(apiVersion: Int = -1) {
     val title = stringResource(R.string.top_bar_about_title)
-    DispatchOnce(event(id = ":pageViewModelEvent", title, Route.ABOUT))
+    DispatchOnce(event(id = ":pageInfoEvent", title, Route.ABOUT))
 
     Column(
         modifier = Modifier.fillMaxSize(),

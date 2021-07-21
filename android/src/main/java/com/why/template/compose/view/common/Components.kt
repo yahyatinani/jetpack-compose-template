@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.why.template.compose.R
+import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.recompose.regSub
 import com.why.template.compose.view.theme.MyTheme
 
@@ -59,11 +60,11 @@ fun MyApp(
         ) { innerPadding ->
             Surface(modifier = Modifier.padding(innerPadding)) {
                 BgImage(modifier = Modifier.fillMaxSize())
-                regSub(":counter") { vm, _ ->
-                    vm.counter.toString()
+                regSub<MainViewModel>(":counter") { db, _ ->
+                    db.counter.toString()
                 }
-                regSub(":current-page") { vm, _ ->
-                    vm.currentPage
+                regSub<MainViewModel>(":current-page") { db, _ ->
+                    db.currentPage
                 }
                 content()
             }

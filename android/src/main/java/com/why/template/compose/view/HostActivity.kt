@@ -10,22 +10,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.recompose.*
-import com.why.template.compose.recompose.db.MainViewModel
+import com.why.template.compose.recompose.events.event
 import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
-
-fun pageViewModel(vm: MainViewModel, args: ArrayList<Any>): MainViewModel {
-    val (_, topBarTitle, currentPage) = args
-
-    return vm.copy(
-        topBarTitle = topBarTitle as String,
-        currentPage = currentPage as Route
-    )
-}
 
 class HostActivity : ComponentActivity() {
     private val fxHandler = Framework()
@@ -37,13 +29,31 @@ class HostActivity : ComponentActivity() {
         fxHandler.halt()
     }
 
+    fun pageInfoHandler(
+        db: MainViewModel?,
+        vec: ArrayList<Any>
+    ): MainViewModel {
+        val (_, topBarTitle, currentPage) = vec
+
+        return db!!.copy(
+            topBarTitle = topBarTitle as String,
+            currentPage = currentPage as Route
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb(":pageViewModelEvent", ::pageViewModel)
+        regEventDb<MainViewModel>(":initialize") { _, _ ->
+            MainViewModel()
+        }
 
-        regEventDb(":inc") { vm, _ ->
-            vm.copy(counter = vm.counter + 1)
+        dispatchSync(event(":initialize"))
+
+        regEventDb(":pageInfoEvent", ::pageInfoHandler)
+
+        regEventDb<MainViewModel>(":inc") { db, _ ->
+            db!!.copy(counter = db.counter + 1)
         }
 
         regEventFx(":navigate") { _, vec ->
@@ -55,9 +65,9 @@ class HostActivity : ComponentActivity() {
             )
         }
 
-        regSub(":get-title") { vm, _ ->
-            Log.i(":get-title", "from $vm")
-            vm.topBarTitle
+        regSub<MainViewModel>(":get-title") { db, _ ->
+            Log.i(":get-title", "from $db")
+            db.topBarTitle
         }
 
         regSub(

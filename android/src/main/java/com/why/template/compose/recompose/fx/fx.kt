@@ -3,6 +3,7 @@ package com.why.template.compose.recompose.fx
 import android.util.Log
 import com.why.template.compose.recompose.Context
 import com.why.template.compose.recompose.Context.Db
+import com.why.template.compose.recompose.Context.Effects
 import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.db.reset
 import com.why.template.compose.recompose.interceptor.Interceptor
@@ -27,8 +28,8 @@ fun regFx(id: Any, handler: (value: Any) -> Unit) {
 val doFx: Map<Interceptor, Any> = toInterceptor(
     id = ":do-fx",
     after = { context: Map<Context, Any> ->
-        val effects = context[Context.Effects] as Map<*, *>
-        val effectsWithoutDb = effects.minus(Db)
+        val effects = context[Effects] as Map<Any, Any>
+        val effectsWithoutDb: Map<Any, Any> = effects.minus(Db)
 
         val newDb = effects[Db]
         if (newDb != null) {
@@ -44,7 +45,7 @@ val doFx: Map<Interceptor, Any> = toInterceptor(
             val fxFn = fxHandlers[effectKey] as ((value: Any) -> Unit)?
 
             when {
-                fxFn != null && effectValue != null -> fxFn(effectValue)
+                fxFn != null -> fxFn(effectValue)
                 else -> Log.i(
                     "re-compose",
                     "no handler registered for effect: $effectKey. Ignoring."

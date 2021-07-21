@@ -14,7 +14,6 @@ import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.recompose.*
 import com.why.template.compose.recompose.events.event
-import com.why.template.compose.recompose.subs.subscribe
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage

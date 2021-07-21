@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.recompose.*
+import com.why.template.compose.recompose.Keys.dispatch
 import com.why.template.compose.recompose.Keys.fx
 import com.why.template.compose.recompose.events.event
 import com.why.template.compose.view.about.AboutPage
@@ -61,7 +62,8 @@ class HostActivity : ComponentActivity() {
             mapOf(
                 fx to arrayListOf(
                     event(":navigate!", route),
-                    event(":print!", "I'm currently in About page. yeeeeeah")
+                    event(":print!", "I'm currently in About page. yeeeeeah"),
+                    event(dispatch, event(":inc"))
                 )
             )
         }

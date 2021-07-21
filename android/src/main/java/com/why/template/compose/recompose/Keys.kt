@@ -6,6 +6,7 @@ enum class Keys {
     db,
     event,
     fx,
+    dispatch,
     dofx;
 
     override fun toString(): String {

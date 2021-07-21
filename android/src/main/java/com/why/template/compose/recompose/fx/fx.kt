@@ -5,6 +5,7 @@ import com.why.template.compose.recompose.Keys
 import com.why.template.compose.recompose.Keys.*
 import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.db.reset
+import com.why.template.compose.recompose.dispatch
 import com.why.template.compose.recompose.interceptor.Interceptor
 import com.why.template.compose.recompose.interceptor.toInterceptor
 import com.why.template.compose.recompose.registrar.Kinds
@@ -90,5 +91,16 @@ val fx2: Unit = regFx(id = db) { value ->
     when {
         appDb != value -> reset(value)
         else -> Log.i("regFx", "Same appDb value")
+    }
+}
+
+val fx3: Unit = regFx(id = dispatch) { value ->
+    when (value) {
+        is ArrayList<*> -> dispatch(value)
+        else -> Log.e(
+            "regFx",
+            "ignoring bad :dispatch value. Expected an array list, but got: " +
+                    "$value"
+        )
     }
 }

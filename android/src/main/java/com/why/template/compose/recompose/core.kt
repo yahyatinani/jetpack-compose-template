@@ -96,8 +96,8 @@ fun regSub(
     queryFns[queryId] = arrayOf(inputFn, computationFn)
 }
 
-fun <T> subscribe(qvec: ArrayList<Any>) {
-    com.why.template.compose.recompose.subs.subscribe<T>(qvec)
+fun <T> subscribe(qvec: ArrayList<Any>): T {
+    return com.why.template.compose.recompose.subs.subscribe<T>(qvec)
 }
 /*
 --------------------- effects ---------------------------------

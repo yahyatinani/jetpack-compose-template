@@ -104,3 +104,19 @@ val fx3: Unit = regFx(id = dispatch) { value ->
         )
     }
 }
+
+val fx4: Unit = regFx(id = dispatchN) { value ->
+    when (value) {
+        is List<*> -> {
+            value.forEach { vec: Any? ->
+                val event = vec as ArrayList<Any>
+                dispatch(event)
+            }
+        }
+        else -> Log.e(
+            "regFx",
+            "ignoring bad :dispatchN value. Expected a list, but got: " +
+                    "$value"
+        )
+    }
+}

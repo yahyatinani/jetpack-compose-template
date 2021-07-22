@@ -4,19 +4,20 @@ import android.util.Log
 import com.why.template.compose.recompose.registrar.Kinds.*
 import java.util.concurrent.ConcurrentHashMap
 
-val dbEvent = ConcurrentHashMap<Any, Any>()
-val fxEvent = ConcurrentHashMap<Any, Any>()
-
+val eventHandlers = ConcurrentHashMap<Any, Any>()
 val fxHandlers = ConcurrentHashMap<Any, Any>()
 val cofxHandlers = ConcurrentHashMap<Any, Any>()
-val queryFns = ConcurrentHashMap<Any, Any>()
+val subHandlers = ConcurrentHashMap<Any, Any>()
+
 val memSubComp = ConcurrentHashMap<Any, Any>()
 
-enum class Kinds {
-    Event,
-    Fx,
-    Cofx,
-    Sub
+enum class Kinds { Event, Fx, Cofx, Sub }
+
+fun getHandler(kind: Kinds, id: Any): Any? = when (kind) {
+    Event -> eventHandlers[id]
+    Cofx -> cofxHandlers[id]
+    Sub -> subHandlers[id]
+    Fx -> fxHandlers[id]
 }
 
 internal fun registerHandler(
@@ -26,26 +27,27 @@ internal fun registerHandler(
 ) {
     when (kind) {
         Event -> {
-            if (dbEvent[id] != null)
+            if (eventHandlers[id] != null)
                 Log.w("regEventDb: ", "overwriting handler for: $id")
 
-            dbEvent[id] = handlerFn
+            eventHandlers[id] = handlerFn
         }
         Fx -> {
-            Log.i("regFx", "$id")
-
-            if (dbEvent[id] != null)
+            if (fxHandlers[id] != null)
                 Log.w("regFx: ", "overwriting handler for: $id")
             fxHandlers[id] = handlerFn
         }
         Cofx -> {
-            Log.i("regCofx", "$id")
-
             if (cofxHandlers[id] != null)
                 Log.w("regCofx: ", "overwriting handler for: $id")
 
             cofxHandlers[id] = handlerFn
         }
-        Sub -> TODO()
+        Sub -> {
+            if (subHandlers[id] != null)
+                Log.w("regSub: ", "overwriting handler for: $id")
+
+            subHandlers[id] = handlerFn
+        }
     }
 }

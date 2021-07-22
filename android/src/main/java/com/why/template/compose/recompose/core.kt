@@ -91,7 +91,7 @@ fun <T> regSub(
     queryId: Any,
     computationFn: (db: T, queryVec: ArrayList<Any>) -> Any,
 ) {
-    queryFns[queryId] = computationFn
+    subHandlers[queryId] = computationFn
 }
 
 fun regSub(
@@ -99,7 +99,7 @@ fun regSub(
     inputFn: (queryVec: ArrayList<Any>) -> Any,
     computationFn: (input: Any, queryVec: ArrayList<Any>) -> Any,
 ) {
-    queryFns[queryId] = arrayOf(inputFn, computationFn)
+    subHandlers[queryId] = arrayOf(inputFn, computationFn)
 }
 
 fun <T> subscribe(qvec: ArrayList<Any>): T {

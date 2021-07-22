@@ -39,6 +39,7 @@ fun handle(eventVec: ArrayList<Any>) {
 
     val eventFx: Any? = fxEvent[eventId]
 
+    // TODO: Reimplement
     if (eventFx != null) {
         val function = eventFx
                 as (Map<Any, Any>, ArrayList<Any>) -> Map<Any, Any>

@@ -76,6 +76,10 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Libs.Compose.version
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 tasks.withType<Test> {

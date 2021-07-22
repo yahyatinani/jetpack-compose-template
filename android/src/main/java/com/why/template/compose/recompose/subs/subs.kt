@@ -3,12 +3,12 @@ package com.why.template.compose.recompose.subs
 import android.util.Log
 import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.registrar.memSubComp
-import com.why.template.compose.recompose.registrar.queryFns
+import com.why.template.compose.recompose.registrar.subHandlers
 
 internal fun <T> subscribe(qvec: ArrayList<Any>): T {
     val id = qvec[0]
 
-    return when (val r = queryFns[id]) {
+    return when (val r = subHandlers[id]) {
         null -> throw IllegalArgumentException(
             "No query function was found for the given id: `$id`"
         )

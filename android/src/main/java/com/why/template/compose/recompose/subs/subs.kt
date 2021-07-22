@@ -2,13 +2,21 @@ package com.why.template.compose.recompose.subs
 
 import android.util.Log
 import com.why.template.compose.recompose.db.appDb
-import com.why.template.compose.recompose.registrar.memSubComp
-import com.why.template.compose.recompose.registrar.subHandlers
+import com.why.template.compose.recompose.registrar.Kinds
+import com.why.template.compose.recompose.registrar.Kinds.Sub
+import com.why.template.compose.recompose.registrar.getHandler
+import com.why.template.compose.recompose.registrar.registerHandler
+import java.util.concurrent.ConcurrentHashMap
 
-internal fun <T> subscribe(qvec: ArrayList<Any>): T {
-    val id = qvec[0]
+val kind: Kinds = Sub
 
-    return when (val r = subHandlers[id]) {
+//-- cache ---------------------------------------------------------------------
+val memSubComp = ConcurrentHashMap<Any, Any>()
+
+//-- subscribe -----------------------------------------------------------------
+
+internal fun <T> subscribe(qvec: ArrayList<Any>): T = qvec[0].let { id ->
+    when (val r = getHandler(kind, id)) {
         null -> throw IllegalArgumentException(
             "No query function was found for the given id: `$id`"
         )
@@ -36,4 +44,21 @@ internal fun <T> subscribe(qvec: ArrayList<Any>): T {
             function(appDb(), qvec) as T
         }
     }
+}
+
+//-- regSub -----------------------------------------------------------------
+
+fun <T> regSub(
+    queryId: Any,
+    computationFn: (db: T, queryVec: ArrayList<Any>) -> Any,
+) {
+    registerHandler(queryId, kind, computationFn)
+}
+
+fun regSub(
+    queryId: Any,
+    inputFn: (queryVec: ArrayList<Any>) -> Any,
+    computationFn: (input: Any, queryVec: ArrayList<Any>) -> Any,
+) {
+    registerHandler(queryId, kind, arrayOf(inputFn, computationFn))
 }

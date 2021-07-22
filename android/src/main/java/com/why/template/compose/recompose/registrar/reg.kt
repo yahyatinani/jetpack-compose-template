@@ -9,8 +9,6 @@ val fxHandlers = ConcurrentHashMap<Any, Any>()
 val cofxHandlers = ConcurrentHashMap<Any, Any>()
 val subHandlers = ConcurrentHashMap<Any, Any>()
 
-val memSubComp = ConcurrentHashMap<Any, Any>()
-
 enum class Kinds { Event, Fx, Cofx, Sub }
 
 fun getHandler(kind: Kinds, id: Any): Any? = when (kind) {

@@ -9,7 +9,7 @@ import com.why.template.compose.recompose.dispatch
 import com.why.template.compose.recompose.interceptor.Interceptor
 import com.why.template.compose.recompose.interceptor.toInterceptor
 import com.why.template.compose.recompose.registrar.Kinds
-import com.why.template.compose.recompose.registrar.fxHandlers
+import com.why.template.compose.recompose.registrar.getHandler
 import com.why.template.compose.recompose.registrar.registerHandler
 
 /*
@@ -33,7 +33,7 @@ val doFx: Map<Interceptor, Any> = toInterceptor(
 
         val newDb = effects[db]
         if (newDb != null) {
-            val fxFn = fxHandlers[db] as (value: Any) -> Unit
+            val fxFn = getHandler(kind, db) as (value: Any) -> Unit
             Log.i(
                 "doFx",
                 "$newDb"
@@ -42,7 +42,7 @@ val doFx: Map<Interceptor, Any> = toInterceptor(
         }
 
         for ((effectKey, effectValue) in effectsWithoutDb) {
-            val fxFn = fxHandlers[effectKey] as ((value: Any) -> Unit)?
+            val fxFn = getHandler(kind, effectKey) as ((value: Any) -> Unit)?
 
             when {
                 fxFn != null -> fxFn(effectValue)
@@ -74,7 +74,7 @@ val fx1: Unit = regFx(id = fx) { listOfEffects: Any ->
             if (effectKey == db)
                 Log.w("regFx", "\":fx\" effect should not contain a :db effect")
 
-            val fxFn = fxHandlers[effectKey] as ((value: Any) -> Unit)?
+            val fxFn = getHandler(kind, effectKey) as ((value: Any) -> Unit)?
 
             when {
                 fxFn != null -> fxFn(effectValue)

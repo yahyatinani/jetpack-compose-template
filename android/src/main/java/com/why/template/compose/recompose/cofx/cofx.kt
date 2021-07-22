@@ -1,18 +1,19 @@
 package com.why.template.compose.recompose.cofx
 
 import android.util.Log
-import com.why.template.compose.recompose.Keys
+import com.why.template.compose.recompose.Keys.coeffects
 import com.why.template.compose.recompose.Keys.db
 import com.why.template.compose.recompose.db.appDb
 import com.why.template.compose.recompose.interceptor.toInterceptor
 import com.why.template.compose.recompose.registrar.Kinds
-import com.why.template.compose.recompose.registrar.cofxHandlers
+import com.why.template.compose.recompose.registrar.Kinds.Cofx
+import com.why.template.compose.recompose.registrar.getHandler
 import com.why.template.compose.recompose.registrar.registerHandler
 
 /*
 ---------- Registration ----------------
  */
-val kind: Kinds = Kinds.Cofx
+val kind: Kinds = Cofx
 
 fun regCofx(id: Any, handler: (coeffects: Map<Any, Any>) -> Any) {
     registerHandler(id, kind, handler)
@@ -23,14 +24,14 @@ fun regCofx(id: Any, handler: (coeffects: Map<Any, Any>) -> Any) {
  */
 fun injectCofx(id: Any): Any {
     return toInterceptor(
-        id = Keys.coeffects,
+        id = coeffects,
         before = { context ->
-            val handler = cofxHandlers[id] as ((Any) -> Any)?
+            val handler = getHandler(kind, id) as ((Any) -> Any)?
             if (handler != null) {
-                val newCofx =
-                    handler(context[Keys.coeffects] ?: mapOf<Any, Any>())
+                val cofx = context[coeffects] ?: mapOf<Any, Any>()
+                val newCofx = handler(cofx)
+                val newContext = context.plus(coeffects to newCofx)
 
-                val newContext = context.plus(Keys.coeffects to newCofx)
                 newContext
             } else Log.e("injectCofx", "No cofx handler registered for $id")
         }

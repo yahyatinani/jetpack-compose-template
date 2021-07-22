@@ -87,11 +87,16 @@ fun regEventFx(
 /*
 -- subscriptions ---------------------
  */
+
+fun <T> subscribe(qvec: ArrayList<Any>): T {
+    return com.why.template.compose.recompose.subs.subscribe<T>(qvec)
+}
+
 fun <T> regSub(
     queryId: Any,
     computationFn: (db: T, queryVec: ArrayList<Any>) -> Any,
 ) {
-    subHandlers[queryId] = computationFn
+    com.why.template.compose.recompose.subs.regSub(queryId, computationFn)
 }
 
 fun regSub(
@@ -99,12 +104,13 @@ fun regSub(
     inputFn: (queryVec: ArrayList<Any>) -> Any,
     computationFn: (input: Any, queryVec: ArrayList<Any>) -> Any,
 ) {
-    subHandlers[queryId] = arrayOf(inputFn, computationFn)
+    com.why.template.compose.recompose.subs.regSub(
+        queryId,
+        inputFn,
+        computationFn
+    )
 }
 
-fun <T> subscribe(qvec: ArrayList<Any>): T {
-    return com.why.template.compose.recompose.subs.subscribe<T>(qvec)
-}
 /*
 -- effects ---------------------------------
  */

@@ -47,7 +47,7 @@ internal fun <T> subscribe(qvec: ArrayList<Any>): T = qvec[0].let { id ->
 }
 
 //-- regSub -----------------------------------------------------------------
-
+// TODO: Reimplement maybe!
 fun <T> regSub(
     queryId: Any,
     computationFn: (db: T, queryVec: ArrayList<Any>) -> Any,

@@ -33,12 +33,6 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb(":initialize") { _, _ ->
-            MainViewModel()
-        }
-
-        dispatchSync(event(":initialize"))
-
         regEventDb(":pageInfoEvent") { db, vec ->
             val (_, topBarTitle, currentPage) = vec
 

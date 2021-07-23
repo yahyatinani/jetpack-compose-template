@@ -21,16 +21,6 @@ import androidx.compose.runtime.setValue
 var appDb by mutableStateOf<Any>(0)
     private set
 
-inline fun <reified R> appDb(): R = when (appDb) {
-    is R -> appDb as R
-    else -> {
-        val message = "`appDb` is not initialized yet! Use regDbInit() to " +
-                "register an init event and remember to dispatch it at the " +
-                "start of your app."
-        throw IllegalStateException(message)
-    }
-}
-
 fun reset(value: Any) {
     appDb = value
 }

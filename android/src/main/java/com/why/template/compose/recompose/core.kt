@@ -37,10 +37,10 @@ import kotlinx.coroutines.launch
 /**
  * Register the given event `handler` (function) for the given `id`.
  */
-inline fun <reified T> regEventDb(
+fun regEventDb(
     id: Any,
     interceptors: ArrayList<Any>,
-    crossinline handler: (db: T?, vec: ArrayList<Any>) -> T
+    handler: (db: Any, vec: ArrayList<Any>) -> Any
 ) {
     register(
         id = id,
@@ -53,9 +53,9 @@ inline fun <reified T> regEventDb(
     )
 }
 
-inline fun <reified T> regEventDb(
+fun regEventDb(
     id: Any,
-    crossinline handler: (db: T?, vec: ArrayList<Any>) -> T
+    handler: (db: Any, vec: ArrayList<Any>) -> Any
 ) {
     Log.i("regEventDb", "$id")
     regEventDb(id, arrayListOf(), handler)
@@ -89,7 +89,7 @@ fun regEventFx(
  */
 
 fun <T> subscribe(qvec: ArrayList<Any>): T {
-    return com.why.template.compose.recompose.subs.subscribe<T>(qvec)
+    return com.why.template.compose.recompose.subs.subscribe(qvec)
 }
 
 fun <T> regSub(

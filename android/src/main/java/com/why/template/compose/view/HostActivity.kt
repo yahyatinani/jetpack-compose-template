@@ -20,18 +20,6 @@ import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
 
-fun pageInfoHandler(
-    db: MainViewModel?,
-    vec: ArrayList<Any>
-): MainViewModel {
-    val (_, topBarTitle, currentPage) = vec
-
-    return db!!.copy(
-        topBarTitle = topBarTitle as String,
-        currentPage = currentPage as Route
-    )
-}
-
 class HostActivity : ComponentActivity() {
     private val fxHandler = Framework()
 
@@ -45,16 +33,23 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb<MainViewModel>(":initialize") { _, _ ->
+        regEventDb(":initialize") { _, _ ->
             MainViewModel()
         }
 
         dispatchSync(event(":initialize"))
 
-        regEventDb(":pageInfoEvent", ::pageInfoHandler)
+        regEventDb(":pageInfoEvent") { db, vec ->
+            val (_, topBarTitle, currentPage) = vec
 
-        regEventDb<MainViewModel>(":inc") { db, _ ->
-            db!!.copy(counter = db.counter + 1)
+            (db as MainViewModel).copy(
+                topBarTitle = topBarTitle as String,
+                currentPage = currentPage as Route
+            )
+        }
+
+        regEventDb(":inc") { db, _ ->
+            (db as MainViewModel).copy(counter = db.counter + 1)
         }
 
         regEventFx(":navigate") { _, vec ->

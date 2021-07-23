@@ -1,6 +1,6 @@
 package com.why.template.compose.recompose.events
 
-import com.why.template.compose.recompose.interceptor.Interceptor
+import com.why.template.compose.recompose.Keys
 import com.why.template.compose.recompose.interceptor.execute
 import com.why.template.compose.recompose.registrar.Kinds
 import com.why.template.compose.recompose.registrar.Kinds.Event
@@ -12,8 +12,8 @@ val kind: Kinds = Event
 private fun flatten(interceptors: ArrayList<Any>) =
     interceptors.flatMap { element: Any ->
         when (element) {
-            is ArrayList<*> -> element as ArrayList<Map<Interceptor, Any>>
-            else -> arrayListOf(element as Map<Interceptor, Any>)
+            is ArrayList<*> -> element as ArrayList<Map<Keys, Any>>
+            else -> arrayListOf(element as Map<Keys, Any>)
         }
     }
 
@@ -32,7 +32,7 @@ fun handle(eventVec: ArrayList<Any>) {
     val eventId = eventVec[0]
     val handler: Any = getHandler(kind, eventId) ?: return
 
-    val chainOfInterceptors = handler as List<Map<Interceptor, Any>>
+    val chainOfInterceptors = handler as List<Map<Keys, Any>>
     execute(eventVec, chainOfInterceptors)
 }
 

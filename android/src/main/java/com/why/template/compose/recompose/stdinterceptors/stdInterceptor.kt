@@ -2,7 +2,6 @@ package com.why.template.compose.recompose.stdinterceptors
 
 import com.why.template.compose.recompose.Keys
 import com.why.template.compose.recompose.Keys.*
-import com.why.template.compose.recompose.interceptor.Interceptor
 import com.why.template.compose.recompose.interceptor.toInterceptor
 
 /*
@@ -12,29 +11,22 @@ These 2 factories wrap the 2 kinds of event handlers.
 
  */
 
-fun appDbNotInitialized(oldDb: Any?) = oldDb is Int
-
-inline fun <reified T> dbHandlerToInterceptor(
-    crossinline handlerFn: (db: T?, vec: ArrayList<Any>) -> T
-): Map<Interceptor, Any> = toInterceptor(
+fun dbHandlerToInterceptor(
+    handlerFn: (db: Any, vec: ArrayList<Any>) -> Any
+): Map<Keys, Any> = toInterceptor(
     id = ":db-handler",
-    before = { keys: Map<Keys, Any> ->
-        val cofx = keys[coeffects] as Map<*, *>
+    before = { context: Map<Keys, Any> ->
+        val cofx = context[coeffects] as Map<*, *>
         val oldDb = cofx[db]
         val event = cofx[event] as ArrayList<Any>
 
-        val newDb: T = when {
-            appDbNotInitialized(oldDb) -> handlerFn(null, event)
-            else -> handlerFn(oldDb as T, event)
-        }
+        val newDb = handlerFn(oldDb!!, event)
 
-        val fx = keys[effects] as Map<*, *>
+        val fx = (context[effects] ?: mapOf<Any, Any>()) as Map<Keys, Any>
 
-        val newContext = fx.plus(db to newDb).let { newFx ->
-            keys.plus(effects to newFx)
-        }
+        val newFx = fx.plus(db to newDb)
 
-        newContext
+        context.plus(effects to newFx)
     }
 )
 

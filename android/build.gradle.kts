@@ -34,7 +34,7 @@ dependencies {
     testImplementation(Libs.Kotest.property)
 
     testImplementation(Libs.Coroutines.coroutinesTest)
-    testImplementation(Libs.Compose.uiTestJUnit)
+    androidTestImplementation(Libs.Compose.uiTestJUnit)
 }
 
 android {

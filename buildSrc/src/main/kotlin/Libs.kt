@@ -59,14 +59,14 @@ object Libs {
 
     object Y {
         private const val group = "com.github.whyrising.y"
-        private const val version = "0.0.2.1"
+        private const val version = "0.0.3"
 
         const val core = "$group:y-core:$version"
         const val collections = "$group:y-collections:$version"
     }
 
     object Recompose {
-        private const val v = "v0.0.1"
+        private const val v = "0.0.2"
         const val recompose = "com.github.whyrising.recompose:recompose:$v"
     }
 

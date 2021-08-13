@@ -10,8 +10,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
-import com.github.whyrising.recompose.*
+import com.github.whyrising.recompose.Framework
+import com.github.whyrising.recompose.Keys
 import com.github.whyrising.recompose.events.event
+import com.github.whyrising.recompose.regEventDb
+import com.github.whyrising.recompose.regEventFx
+import com.github.whyrising.recompose.regFx
+import com.github.whyrising.recompose.regSub
+import com.github.whyrising.recompose.subscribe
 import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.about.AboutPage
@@ -64,7 +70,8 @@ class HostActivity : ComponentActivity() {
             queryId = ":uppercase-title",
             inputFn = {
                 subscribe(event(":get-title"))
-            }) { title, _ ->
+            }
+        ) { title, _ ->
             val uppercase = (title as String).uppercase()
             Log.i(":uppercase-title", uppercase)
             uppercase

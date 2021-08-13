@@ -2,7 +2,12 @@ package com.why.template.compose.view.home
 
 import android.content.res.Configuration
 import android.os.Build
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -67,17 +72,15 @@ fun HomePage() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = {
-            dispatch(event(":inc"))
-        }) {
+        Button(onClick = { dispatch(event(":inc")) }) {
             Text(text = "Increase")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        Button(onClick = {
-            dispatch(event(":navigate", "${Route.ABOUT}/$apiV"))
-        }) {
+        Button(
+            onClick = { dispatch(event(":navigate", "${Route.ABOUT}/$apiV")) }
+        ) {
             Text(text = "Navigate")
         }
     }

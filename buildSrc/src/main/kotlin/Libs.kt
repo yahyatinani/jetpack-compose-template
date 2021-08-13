@@ -4,7 +4,7 @@ object Libs {
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.0-beta09"
+        const val version = "1.0.0"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -21,24 +21,27 @@ object Libs {
         const val iconsCore = "$gr.material:material-icons-core:$version"
         const val iconsExt = "$gr.material:material-icons-extended:$version"
 
-        // Integration with activities
-        const val activity = "androidx.activity:activity-compose:1.3.0-alpha06"
-
-        // Integration with ViewModels
-        const val viewModels =
-            "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
-
-        // Appcompat is needed for themes.xml resource
-        const val appcompat = "androidx.appcompat:appcompat:1.4.0-alpha02"
-
         // UI Testing
         const val uiTestJUnit = "$gr.ui:ui-test-junit4:$version"
     }
 
-    object ConstraintLayout {
-        private const val version = "1.0.0-alpha08"
-        const val compose =
-            "androidx.constraintlayout:constraintlayout-compose:$version"
+    object Androidx {
+        // Integration with activities
+        const val activityCompose =
+            "androidx.activity:activity-compose:1.3.0-beta02"
+
+        // Integration with ViewModels
+        const val viewModelCompose =
+            "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+
+        // Appcompat is needed for themes.xml resource
+        const val appcompat = "androidx.appcompat:appcompat:1.3.0-rc01"
+
+        const val navigationCompose =
+            "androidx.navigation:navigation-compose:2.4.0-alpha03"
+
+        const val constraintLayoutCompose =
+            "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha08"
     }
 
     object LayoutInspector {
@@ -47,7 +50,7 @@ object Libs {
     }
 
     object Kotest {
-        private const val version = "4.6.0"
+        private const val version = "4.6.1"
 
         const val runner = "io.kotest:kotest-runner-junit5:$version"
         const val assertions = "io.kotest:kotest-assertions-core:$version"
@@ -62,12 +65,19 @@ object Libs {
         const val collections = "$group:y-collections:$version"
     }
 
-    object Kotlinx {
+    object Recompose {
+        private const val v = "v0.0.1"
+        const val recompose = "com.github.whyrising.recompose:recompose:$v"
+    }
+
+    object Coroutines {
         private const val group = "org.jetbrains.kotlinx"
-        private const val version = "1.5.0"
+        private const val version = "1.5.1"
 
-        const val coroutines = "$group:kotlinx-coroutines-android:$version"
-
+        const val core = "$group:kotlinx-coroutines-core:$version"
+        const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
+
+        const val vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     }
 }

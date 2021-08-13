@@ -12,8 +12,10 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -21,6 +23,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.whyrising.recompose.dispatch
+import com.github.whyrising.recompose.events.event
+import com.github.whyrising.recompose.subscribe
+import com.why.template.compose.R
+import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.common.MyApp
 
 @Composable
@@ -40,22 +47,40 @@ fun helloText(name: String): AnnotatedString = buildAnnotatedString {
 @Composable
 fun Greeting(name: String) {
     Text(
-        modifier = Modifier
-            .padding(24.dp),
+        modifier = Modifier.padding(24.dp),
         text = helloText(name)
     )
 }
 
 @Composable
 fun HomePage() {
+    val title = stringResource(R.string.top_bar_home_title)
+    LaunchedEffect(true) {
+        dispatch(event(id = ":pageInfoEvent", title, Route.HOME))
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Greeting("Android ${Build.VERSION.SDK_INT}")
+        val apiV = Build.VERSION.SDK_INT
+        Greeting(name = "Android $apiV")
         Spacer(modifier = Modifier.height(24.dp))
-        Button(onClick = { /*TODO: Navigation library*/ }) {
+
+        Text(text = subscribe<String>(arrayListOf(":counter")))
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(onClick = { dispatch(event(":inc")) }) {
+            Text(text = "Increase")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = { dispatch(event(":navigate", "${Route.ABOUT}/$apiV")) }
+        ) {
             Text(text = "Navigate")
         }
     }
@@ -68,7 +93,7 @@ fun HomePage() {
 * */
 
 @Composable
-fun HomePageWithTheme() {
+private fun HomePageWithTheme() {
     MyApp {
         HomePage()
     }
@@ -76,7 +101,7 @@ fun HomePageWithTheme() {
 
 @Composable
 @Preview(name = "HomePage Preview - Light Mode")
-fun HomePagePreview() {
+private fun HomePagePreview() {
     HomePageWithTheme()
 }
 
@@ -85,6 +110,6 @@ fun HomePagePreview() {
     name = "HomePage Preview - Dark Mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
-fun HomePageDarkPreview() {
+private fun HomePageDarkPreview() {
     HomePageWithTheme()
 }

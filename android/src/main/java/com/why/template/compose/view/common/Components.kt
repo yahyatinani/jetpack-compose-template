@@ -2,7 +2,6 @@ package com.why.template.compose.view.common
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,41 +12,61 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.github.whyrising.recompose.regSub
 import com.why.template.compose.R
-import com.why.template.compose.theme.MyTheme
+import com.why.template.compose.presentation.MainViewModel
+import com.why.template.compose.view.theme.MyTheme
 
-fun topAppBar(text: String) = @Composable {
+@Composable
+fun TopBar(title: String, elevation: Dp = 1.dp) {
     TopAppBar(
-        elevation = 1.dp,
+        elevation = elevation,
         title = {
             Text(
-                text = text,
-                modifier = Modifier.fillMaxWidth(),
+                text = title,
+                modifier = Modifier.fillMaxWidth()
             )
         }
     )
 }
 
 @Composable
-fun BackgroundImage(modifier: Modifier = Modifier) = Image(
-    modifier = modifier,
-    painter = painterResource(id = R.drawable.product_logo_compose_color_192),
-    contentDescription = "",
-    alpha = 0.05f
-)
+fun BgImage(modifier: Modifier = Modifier) {
+    Image(
+        painter = painterResource(R.drawable.product_logo_compose_color_192),
+        contentDescription = "",
+        modifier = modifier,
+        alignment = Alignment.Center,
+        contentScale = ContentScale.None,
+        alpha = 0.05f
+    )
+}
 
 @Composable
-fun MyApp(topAppBarText: String = "Title", content: @Composable () -> Unit) {
+fun MyApp(
+    topBarTitle: String = "title",
+    content: @Composable () -> Unit
+) {
     MyTheme {
-        Scaffold(topBar = topAppBar(topAppBarText)) { innerPadding ->
+        Scaffold(
+            topBar = {
+                TopBar(title = topBarTitle)
+            }
+        ) { innerPadding ->
             Surface(modifier = Modifier.padding(innerPadding)) {
-                Box(modifier = Modifier.fillMaxSize()) {
-                    BackgroundImage(modifier = Modifier.align(Alignment.Center))
-                    content()
+                BgImage(modifier = Modifier.fillMaxSize())
+                regSub<MainViewModel>(":counter") { db, _ ->
+                    db.counter.toString()
                 }
+                regSub<MainViewModel>(":current-page") { db, _ ->
+                    db.currentPage
+                }
+                content()
             }
         }
     }

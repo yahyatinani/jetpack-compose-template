@@ -1,4 +1,6 @@
 <resources>
     <!-- TODO: Change the app name -->
     <string name="application_name">Compose</string>
+    <string name="top_bar_home_title">Compose Template</string>
+    <string name="top_bar_about_title">About</string>
 </resources>

@@ -10,16 +10,21 @@ dependencies {
     implementation(Libs.Compose.material)
     implementation(Libs.Compose.iconsCore)
     implementation(Libs.Compose.iconsExt)
-    implementation(Libs.Compose.activity)
-    implementation(Libs.Compose.viewModels)
-    implementation(Libs.Compose.appcompat)
 
-    implementation(Libs.ConstraintLayout.compose)
+    implementation(Libs.Androidx.appcompat)
+    implementation(Libs.Androidx.activityCompose)
+    implementation(Libs.Androidx.viewModelCompose)
+    implementation(Libs.Androidx.navigationCompose)
+    implementation(Libs.Androidx.constraintLayoutCompose)
 
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
 
-    implementation(Libs.Kotlinx.coroutines)
+    implementation(Libs.Coroutines.core)
+    implementation(Libs.Coroutines.android)
+    implementation(Libs.Coroutines.vm)
+
+    implementation(Libs.Recompose.recompose)
 
     debugImplementation(Libs.LayoutInspector.uiTooling)
     debugImplementation(Libs.LayoutInspector.reflect)
@@ -28,14 +33,13 @@ dependencies {
     testImplementation(Libs.Kotest.assertions)
     testImplementation(Libs.Kotest.property)
 
-    testImplementation(Libs.Kotlinx.coroutinesTest)
-
-    testImplementation(Libs.Compose.uiTestJUnit)
+    testImplementation(Libs.Coroutines.coroutinesTest)
+    androidTestImplementation(Libs.Compose.uiTestJUnit)
 }
 
 android {
     compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    buildToolsVersion = "31.0.0"
 
     defaultConfig {
         // TODO: Change the applicationId
@@ -71,6 +75,10 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = Libs.Compose.version
+    }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }
 

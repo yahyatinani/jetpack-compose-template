@@ -1,4 +1,4 @@
-package com.why.template.compose.theme
+package com.why.template.compose.view.theme
 
 // TODO: Remove the comment and make your own shapes
 // val TemplateShapes = Shapes(

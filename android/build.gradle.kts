@@ -24,7 +24,7 @@ dependencies {
     implementation(Libs.Coroutines.android)
     implementation(Libs.Coroutines.vm)
 
-    implementation("com.github.whyrising.recompose:recompose:v0.0.1")
+    implementation(Libs.Recompose.recompose)
 
     debugImplementation(Libs.LayoutInspector.uiTooling)
     debugImplementation(Libs.LayoutInspector.reflect)

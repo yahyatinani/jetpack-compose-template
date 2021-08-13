@@ -65,6 +65,11 @@ object Libs {
         const val collections = "$group:y-collections:$version"
     }
 
+    object Recompose {
+        private const val v = "v0.0.1"
+        const val recompose = "com.github.whyrising.recompose:recompose:$v"
+    }
+
     object Coroutines {
         private const val group = "org.jetbrains.kotlinx"
         private const val version = "1.5.1"

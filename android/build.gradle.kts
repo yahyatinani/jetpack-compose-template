@@ -17,8 +17,11 @@ dependencies {
     implementation(Libs.Androidx.navigationCompose)
     implementation(Libs.Androidx.constraintLayoutCompose)
 
+    implementation(Libs.Accompanist.navAnimation)
+
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
+    implementation(Libs.Y.concurrency)
 
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)

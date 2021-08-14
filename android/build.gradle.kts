@@ -19,6 +19,7 @@ dependencies {
 
     implementation(Libs.Y.core)
     implementation(Libs.Y.collections)
+    implementation(Libs.Y.concurrency)
 
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)

@@ -1,10 +1,10 @@
 object Libs {
-    const val kotlinVersion = "1.5.10"
+    const val kotlinVersion = "1.5.21"
     const val jvmTarget = "1.8"
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.0"
+        const val version = "1.0.1"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -28,20 +28,20 @@ object Libs {
     object Androidx {
         // Integration with activities
         const val activityCompose =
-            "androidx.activity:activity-compose:1.3.0-beta02"
+            "androidx.activity:activity-compose:1.3.1"
 
         // Integration with ViewModels
         const val viewModelCompose =
             "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
 
         // Appcompat is needed for themes.xml resource
-        const val appcompat = "androidx.appcompat:appcompat:1.3.0-rc01"
+        const val appcompat = "androidx.appcompat:appcompat:1.3.1"
 
         const val navigationCompose =
-            "androidx.navigation:navigation-compose:2.4.0-alpha03"
+            "androidx.navigation:navigation-compose:2.4.0-alpha06"
 
         const val constraintLayoutCompose =
-            "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha08"
+            "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
     }
 
     object LayoutInspector {
@@ -63,6 +63,7 @@ object Libs {
 
         const val core = "$group:y-core:$version"
         const val collections = "$group:y-collections:$version"
+        const val concurrency = "$group:y-concurrency:$version"
     }
 
     object Recompose {

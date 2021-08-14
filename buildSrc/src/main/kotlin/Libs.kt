@@ -44,6 +44,12 @@ object Libs {
             "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
     }
 
+    object Accompanist {
+       private const val version = "0.16.1"
+        const val navAnimation =
+            "com.google.accompanist:accompanist-navigation-animation:$version"
+    }
+
     object LayoutInspector {
         const val uiTooling = Compose.uiTooling
         const val reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"

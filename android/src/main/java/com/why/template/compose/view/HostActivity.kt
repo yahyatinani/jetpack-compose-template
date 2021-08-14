@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.rememberNavController
 import com.github.whyrising.recompose.Framework
 import com.github.whyrising.recompose.Keys
 import com.github.whyrising.recompose.events.event
@@ -18,6 +21,9 @@ import com.github.whyrising.recompose.regEventFx
 import com.github.whyrising.recompose.regFx
 import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.why.template.compose.presentation.MainViewModel
 import com.why.template.compose.presentation.Route
 import com.why.template.compose.view.about.AboutPage
@@ -34,6 +40,7 @@ class HostActivity : ComponentActivity() {
         fxHandler.halt()
     }
 
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -78,7 +85,7 @@ class HostActivity : ComponentActivity() {
         }
 
         setContent {
-            val navController = rememberNavController()
+            val navController = rememberAnimatedNavController()
 
             LaunchedEffect(navController) {
                 regFx(":navigate!") { value ->
@@ -91,12 +98,27 @@ class HostActivity : ComponentActivity() {
             }
 
             MyApp(topBarTitle = subscribe(event(":uppercase-title"))) {
-                NavHost(
+                AnimatedNavHost(
                     navController = navController,
                     startDestination = Route.HOME.name
                 ) {
-                    composable(Route.HOME.name) {
-                        Log.i("NavHost", "HomePage")
+                    val offSetX = 300
+                    val duration = 300
+                    composable(
+                        route = Route.HOME.name,
+                        exitTransition = { _, _ ->
+                            slideOutHorizontally(
+                                targetOffsetX = { -offSetX },
+                                animationSpec = tween(duration)
+                            ) + fadeOut(animationSpec = tween(duration))
+                        },
+                        popEnterTransition = { _, _ ->
+                            slideInHorizontally(
+                                initialOffsetX = { -offSetX },
+                                animationSpec = tween(duration)
+                            ) + fadeIn(animationSpec = tween(duration))
+                        },
+                    ) {
                         HomePage()
                     }
 
@@ -106,7 +128,19 @@ class HostActivity : ComponentActivity() {
                             navArgument("api-v") {
                                 type = NavType.IntType
                             }
-                        )
+                        ),
+                        enterTransition = { _, _ ->
+                            slideInHorizontally(
+                                initialOffsetX = { offSetX },
+                                animationSpec = tween(duration)
+                            ) + fadeIn(animationSpec = tween(duration))
+                        },
+                        popExitTransition = { _, _ ->
+                            slideOutHorizontally(
+                                targetOffsetX = { offSetX },
+                                animationSpec = tween(durationMillis = duration)
+                            ) + fadeOut(animationSpec = tween(duration))
+                        }
                     ) { entry ->
                         AboutPage(
                             apiVersion = entry.arguments?.getInt("api-v") ?: -1

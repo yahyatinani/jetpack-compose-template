@@ -21,6 +21,7 @@ import com.github.whyrising.recompose.regEventFx
 import com.github.whyrising.recompose.regFx
 import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
+import com.github.whyrising.y.collections.core.m
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -59,7 +60,7 @@ class HostActivity : ComponentActivity() {
 
         regEventFx(":navigate") { _, vec ->
             val route = vec[1]
-            mapOf(
+            m(
                 Keys.fx to arrayListOf(
                     event(":navigate!", route),
                     event(":print!", "I'm currently in About page. yeeeeeah"),

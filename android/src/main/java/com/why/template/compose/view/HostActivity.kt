@@ -21,6 +21,7 @@ import com.github.whyrising.recompose.regEventFx
 import com.github.whyrising.recompose.regFx
 import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
+import com.github.whyrising.y.collections.core.get
 import com.github.whyrising.y.collections.core.m
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -45,7 +46,17 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb(":pageInfoEvent") { db, vec ->
+        regEventDb(":homePage") { db, vec ->
+            val (_, topBarTitle, currentPage) = vec
+
+            (db as MainViewModel).copy(
+                topBarTitle = topBarTitle as String,
+                currentPage = currentPage as Route,
+                navigateButtonFlag = true
+            )
+        }
+
+        regEventDb(":aboutPage") { db, vec ->
             val (_, topBarTitle, currentPage) = vec
 
             (db as MainViewModel).copy(
@@ -58,15 +69,21 @@ class HostActivity : ComponentActivity() {
             (db as MainViewModel).copy(counter = db.counter + 1)
         }
 
-        regEventFx(":navigate") { _, vec ->
+        regEventFx(":navigate") { cofx, vec ->
+            val viewModel = get(cofx, Keys.db) as MainViewModel
             val route = vec[1]
             m(
+                Keys.db to viewModel.copy(navigateButtonFlag = false),
                 Keys.fx to arrayListOf(
                     event(":navigate!", route),
                     event(":print!", "I'm currently in About page. yeeeeeah"),
                     event(Keys.dispatch, event(":inc"))
                 )
             )
+        }
+
+        regSub<MainViewModel>(":nav-button-flag") { db, _ ->
+            db.navigateButtonFlag
         }
 
         regSub<MainViewModel>(":get-title") { db, _ ->

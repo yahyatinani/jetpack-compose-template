@@ -25,7 +25,7 @@ import com.why.template.compose.view.common.MyApp
 fun AboutPage(apiVersion: Int = -1) {
     val title = stringResource(R.string.top_bar_about_title)
     LaunchedEffect(true) {
-        dispatch(event(id = ":pageInfoEvent", title, Route.ABOUT))
+        dispatch(event(id = ":aboutPage", title, Route.ABOUT))
     }
     Column(
         modifier = Modifier.fillMaxSize(),

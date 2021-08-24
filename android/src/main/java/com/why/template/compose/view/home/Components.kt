@@ -2,6 +2,7 @@ package com.why.template.compose.view.home
 
 import android.content.res.Configuration
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -56,7 +57,8 @@ fun Greeting(name: String) {
 fun HomePage() {
     val title = stringResource(R.string.top_bar_home_title)
     LaunchedEffect(true) {
-        dispatch(event(id = ":pageInfoEvent", title, Route.HOME))
+        Log.i("LaunchedEffect", "HomePage")
+        dispatch(event(id = ":homePage", title, Route.HOME, true))
     }
 
     Column(
@@ -79,7 +81,8 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(
-            onClick = { dispatch(event(":navigate", "${Route.ABOUT}/$apiV")) }
+            onClick = { dispatch(event(":navigate", "${Route.ABOUT}/$apiV")) },
+            enabled = subscribe(event(":nav-button-flag"))
         ) {
             Text(text = "Navigate")
         }

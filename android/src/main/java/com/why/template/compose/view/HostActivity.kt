@@ -51,6 +51,24 @@ private fun register() {
     }
 }
 
+@ExperimentalAnimationApi
+private fun exitTransition(
+    targetOffsetX: Int,
+    duration: Int = 300
+) = slideOutHorizontally(
+    targetOffsetX = { targetOffsetX },
+    animationSpec = tween(duration)
+) + fadeOut(animationSpec = tween(duration))
+
+@ExperimentalAnimationApi
+private fun enterTransition(
+    initialOffsetX: Int,
+    duration: Int = 300
+) = slideInHorizontally(
+    initialOffsetX = { initialOffsetX },
+    animationSpec = tween(duration)
+) + fadeIn(animationSpec = tween(duration))
+
 class HostActivity : ComponentActivity() {
     private val recompose = Framework()
 
@@ -82,20 +100,13 @@ class HostActivity : ComponentActivity() {
                     startDestination = Route.HOME.name
                 ) {
                     val offSetX = 300
-                    val duration = 300
                     composable(
                         route = Route.HOME.name,
                         exitTransition = { _, _ ->
-                            slideOutHorizontally(
-                                targetOffsetX = { -offSetX },
-                                animationSpec = tween(duration)
-                            ) + fadeOut(animationSpec = tween(duration))
+                            exitTransition(targetOffsetX = -offSetX)
                         },
                         popEnterTransition = { _, _ ->
-                            slideInHorizontally(
-                                initialOffsetX = { -offSetX },
-                                animationSpec = tween(duration)
-                            ) + fadeIn(animationSpec = tween(duration))
+                            enterTransition(initialOffsetX = -offSetX)
                         },
                     ) {
                         HomePage()
@@ -107,16 +118,10 @@ class HostActivity : ComponentActivity() {
                             navArgument("api-v") { type = NavType.IntType }
                         ),
                         enterTransition = { _, _ ->
-                            slideInHorizontally(
-                                initialOffsetX = { offSetX },
-                                animationSpec = tween(duration)
-                            ) + fadeIn(animationSpec = tween(duration))
+                            enterTransition(initialOffsetX = offSetX)
                         },
                         popExitTransition = { _, _ ->
-                            slideOutHorizontally(
-                                targetOffsetX = { offSetX },
-                                animationSpec = tween(durationMillis = duration)
-                            ) + fadeOut(animationSpec = tween(duration))
+                            exitTransition(targetOffsetX = offSetX)
                         }
                     ) { entry ->
                         AboutPage(entry.arguments?.getInt("api-v") ?: -1)

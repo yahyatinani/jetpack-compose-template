@@ -11,8 +11,6 @@ class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        init()
-
         startActivity(Intent(this, HostActivity::class.java))
         finish()
     }

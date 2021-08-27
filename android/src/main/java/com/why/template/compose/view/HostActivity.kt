@@ -21,41 +21,51 @@ import com.github.whyrising.recompose.subscribe
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.why.template.compose.data.Spec
 import com.why.template.compose.data.Route
+import com.why.template.compose.data.Spec
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
 
+private fun register() {
+    // subscriptions
+    regSub<Spec>(":get-title") { db, _ ->
+        Log.i(":get-title", "from $db")
+        db.topBarTitle
+    }
+
+    regSub(
+        queryId = ":uppercase-title",
+        inputFn = {
+            subscribe(event(":get-title"))
+        }
+    ) { title, _ ->
+        val uppercase = (title as String).uppercase()
+        Log.i(":uppercase-title", uppercase)
+        uppercase
+    }
+
+    // effects
+    regFx(":print!") { value ->
+        Log.e(":print!", value.toString())
+    }
+}
+
 class HostActivity : ComponentActivity() {
-    private val fxHandler = Framework()
+    private val recompose = Framework()
 
     override fun onDestroy() {
         super.onDestroy()
 
         Log.i("onDispose", "Framework")
-        fxHandler.halt()
+        recompose.halt()
     }
 
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regSub<Spec>(":get-title") { db, _ ->
-            Log.i(":get-title", "from $db")
-            db.topBarTitle
-        }
-
-        regSub(
-            queryId = ":uppercase-title",
-            inputFn = {
-                subscribe(event(":get-title"))
-            }
-        ) { title, _ ->
-            val uppercase = (title as String).uppercase()
-            Log.i(":uppercase-title", uppercase)
-            uppercase
-        }
+        register()
 
         setContent {
             val navController = rememberAnimatedNavController()
@@ -63,10 +73,6 @@ class HostActivity : ComponentActivity() {
             LaunchedEffect(navController) {
                 regFx(":navigate!") { value ->
                     navController.navigate(value as String)
-                }
-
-                regFx(":print!") { value ->
-                    Log.e(":print!", value.toString())
                 }
             }
 
@@ -98,9 +104,7 @@ class HostActivity : ComponentActivity() {
                     composable(
                         route = "${Route.ABOUT.name}/{api-v}",
                         arguments = listOf(
-                            navArgument("api-v") {
-                                type = NavType.IntType
-                            }
+                            navArgument("api-v") { type = NavType.IntType }
                         ),
                         enterTransition = { _, _ ->
                             slideInHorizontally(
@@ -115,9 +119,7 @@ class HostActivity : ComponentActivity() {
                             ) + fadeOut(animationSpec = tween(duration))
                         }
                     ) { entry ->
-                        AboutPage(
-                            apiVersion = entry.arguments?.getInt("api-v") ?: -1
-                        )
+                        AboutPage(entry.arguments?.getInt("api-v") ?: -1)
                     }
                 }
             }

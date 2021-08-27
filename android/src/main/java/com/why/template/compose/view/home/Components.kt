@@ -37,6 +37,7 @@ import com.why.template.compose.R
 import com.why.template.compose.data.Route
 import com.why.template.compose.data.Spec
 import com.why.template.compose.view.common.MyApp
+import com.why.template.compose.view.common.init
 
 @Composable
 fun helloText(name: String): AnnotatedString = buildAnnotatedString {
@@ -140,6 +141,8 @@ fun HomePage() {
 
 @Composable
 private fun HomePageWithTheme() {
+    init()
+
     MyApp {
         HomePage()
     }

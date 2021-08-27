@@ -17,10 +17,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.github.whyrising.recompose.dispatchSync
+import com.github.whyrising.recompose.events.event
+import com.github.whyrising.recompose.regEventDb
 import com.github.whyrising.recompose.regSub
 import com.why.template.compose.R
 import com.why.template.compose.data.Spec
 import com.why.template.compose.view.theme.MyTheme
+
+fun init() {
+    regEventDb(":initialize") { _, _ ->
+        Spec()
+    }
+
+    dispatchSync(event(":initialize"))
+}
 
 @Composable
 fun TopBar(title: String, elevation: Dp = 1.dp) {

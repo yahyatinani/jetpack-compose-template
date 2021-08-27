@@ -41,7 +41,7 @@ dependencies {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     buildToolsVersion = "31.0.0"
 
     defaultConfig {

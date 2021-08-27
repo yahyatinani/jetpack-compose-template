@@ -7,14 +7,14 @@ import androidx.activity.ComponentActivity
 import com.github.whyrising.recompose.dispatchSync
 import com.github.whyrising.recompose.events.event
 import com.github.whyrising.recompose.regEventDb
-import com.why.template.compose.presentation.MainViewModel
+import com.why.template.compose.data.Spec
 
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         regEventDb(":initialize") { _, _ ->
-            MainViewModel()
+            Spec()
         }
 
         dispatchSync(event(":initialize"))

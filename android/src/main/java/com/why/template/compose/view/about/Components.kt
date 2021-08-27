@@ -17,16 +17,32 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.whyrising.recompose.dispatch
 import com.github.whyrising.recompose.events.event
+import com.github.whyrising.recompose.regEventDb
 import com.why.template.compose.R
-import com.why.template.compose.presentation.Route
+import com.why.template.compose.data.Route
+import com.why.template.compose.data.Spec
 import com.why.template.compose.view.common.MyApp
+
+fun regAboutPageEvents() {
+    regEventDb(":aboutPage") { db, vec ->
+        val (_, topBarTitle, currentPage) = vec
+
+        (db as Spec).copy(
+            topBarTitle = topBarTitle as String,
+            currentPage = currentPage as Route
+        )
+    }
+}
 
 @Composable
 fun AboutPage(apiVersion: Int = -1) {
+    regAboutPageEvents()
+
     val title = stringResource(R.string.top_bar_about_title)
     LaunchedEffect(true) {
         dispatch(event(id = ":aboutPage", title, Route.ABOUT))
     }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,

@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.github.whyrising.recompose.regSub
 import com.why.template.compose.R
-import com.why.template.compose.presentation.MainViewModel
+import com.why.template.compose.data.Spec
 import com.why.template.compose.view.theme.MyTheme
 
 @Composable
@@ -60,10 +60,10 @@ fun MyApp(
         ) { innerPadding ->
             Surface(modifier = Modifier.padding(innerPadding)) {
                 BgImage(modifier = Modifier.fillMaxSize())
-                regSub<MainViewModel>(":counter") { db, _ ->
+                regSub<Spec>(":counter") { db, _ ->
                     db.counter.toString()
                 }
-                regSub<MainViewModel>(":current-page") { db, _ ->
+                regSub<Spec>(":current-page") { db, _ ->
                     db.currentPage
                 }
                 content()

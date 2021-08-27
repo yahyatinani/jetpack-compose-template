@@ -1,6 +1,6 @@
-package com.why.template.compose.presentation
+package com.why.template.compose.data
 
-data class MainViewModel(
+data class Spec(
     val topBarTitle: String = "",
     val counter: Int = 0,
     val currentPage: Route = Route.NONE,

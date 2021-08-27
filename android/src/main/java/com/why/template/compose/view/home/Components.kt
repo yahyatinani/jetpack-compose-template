@@ -24,11 +24,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.github.whyrising.recompose.Keys
 import com.github.whyrising.recompose.dispatch
 import com.github.whyrising.recompose.events.event
+import com.github.whyrising.recompose.regEventDb
+import com.github.whyrising.recompose.regEventFx
+import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
+import com.github.whyrising.y.collections.core.get
+import com.github.whyrising.y.collections.core.m
 import com.why.template.compose.R
-import com.why.template.compose.presentation.Route
+import com.why.template.compose.data.Route
+import com.why.template.compose.data.Spec
 import com.why.template.compose.view.common.MyApp
 
 @Composable
@@ -53,9 +60,45 @@ fun Greeting(name: String) {
     )
 }
 
+fun regHomePageEvents() {
+    regEventDb(":homePage") { db, vec ->
+        val (_, topBarTitle, currentPage) = vec
+
+        (db as Spec).copy(
+            topBarTitle = topBarTitle as String,
+            currentPage = currentPage as Route,
+            navigateButtonFlag = true
+        )
+    }
+
+    regEventDb(":inc") { db, _ ->
+        (db as Spec).copy(counter = db.counter + 1)
+    }
+
+    regEventFx(":navigate") { cofx, vec ->
+        val viewModel = get(cofx, Keys.db) as Spec
+        val route = vec[1]
+        m(
+            Keys.db to viewModel.copy(navigateButtonFlag = false),
+            Keys.fx to arrayListOf(
+                event(":navigate!", route),
+                event(":print!", "I'm currently in About page. yeeeeeah"),
+                event(Keys.dispatch, event(":inc"))
+            )
+        )
+    }
+
+    regSub<Spec>(":nav-button-flag") { db, _ ->
+        db.navigateButtonFlag
+    }
+}
+
 @Composable
 fun HomePage() {
     val title = stringResource(R.string.top_bar_home_title)
+
+    regHomePageEvents()
+
     LaunchedEffect(true) {
         Log.i("LaunchedEffect", "HomePage")
         dispatch(event(id = ":homePage", title, Route.HOME, true))

@@ -1,4 +1,4 @@
-package com.why.template.compose.presentation
+package com.why.template.compose.data
 
 enum class Route {
     HOME,

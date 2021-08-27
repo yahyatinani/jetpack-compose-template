@@ -14,20 +14,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.compose.navArgument
 import com.github.whyrising.recompose.Framework
-import com.github.whyrising.recompose.Keys
 import com.github.whyrising.recompose.events.event
-import com.github.whyrising.recompose.regEventDb
-import com.github.whyrising.recompose.regEventFx
 import com.github.whyrising.recompose.regFx
 import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
-import com.github.whyrising.y.collections.core.get
-import com.github.whyrising.y.collections.core.m
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.why.template.compose.presentation.MainViewModel
-import com.why.template.compose.presentation.Route
+import com.why.template.compose.data.Spec
+import com.why.template.compose.data.Route
 import com.why.template.compose.view.about.AboutPage
 import com.why.template.compose.view.common.MyApp
 import com.why.template.compose.view.home.HomePage
@@ -46,47 +41,7 @@ class HostActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        regEventDb(":homePage") { db, vec ->
-            val (_, topBarTitle, currentPage) = vec
-
-            (db as MainViewModel).copy(
-                topBarTitle = topBarTitle as String,
-                currentPage = currentPage as Route,
-                navigateButtonFlag = true
-            )
-        }
-
-        regEventDb(":aboutPage") { db, vec ->
-            val (_, topBarTitle, currentPage) = vec
-
-            (db as MainViewModel).copy(
-                topBarTitle = topBarTitle as String,
-                currentPage = currentPage as Route
-            )
-        }
-
-        regEventDb(":inc") { db, _ ->
-            (db as MainViewModel).copy(counter = db.counter + 1)
-        }
-
-        regEventFx(":navigate") { cofx, vec ->
-            val viewModel = get(cofx, Keys.db) as MainViewModel
-            val route = vec[1]
-            m(
-                Keys.db to viewModel.copy(navigateButtonFlag = false),
-                Keys.fx to arrayListOf(
-                    event(":navigate!", route),
-                    event(":print!", "I'm currently in About page. yeeeeeah"),
-                    event(Keys.dispatch, event(":inc"))
-                )
-            )
-        }
-
-        regSub<MainViewModel>(":nav-button-flag") { db, _ ->
-            db.navigateButtonFlag
-        }
-
-        regSub<MainViewModel>(":get-title") { db, _ ->
+        regSub<Spec>(":get-title") { db, _ ->
             Log.i(":get-title", "from $db")
             db.topBarTitle
         }

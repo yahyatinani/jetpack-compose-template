@@ -24,13 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.whyrising.composetemplate.app.Page
-import com.github.whyrising.composetemplate.app.Page.ABOUT
+import com.github.whyrising.composetemplate.app.Screens.ABOUT
 import com.github.whyrising.composetemplate.app.common.composables.MyApp
-import com.github.whyrising.composetemplate.app.home.events.regHomePageEvents
-import com.github.whyrising.composetemplate.app.home.fx.regHomePageFx
+import com.github.whyrising.composetemplate.app.home.events.regHomeScreenEvents
 import com.github.whyrising.composetemplate.app.home.subs.regHomePageSubs
-import com.github.whyrising.composetemplate.app.init
 import com.github.whyrising.recompose.dispatch
 import com.github.whyrising.recompose.subscribe
 import com.github.whyrising.recompose.w
@@ -61,23 +58,23 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomePage() {
-    regHomePageEvents()
-    regHomePageFx()
+    regHomeScreenEvents()
     regHomePageSubs()
 
     val title = stringResource(R.string.top_bar_home_title)
     LaunchedEffect(true) {
-        Log.i("LaunchedEffect", "HomePage")
-        dispatch(v(":homePage", title, Page.HOME, true))
+        Log.i("LaunchedEffect", "Home Screen")
+        dispatch(v(":homePage", title, true))
     }
 
+    val androidVersion = Build.VERSION.SDK_INT
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val apiV = Build.VERSION.SDK_INT
-        Greeting(name = "Android $apiV")
+        Greeting(name = "Android $androidVersion")
+
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(text = subscribe<String>(v(":counter")).w())
@@ -91,9 +88,7 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(
-            onClick = {
-                dispatch(v(":navigate", "$ABOUT/$apiV"))
-            },
+            onClick = { dispatch(v(":navigate", ABOUT, androidVersion)) },
             enabled = subscribe<Boolean>(v(":is-nav-button-enabled")).w()
         ) {
             Text(text = "Navigate")
@@ -110,8 +105,6 @@ fun HomePage() {
 @Composable
 @Preview(name = "HomePage Preview - Light Mode")
 private fun HomePagePreview() {
-    init()
-
     MyApp {
         HomePage()
     }
@@ -123,8 +116,6 @@ private fun HomePagePreview() {
     uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 private fun HomePageDarkPreview() {
-    init()
-
     MyApp {
         HomePage()
     }

@@ -1,7 +1,6 @@
 package com.github.whyrising.composetemplate.app
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -13,78 +12,51 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.github.whyrising.composetemplate.app.Screens.ABOUT
+import com.github.whyrising.composetemplate.app.Screens.HOME
 import com.github.whyrising.composetemplate.app.about.composables.AboutPage
 import com.github.whyrising.composetemplate.app.common.composables.MyApp
 import com.github.whyrising.composetemplate.app.home.composables.HomePage
-import com.github.whyrising.composetemplate.app.home.db.AppDbSchema
+import com.github.whyrising.composetemplate.app.home.db.DbSchema
+import com.github.whyrising.composetemplate.app.home.events.initDbHandler
 import com.github.whyrising.recompose.dispatchSync
 import com.github.whyrising.recompose.regEventDb
 import com.github.whyrising.recompose.regFx
 import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
 import com.github.whyrising.recompose.w
+import com.github.whyrising.y.collections.core.get
 import com.github.whyrising.y.collections.core.l
+import com.github.whyrising.y.collections.core.m
 import com.github.whyrising.y.collections.core.v
+import com.github.whyrising.y.collections.map.IPersistentMap
+import com.github.whyrising.y.collections.vector.IPersistentVector
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 
-enum class Page {
+enum class Screens {
     HOME,
-    ABOUT;
-
-    override fun toString(): String = name
-
-    companion object {
-        fun toRoute(route: String?): Page =
-            when (route?.substringBefore("/")) {
-                HOME.name -> HOME
-                ABOUT.name -> ABOUT
-                null -> HOME
-                else -> throw IllegalArgumentException(
-                    "Route $route is not recognized."
-                )
-            }
-    }
+    ABOUT
 }
 
-fun init() {
-    regEventDb<Any>(":initialize") { _, _ ->
-        AppDbSchema()
-    }
+val routes: IPersistentMap<Screens, String> = m(
+    HOME to "home",
+    ABOUT to "about/{api-version}"
+)
 
-    dispatchSync(v(":initialize"))
-}
+fun route(screen: Screens): String = routes[screen]!!
 
 fun register() {
-    regSub<AppDbSchema, Page>(":current-page") { db, _ ->
-        db.activePage
-    }
-
-    regSub<AppDbSchema, String>(":page-title") { db, _ ->
+    regSub<DbSchema, String>(":screen-title") { db, _ ->
         db.topBarTitle
-    }
-
-    regSub<AppDbSchema, String>(":active-page") { db, _ ->
-        db.activePage.name
-    }
-
-    regSub<AppDbSchema, String>(":home-route") { db, _ ->
-        db.homeRoute
-    }
-
-    regSub<AppDbSchema, String>(":about-route") { db, _ ->
-        db.aboutRoute
     }
 
     regSub(
         queryId = ":uppercase-title",
-        signalsFn = { subscribe<String>(v(":page-title")) }) { title, _ ->
+        signalsFn = { subscribe<String>(v(":screen-title")) }
+    ) { title, _ ->
         title.uppercase()
-    }
-
-    regFx(":print!") { value ->
-        Log.e(":print!", value.toString())
     }
 }
 
@@ -108,10 +80,13 @@ fun enterTransition(
 
 @ExperimentalAnimationApi
 class HostActivity : ComponentActivity() {
+    init {
+        regEventDb(":initialize", handler = ::initDbHandler)
+        dispatchSync(v(":initialize"))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        init()
         register()
 
         setContent {
@@ -119,17 +94,28 @@ class HostActivity : ComponentActivity() {
 
             LaunchedEffect(navController) {
                 regFx(":navigate!") { route ->
-                    navController.navigate("$route")
+                    if (route == null)
+                        return@regFx
+
+                    val (screen) = route as IPersistentVector<*>
+                    when (screen) {
+                        HOME -> TODO()
+                        ABOUT -> {
+                            val arg = route[1]
+                            navController.navigate("$screen/$arg")
+                        }
+                    }
                 }
             }
+
             MyApp(topBarTitle = subscribe<String>(v(":uppercase-title")).w()) {
                 AnimatedNavHost(
                     navController = navController,
-                    startDestination = subscribe<String>(v(":home-route")).w()
+                    startDestination = route(HOME)
                 ) {
                     val offSetX = 300
                     composable(
-                        route = subscribe<String>(v(":home-route")).deref(),
+                        route = route(HOME),
                         exitTransition = { _, _ ->
                             exitTransition(targetOffsetX = -offSetX)
                         },
@@ -141,7 +127,7 @@ class HostActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = subscribe<String>(v(":about-route")).deref(),
+                        route = route(ABOUT),
                         arguments = l(
                             navArgument("api-version") {
                                 type = NavType.IntType

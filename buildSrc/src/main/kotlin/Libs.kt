@@ -1,10 +1,10 @@
 object Libs {
-    const val kotlinVersion = "1.5.21"
+    const val kotlinVersion = "1.5.31"
     const val jvmTarget = "1.8"
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.1"
+        const val version = "1.0.4"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -28,24 +28,24 @@ object Libs {
     object Androidx {
         // Integration with activities
         const val activityCompose =
-            "androidx.activity:activity-compose:1.3.1"
+            "androidx.activity:activity-compose:1.4.0-rc01"
 
         // Integration with ViewModels
         const val viewModelCompose =
-            "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+            "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01"
 
         // Appcompat is needed for themes.xml resource
-        const val appcompat = "androidx.appcompat:appcompat:1.3.1"
+        const val appcompat = "androidx.appcompat:appcompat:1.4.0-beta01"
 
         const val navigationCompose =
-            "androidx.navigation:navigation-compose:2.4.0-alpha07"
+            "androidx.navigation:navigation-compose:2.4.0-alpha10"
 
         const val constraintLayoutCompose =
-            "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+            "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01"
     }
 
     object Accompanist {
-       private const val version = "0.17.0"
+        private const val version = "0.20.0"
         const val navAnimation =
             "com.google.accompanist:accompanist-navigation-animation:$version"
     }
@@ -56,7 +56,7 @@ object Libs {
     }
 
     object Kotest {
-        private const val version = "4.6.1"
+        private const val version = "5.0.0.M3"
 
         const val runner = "io.kotest:kotest-runner-junit5:$version"
         const val assertions = "io.kotest:kotest-assertions-core:$version"
@@ -65,7 +65,7 @@ object Libs {
 
     object Y {
         private const val group = "com.github.whyrising.y"
-        private const val version = "0.0.5"
+        private const val version = "0.0.7"
 
         const val core = "$group:y-core:$version"
         const val collections = "$group:y-collections:$version"
@@ -73,13 +73,13 @@ object Libs {
     }
 
     object Recompose {
-        private const val v = "0.0.3"
+        private const val v = "0.0.5"
         const val recompose = "com.github.whyrising.recompose:recompose:$v"
     }
 
     object Coroutines {
         private const val group = "org.jetbrains.kotlinx"
-        private const val version = "1.5.1"
+        private const val version = "1.5.2"
 
         const val core = "$group:kotlinx-coroutines-core:$version"
         const val android = "$group:kotlinx-coroutines-android:$version"

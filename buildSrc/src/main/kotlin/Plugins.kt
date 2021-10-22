@@ -1,6 +1,6 @@
 object Plugins {
     object Ktlint {
-        const val version = "10.1.0"
+        const val version = "10.2.0"
         const val id = "org.jlleitschuh.gradle.ktlint"
     }
 
@@ -10,7 +10,7 @@ object Plugins {
     }
 
     object Android {
-        private const val version = "7.0.1"
+        private const val version = "7.0.3"
 
         const val gradle = "com.android.tools.build:gradle:$version"
     }

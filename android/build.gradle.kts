@@ -83,6 +83,10 @@ android {
     testOptions {
         unitTests.isReturnDefaultValues = true
     }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 tasks.withType<Test> {

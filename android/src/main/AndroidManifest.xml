@@ -3,7 +3,6 @@
     package="com.why.template.compose">
 
     <application
-        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_name"
@@ -11,15 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Template.Main">
         <activity
-            android:name=".view.SplashActivity"
+            android:name="com.github.whyrising.composetemplate.app.SplashActivity"
             android:theme="@style/Theme.Template.Fullscreen.Splash" />
 
-        <activity android:name=".view.HostActivity" />
+        <activity android:name="com.github.whyrising.composetemplate.app.HostActivity" />
 
         <activity-alias
             android:name="LauncherActivity"
             android:exported="true"
-            android:targetActivity=".view.SplashActivity">
+            android:targetActivity="com.github.whyrising.composetemplate.app.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -29,6 +28,6 @@
         <activity-alias
             android:name="HomeActivity"
             android:exported="true"
-            android:targetActivity=".view.HostActivity" />
+            android:targetActivity="com.github.whyrising.composetemplate.app.HostActivity" />
     </application>
 </manifest>

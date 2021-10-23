@@ -57,7 +57,7 @@ fun Greeting(name: String) {
 }
 
 @Composable
-fun HomePage() {
+fun HomeScreen() {
     regHomeScreenEvents()
     regHomePageSubs()
 
@@ -82,7 +82,7 @@ fun HomePage() {
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = { dispatch(v(":inc")) }) {
-            Text(text = "Increase")
+            Text(text = "Count")
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -91,7 +91,7 @@ fun HomePage() {
             onClick = { dispatch(v(":navigate", ABOUT, androidVersion)) },
             enabled = subscribe<Boolean>(v(":is-nav-button-enabled")).w()
         ) {
-            Text(text = "Navigate")
+            Text(text = "About")
         }
     }
 }
@@ -106,7 +106,7 @@ fun HomePage() {
 @Preview(name = "HomePage Preview - Light Mode")
 private fun HomePagePreview() {
     MyApp {
-        HomePage()
+        HomeScreen()
     }
 }
 
@@ -117,6 +117,6 @@ private fun HomePagePreview() {
 )
 private fun HomePageDarkPreview() {
     MyApp {
-        HomePage()
+        HomeScreen()
     }
 }

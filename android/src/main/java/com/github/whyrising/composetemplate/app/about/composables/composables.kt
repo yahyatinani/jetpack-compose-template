@@ -32,7 +32,7 @@ fun regAboutPageEvents() {
 }
 
 @Composable
-fun AboutPage(apiVersion: Int = -1) {
+fun AboutScreen(apiVersion: Int = -1) {
     regAboutPageEvents()
 
     val title = stringResource(R.string.top_bar_about_title)
@@ -65,7 +65,7 @@ fun AboutPage(apiVersion: Int = -1) {
 @Preview(name = "AboutPage Preview - Light Mode")
 private fun AboutPagePreview() {
     MyApp {
-        AboutPage()
+        AboutScreen()
     }
 }
 
@@ -76,6 +76,6 @@ private fun AboutPagePreview() {
 )
 private fun AboutPageDarkPreview() {
     MyApp {
-        AboutPage()
+        AboutScreen()
     }
 }

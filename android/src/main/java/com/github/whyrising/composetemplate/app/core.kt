@@ -14,9 +14,9 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.github.whyrising.composetemplate.app.Screens.ABOUT
 import com.github.whyrising.composetemplate.app.Screens.HOME
-import com.github.whyrising.composetemplate.app.about.composables.AboutPage
+import com.github.whyrising.composetemplate.app.about.composables.AboutScreen
 import com.github.whyrising.composetemplate.app.common.composables.MyApp
-import com.github.whyrising.composetemplate.app.home.composables.HomePage
+import com.github.whyrising.composetemplate.app.home.composables.HomeScreen
 import com.github.whyrising.composetemplate.app.home.db.DbSchema
 import com.github.whyrising.composetemplate.app.home.events.initDbHandler
 import com.github.whyrising.recompose.dispatchSync
@@ -123,7 +123,7 @@ class HostActivity : ComponentActivity() {
                             enterTransition(initialOffsetX = -offSetX)
                         },
                     ) {
-                        HomePage()
+                        HomeScreen()
                     }
 
                     composable(
@@ -140,7 +140,9 @@ class HostActivity : ComponentActivity() {
                             exitTransition(targetOffsetX = offSetX)
                         }
                     ) { entry ->
-                        AboutPage(entry.arguments?.getInt("api-version") ?: -1)
+                        AboutScreen(
+                            entry.arguments?.getInt("api-version") ?: -1
+                        )
                     }
                 }
             }

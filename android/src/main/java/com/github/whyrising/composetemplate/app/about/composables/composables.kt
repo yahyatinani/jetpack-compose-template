@@ -23,17 +23,17 @@ import com.github.whyrising.recompose.regEventDb
 import com.github.whyrising.y.collections.core.v
 import com.why.template.compose.R
 
-fun regAboutPageEvents() {
+fun regAbouScreenEvents() {
     regEventDb<DbSchema>(":aboutPage") { db, event ->
         val (_, topBarTitle) = event
 
-        db.copy(topBarTitle = "$topBarTitle")
+        db.copy(screenTitle = "$topBarTitle")
     }
 }
 
 @Composable
 fun AboutScreen(apiVersion: Int = -1) {
-    regAboutPageEvents()
+    regAbouScreenEvents()
 
     val title = stringResource(R.string.top_bar_about_title)
     LaunchedEffect(true) {

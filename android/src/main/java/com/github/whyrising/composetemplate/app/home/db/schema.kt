@@ -8,13 +8,13 @@ data class HomeData(
 )
 
 data class DbSchema(
-    val topBarTitle: String,
+    val screenTitle: String,
     val activeScreen: String,
     val home: HomeData
 )
 
 val defaultDb = DbSchema(
-    topBarTitle = "",
+    screenTitle = "",
     activeScreen = "$HOME",
     home = HomeData(
         counter = 0,

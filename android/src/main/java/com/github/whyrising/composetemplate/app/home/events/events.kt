@@ -18,7 +18,7 @@ fun regHomeScreenEvents() {
     regEventDb<DbSchema>(":homePage") { db, event ->
         val (_, topBarTitle) = event
         db.copy(
-            topBarTitle = "$topBarTitle",
+            screenTitle = "$topBarTitle",
             home = db.home.copy(isNavButtonEnabled = true)
         )
     }

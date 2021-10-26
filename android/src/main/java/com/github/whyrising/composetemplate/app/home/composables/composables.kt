@@ -58,9 +58,6 @@ fun Greeting(name: String) {
 
 @Composable
 fun HomeScreen() {
-    regHomeScreenEvents()
-    regHomePageSubs()
-
     val title = stringResource(R.string.top_bar_home_title)
     LaunchedEffect(true) {
         Log.i("LaunchedEffect", "Home Screen")

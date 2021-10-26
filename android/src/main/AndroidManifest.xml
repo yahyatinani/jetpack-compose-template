@@ -3,6 +3,7 @@
     package="com.why.template.compose">
 
     <application
+        android:name="com.github.whyrising.composetemplate.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/application_name"

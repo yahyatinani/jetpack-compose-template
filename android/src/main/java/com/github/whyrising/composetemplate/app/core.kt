@@ -16,13 +16,11 @@ import com.github.whyrising.composetemplate.app.Screens.ABOUT
 import com.github.whyrising.composetemplate.app.Screens.HOME
 import com.github.whyrising.composetemplate.app.about.composables.AboutScreen
 import com.github.whyrising.composetemplate.app.common.composables.MyApp
+import com.github.whyrising.composetemplate.app.common.subs.registerCommonSubs
 import com.github.whyrising.composetemplate.app.home.composables.HomeScreen
-import com.github.whyrising.composetemplate.app.home.db.DbSchema
-import com.github.whyrising.composetemplate.app.home.events.initDbHandler
-import com.github.whyrising.recompose.dispatchSync
-import com.github.whyrising.recompose.regEventDb
+import com.github.whyrising.composetemplate.app.home.events.regHomeScreenEvents
+import com.github.whyrising.composetemplate.app.home.subs.regHomePageSubs
 import com.github.whyrising.recompose.regFx
-import com.github.whyrising.recompose.regSub
 import com.github.whyrising.recompose.subscribe
 import com.github.whyrising.recompose.w
 import com.github.whyrising.y.collections.core.get
@@ -47,19 +45,6 @@ val routes: IPersistentMap<Screens, String> = m(
 
 fun route(screen: Screens): String = routes[screen]!!
 
-fun register() {
-    regSub<DbSchema, String>(":screen-title") { db, _ ->
-        db.topBarTitle
-    }
-
-    regSub(
-        queryId = ":uppercase-title",
-        signalsFn = { subscribe<String>(v(":screen-title")) }
-    ) { title, _ ->
-        title.uppercase()
-    }
-}
-
 @ExperimentalAnimationApi
 fun exitTransition(
     targetOffsetX: Int,
@@ -80,15 +65,12 @@ fun enterTransition(
 
 @ExperimentalAnimationApi
 class HostActivity : ComponentActivity() {
-    init {
-        regEventDb(":initialize", handler = ::initDbHandler)
-        dispatchSync(v(":initialize"))
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        register()
 
+        registerCommonSubs()
+        regHomeScreenEvents()
+        regHomePageSubs()
         setContent {
             val navController = rememberAnimatedNavController()
 

@@ -8,7 +8,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 
 @ExperimentalAnimationApi
 class SplashActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

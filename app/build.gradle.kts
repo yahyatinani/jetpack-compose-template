@@ -9,11 +9,17 @@ android {
 
     defaultConfig {
         // TODO: Change the applicationId
-        applicationId = "com.why.template.compose"
+        applicationId = "com.github.whyrising.app"
         minSdk = 22
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = Ci.publishVersion
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -53,6 +59,11 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-ktx:1.6.0")
+    implementation(Libs.Androidx.appcompat)
+    implementation("com.google.android.material:material:1.4.0")
+
+
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.uiTooling)
     implementation(Libs.Compose.foundation)
@@ -60,34 +71,16 @@ dependencies {
     implementation(Libs.Compose.iconsCore)
     implementation(Libs.Compose.iconsExt)
 
-    implementation(Libs.Androidx.appcompat)
+    implementation(Libs.Lifecycle.lifecycles)
+
     implementation(Libs.Activity.compose)
-    implementation(Libs.Lifecycle.viewModelCompose)
-    implementation(Libs.Navigation.compose)
-    implementation(Libs.Androidx.constraintLayoutCompose)
-
-    implementation(Libs.Accompanist.navAnimation)
-
-    implementation(Libs.Y.core)
-    implementation(Libs.Y.collections)
-    implementation(Libs.Y.concurrency)
-
-    implementation(Libs.Coroutines.core)
-    implementation(Libs.Coroutines.android)
 
     implementation(Libs.Recompose.recompose)
 
-    debugImplementation(Libs.LayoutInspector.uiTooling)
-    debugImplementation(Libs.LayoutInspector.reflect)
+    testImplementation("junit:junit:4.13.2")
 
-    testImplementation(Libs.Kotest.runner)
-    testImplementation(Libs.Kotest.assertions)
-    testImplementation(Libs.Kotest.property)
-
-    testImplementation(Libs.Coroutines.coroutinesTest)
-    androidTestImplementation(Libs.Compose.uiTestJUnit)
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
+    debugImplementation("androidx.compose.ui:ui-tooling:${Libs.Compose.version}")
 }

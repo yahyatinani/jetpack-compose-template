@@ -25,21 +25,39 @@ object Libs {
         const val uiTestJUnit = "$gr.ui:ui-test-junit4:$version"
     }
 
-    object Androidx {
+    object Lifecycle {
+        private const val version = "2.4.0"
+        private const val gr = "androidx.lifecycle"
+
+        // ViewModel
+        const val vm = "$gr:lifecycle-viewmodel-ktx:$version"
+
+        // ViewModel utilities for Compose
+        const val viewModelCompose = "$gr:lifecycle-viewmodel-compose:$version"
+
+        // Lifecycles only (without ViewModel or LiveData)
+        const val lifecycles = "$gr:lifecycle-runtime-ktx:$version"
+
+        // Saved state module for ViewModel
+        const val savedState = "$gr:lifecycle-viewmodel-savedstate:$version"
+    }
+
+    object Activity {
+        private const val version = "1.4.0"
+
         // Integration with activities
-        const val activityCompose =
-            "androidx.activity:activity-compose:1.4.0-rc01"
+        const val compose = "androidx.activity:activity-compose:$version"
+    }
 
-        // Integration with ViewModels
-        const val viewModelCompose =
-            "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0-rc01"
+    object Navigation {
+        private const val version = "2.4.0-alpha10"
 
+        const val compose = "androidx.navigation:navigation-compose:$version"
+    }
+
+    object Androidx {
         // Appcompat is needed for themes.xml resource
         const val appcompat = "androidx.appcompat:appcompat:1.4.0-beta01"
-
-        const val navigationCompose =
-            "androidx.navigation:navigation-compose:2.4.0-alpha10"
-
         const val constraintLayoutCompose =
             "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01"
     }
@@ -84,7 +102,5 @@ object Libs {
         const val core = "$group:kotlinx-coroutines-core:$version"
         const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
-
-        const val vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     }
 }

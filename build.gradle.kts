@@ -1,4 +1,5 @@
 buildscript {
+    val compose_version by extra("1.0.1")
     repositories {
         gradlePluginPortal()
         google()
@@ -8,6 +9,7 @@ buildscript {
     dependencies {
         classpath(Plugins.Android.gradle)
         classpath(Plugins.Kotlin.gradle)
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
     }
 }
 

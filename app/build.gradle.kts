@@ -71,6 +71,9 @@ dependencies {
     implementation(Libs.Compose.iconsCore)
     implementation(Libs.Compose.iconsExt)
 
+    implementation(Libs.Navigation.compose)
+    implementation(Libs.Accompanist.navAnimation)
+
     implementation(Libs.Lifecycle.lifecycles)
 
     implementation(Libs.Activity.compose)
@@ -82,5 +85,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
-    debugImplementation("androidx.compose.ui:ui-tooling:${Libs.Compose.version}")
+    debugImplementation(Libs.LayoutInspector.uiTooling)
+    debugImplementation(Libs.LayoutInspector.reflect)
 }

@@ -103,4 +103,11 @@ object Libs {
         const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
     }
+
+    object Mockk {
+        private const val version = "1.12.0"
+
+        const val core = "io.mockk:mockk:$version"
+        const val jvm = "io.mockk:mockk-agent-jvm:$version"
+    }
 }

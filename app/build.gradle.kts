@@ -79,6 +79,9 @@ dependencies {
     implementation(Libs.Activity.compose)
 
     implementation(Libs.Recompose.recompose)
+    implementation(Libs.Y.core)
+    implementation(Libs.Y.concurrency)
+    implementation(Libs.Y.collections)
 
     testImplementation("junit:junit:4.13.2")
 

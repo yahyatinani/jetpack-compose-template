@@ -1,5 +1,6 @@
 package com.github.whyrising.app.home
 
+import com.github.whyrising.recompose.cofx.injectCofx
 import com.github.whyrising.recompose.fx.FxIds.fx
 import com.github.whyrising.recompose.regEventDb
 import com.github.whyrising.recompose.regEventFx
@@ -12,6 +13,7 @@ fun regHomeEvents() {
     regEventDb<DbSchema>(":update-screen-title") { db, (_, title) ->
         db.copy(screenTitle = title as String)
     }
+
     regEventDb<DbSchema>(":enable-about-btn") { db, _ ->
         db.copy(home = db.home.copy(isAboutBtnEnabled = true))
     }
@@ -26,5 +28,15 @@ fun regHomeEvents() {
 //                v(FxIds.dispatch, v(":inc"))
             )
         )
+    }
+
+    regEventFx(
+        id = ":set-android-api",
+        interceptors = v(injectCofx(":android-api"))
+    ) { cofx, _ ->
+        val appDb = cofx[db] as DbSchema
+        val home = appDb.home.copy(androidApi = "${cofx[":android-api"]}")
+
+        m(db to appDb.copy(home = home))
     }
 }

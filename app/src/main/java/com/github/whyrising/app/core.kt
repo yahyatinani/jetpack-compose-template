@@ -19,12 +19,12 @@ import androidx.navigation.NavGraphBuilder
 import com.github.whyrising.app.about.AboutScreen
 import com.github.whyrising.app.home.HomeScreen
 import com.github.whyrising.app.home.defaultDb
+import com.github.whyrising.app.home.regHomeCofx
 import com.github.whyrising.app.home.regHomeEvents
 import com.github.whyrising.app.home.regHomeSubs
 import com.github.whyrising.app.ui.animation.nav.enterAnimation
 import com.github.whyrising.app.ui.animation.nav.exitAnimation
 import com.github.whyrising.app.ui.theme.JetpackComposeTemplateTheme
-import com.github.whyrising.recompose.dispatch
 import com.github.whyrising.recompose.dispatchSync
 import com.github.whyrising.recompose.regEventDb
 import com.github.whyrising.recompose.regFx
@@ -126,6 +126,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         initAppDb()
+        regHomeCofx()
         regHomeEvents()
         regHomeSubs()
 

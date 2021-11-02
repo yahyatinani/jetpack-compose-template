@@ -55,9 +55,7 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Android API: ${
-                    subscribe<Int>(v(sdk_version)).w()
-                }",
+                text = "Android API: ${subscribe<Int>(v(sdk_version)).w()}",
                 color = MaterialTheme.colors.primary,
                 fontSize = 20.sp
             )

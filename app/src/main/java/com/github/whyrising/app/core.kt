@@ -43,6 +43,7 @@ enum class Keys {
     update_screen_title,
     navigate_about,
     navigate,
+    inc_counter,
 
     // Subs
     sdk_version,
@@ -50,6 +51,7 @@ enum class Keys {
     format_screen_title,
     is_about_btn_enabled,
     android_greeting,
+    counter,
 
     // Fx
     navigateFx,

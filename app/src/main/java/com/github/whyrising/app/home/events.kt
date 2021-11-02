@@ -3,6 +3,7 @@ package com.github.whyrising.app.home
 import com.github.whyrising.app.Keys
 import com.github.whyrising.app.Keys.disable_about_btn
 import com.github.whyrising.app.Keys.enable_about_btn
+import com.github.whyrising.app.Keys.inc_counter
 import com.github.whyrising.app.Keys.navigateFx
 import com.github.whyrising.app.Keys.navigate_about
 import com.github.whyrising.app.Keys.sdk_version
@@ -47,5 +48,10 @@ fun regHomeEvents() {
             db to disableAboutBtn(cofx[db] as DbSchema),
             fx to v(v(navigateFx, Routes.about))
         )
+    }
+
+    regEventDb<DbSchema>(id = inc_counter) { db, _ ->
+        val home = db.home
+        db.copy(home = home.copy(count = home.count.inc()))
     }
 }

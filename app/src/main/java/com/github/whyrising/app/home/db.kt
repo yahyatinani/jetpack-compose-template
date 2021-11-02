@@ -7,11 +7,13 @@ import com.github.whyrising.recompose.cofx.regCofx
 data class DbHomeSchema(
     val isAboutBtnEnabled: Boolean,
     val sdkVersion: Int,
+    val count: Int
 )
 
 val defaultDbHomeSchema = DbHomeSchema(
     isAboutBtnEnabled = true,
-    sdkVersion = -1
+    sdkVersion = -1,
+    count = 0
 )
 
 // -- cofx Registrations -------------------------------------------------------

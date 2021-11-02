@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.sp
 import com.github.whyrising.app.Keys.android_greeting
+import com.github.whyrising.app.Keys.counter
 import com.github.whyrising.app.Keys.is_about_btn_enabled
 import com.github.whyrising.app.Keys.sdk_version
 import com.github.whyrising.app.global.DbSchema
@@ -56,5 +57,11 @@ fun regHomeSubs() {
                 append("\uD83D\uDE00")
             }
         }
+    }
+
+    regSub<DbSchema, String>(
+        queryId = counter,
+    ) { db, _ ->
+        "${db.home.count}"
     }
 }

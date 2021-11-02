@@ -20,8 +20,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.whyrising.app.Keys
+import com.github.whyrising.app.Keys.android_greeting
+import com.github.whyrising.app.Keys.enable_about_btn
+import com.github.whyrising.app.Keys.is_about_btn_enabled
+import com.github.whyrising.app.Keys.set_android_version
+import com.github.whyrising.app.Keys.update_screen_title
 import com.github.whyrising.app.R
-import com.github.whyrising.app.Routes
 import com.github.whyrising.app.initAppDb
 import com.github.whyrising.app.ui.theme.JetpackComposeTemplateTheme
 import com.github.whyrising.recompose.dispatch
@@ -29,13 +34,19 @@ import com.github.whyrising.recompose.subscribe
 import com.github.whyrising.recompose.w
 import com.github.whyrising.y.collections.core.v
 
+var start: Long = System.currentTimeMillis()
+
 @Composable
 fun HomeScreen() {
+    regHomeCofx()
+    regHomeEvents()
+    regHomeSubs()
+
     val title = stringResource(R.string.home_screen_title)
     SideEffect {
-        dispatch(v(":update-screen-title", title))
-        dispatch(v(":set-android-api"))
-        dispatch(v(":enable-about-btn"))
+        dispatch(v(update_screen_title, title))
+        dispatch(v(set_android_version))
+        dispatch(v(enable_about_btn))
     }
 
     val primaryColor = MaterialTheme.colors.primary
@@ -47,7 +58,7 @@ fun HomeScreen() {
         ) {
             Text(
                 text = subscribe<AnnotatedString>(
-                    qvec = v(":android-greeting", primaryColor)
+                    qvec = v(android_greeting, primaryColor)
                 ).w(),
                 modifier = Modifier.padding(24.dp)
             )
@@ -68,8 +79,11 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.height(32.dp))
 
             Button(
-                onClick = { dispatch(v(":navigate", Routes.about)) },
-                enabled = subscribe<Boolean>(v(":is-about-btn-enabled")).w()
+                onClick = {
+                    start = System.currentTimeMillis()
+                    dispatch(v(Keys.navigate_about))
+                },
+                enabled = subscribe<Boolean>(v(is_about_btn_enabled)).w()
             ) {
                 Text(text = "About")
             }
@@ -79,16 +93,10 @@ fun HomeScreen() {
 
 // -- Previews -----------------------------------------------------------------
 
-private fun init() {
-    initAppDb()
-    regHomeEvents()
-    regHomeSubs()
-}
-
 @Preview(showBackground = true)
 @Composable
 fun ScreenPreview() {
-    init()
+    initAppDb()
     JetpackComposeTemplateTheme {
         HomeScreen()
     }
@@ -97,7 +105,7 @@ fun ScreenPreview() {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ScreenDarkPreview() {
-    init()
+    initAppDb()
     JetpackComposeTemplateTheme {
         HomeScreen()
     }

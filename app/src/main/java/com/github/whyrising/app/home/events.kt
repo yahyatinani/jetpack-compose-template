@@ -1,5 +1,13 @@
 package com.github.whyrising.app.home
 
+import com.github.whyrising.app.Keys
+import com.github.whyrising.app.Keys.disable_about_btn
+import com.github.whyrising.app.Keys.enable_about_btn
+import com.github.whyrising.app.Keys.navigateFx
+import com.github.whyrising.app.Keys.navigate_about
+import com.github.whyrising.app.Keys.sdk_version
+import com.github.whyrising.app.Routes
+import com.github.whyrising.app.global.DbSchema
 import com.github.whyrising.recompose.cofx.injectCofx
 import com.github.whyrising.recompose.fx.FxIds.fx
 import com.github.whyrising.recompose.regEventDb
@@ -9,34 +17,35 @@ import com.github.whyrising.y.collections.core.get
 import com.github.whyrising.y.collections.core.m
 import com.github.whyrising.y.collections.core.v
 
-fun regHomeEvents() {
-    regEventDb<DbSchema>(":update-screen-title") { db, (_, title) ->
-        db.copy(screenTitle = title as String)
-    }
+fun disableAboutBtn(appDb: DbSchema) = appDb.copy(
+    home = appDb.home.copy(isAboutBtnEnabled = false)
+)
 
-    regEventDb<DbSchema>(":enable-about-btn") { db, _ ->
+fun regHomeEvents() {
+    regEventDb<DbSchema>(id = enable_about_btn) { db, _ ->
         db.copy(home = db.home.copy(isAboutBtnEnabled = true))
     }
 
-    regEventFx(":navigate") { cofx, (_, route) ->
-        val appDb = get(cofx, db) as DbSchema
-        val home = appDb.home.copy(isAboutBtnEnabled = false)
+    regEventDb<DbSchema>(id = disable_about_btn) { db, _ ->
+        disableAboutBtn(db)
+    }
+
+    regEventFx(
+        id = Keys.set_android_version,
+        interceptors = v(injectCofx(sdk_version)),
+    ) { cofx, _ ->
+        val appDb = cofx[db] as DbSchema
         m(
-            db to appDb.copy(home = home),
-            fx to v(
-                v(":navigate!", route),
-//                v(FxIds.dispatch, v(":inc"))
+            db to appDb.copy(
+                home = appDb.home.copy(sdkVersion = cofx[sdk_version] as Int)
             )
         )
     }
 
-    regEventFx(
-        id = ":set-android-api",
-        interceptors = v(injectCofx(":android-api"))
-    ) { cofx, _ ->
-        val appDb = cofx[db] as DbSchema
-        val home = appDb.home.copy(androidApi = "${cofx[":android-api"]}")
-
-        m(db to appDb.copy(home = home))
+    regEventFx(id = navigate_about) { cofx, _ ->
+        m(
+            db to disableAboutBtn(cofx[db] as DbSchema),
+            fx to v(v(navigateFx, Routes.about))
+        )
     }
 }

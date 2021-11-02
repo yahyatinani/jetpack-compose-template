@@ -1,6 +1,7 @@
 package com.github.whyrising.app.about
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,17 +20,24 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.github.whyrising.app.Keys.sdk_version
+import com.github.whyrising.app.Keys.update_screen_title
 import com.github.whyrising.app.R
+import com.github.whyrising.app.home.start
 import com.github.whyrising.app.initAppDb
 import com.github.whyrising.app.ui.theme.JetpackComposeTemplateTheme
 import com.github.whyrising.recompose.dispatch
+import com.github.whyrising.recompose.subscribe
+import com.github.whyrising.recompose.w
 import com.github.whyrising.y.collections.core.v
 
 @Composable
 fun AboutScreen() {
+    val finish = System.currentTimeMillis()
+    Log.i("Measurements", "${finish - start}")
     val title = stringResource(R.string.about_screen_title)
     SideEffect {
-        dispatch(v(":update-screen-title", title))
+        dispatch(v(update_screen_title, title))
     }
     Surface {
         Column(
@@ -47,7 +55,9 @@ fun AboutScreen() {
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Android API: todo",
+                text = "Android API: ${
+                    subscribe<Int>(v(sdk_version)).w()
+                }",
                 color = MaterialTheme.colors.primary,
                 fontSize = 20.sp
             )

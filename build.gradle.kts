@@ -1,5 +1,4 @@
 buildscript {
-    val compose_version by extra("1.0.1")
     repositories {
         gradlePluginPortal()
         google()
@@ -21,6 +20,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 

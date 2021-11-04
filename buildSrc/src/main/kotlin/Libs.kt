@@ -91,7 +91,7 @@ object Libs {
     }
 
     object Recompose {
-        private const val v = "0.0.5"
+        private const val v = "0.0.6-LOCAL"
         const val recompose = "com.github.whyrising.recompose:recompose:$v"
     }
 

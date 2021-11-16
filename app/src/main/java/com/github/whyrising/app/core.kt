@@ -61,12 +61,8 @@ enum class Keys {
 fun NavGraphBuilder.homeComposable(animOffSetX: Int) {
     composable(
         route = Routes.home,
-        exitTransition = { _, _ ->
-            exitAnimation(targetOffsetX = -animOffSetX)
-        },
-        popEnterTransition = { _, _ ->
-            enterAnimation(initialOffsetX = -animOffSetX)
-        }
+        exitTransition = { exitAnimation(targetOffsetX = -animOffSetX) },
+        popEnterTransition = { enterAnimation(initialOffsetX = -animOffSetX) }
     ) {
         HomeScreen()
     }
@@ -76,12 +72,8 @@ fun NavGraphBuilder.homeComposable(animOffSetX: Int) {
 fun NavGraphBuilder.aboutComposable(animOffSetX: Int) {
     composable(
         route = Routes.about,
-        enterTransition = { _, _ ->
-            enterAnimation(initialOffsetX = animOffSetX)
-        },
-        popExitTransition = { _, _ ->
-            exitAnimation(targetOffsetX = animOffSetX)
-        },
+        enterTransition = { enterAnimation(initialOffsetX = animOffSetX) },
+        popExitTransition = { exitAnimation(targetOffsetX = animOffSetX) },
     ) {
         AboutScreen()
     }

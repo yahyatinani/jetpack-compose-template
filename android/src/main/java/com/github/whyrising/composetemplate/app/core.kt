@@ -98,10 +98,10 @@ class HostActivity : ComponentActivity() {
                     val offSetX = 300
                     composable(
                         route = route(HOME),
-                        exitTransition = { _, _ ->
+                        exitTransition = {
                             exitTransition(targetOffsetX = -offSetX)
                         },
-                        popEnterTransition = { _, _ ->
+                        popEnterTransition = {
                             enterTransition(initialOffsetX = -offSetX)
                         },
                     ) {
@@ -115,10 +115,10 @@ class HostActivity : ComponentActivity() {
                                 type = NavType.IntType
                             }
                         ),
-                        enterTransition = { _, _ ->
+                        enterTransition = {
                             enterTransition(initialOffsetX = offSetX)
                         },
-                        popExitTransition = { _, _ ->
+                        popExitTransition = {
                             exitTransition(targetOffsetX = offSetX)
                         }
                     ) { entry ->

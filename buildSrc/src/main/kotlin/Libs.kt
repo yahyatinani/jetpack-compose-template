@@ -4,7 +4,7 @@ object Libs {
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.4"
+        const val version = "1.1.0-beta02"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -50,20 +50,20 @@ object Libs {
     }
 
     object Navigation {
-        private const val version = "2.4.0-alpha10"
+        private const val version = "2.4.0-beta02"
 
         const val compose = "androidx.navigation:navigation-compose:$version"
     }
 
     object Androidx {
         // Appcompat is needed for themes.xml resource
-        const val appcompat = "androidx.appcompat:appcompat:1.4.0-beta01"
+        const val appcompat = "androidx.appcompat:appcompat:1.4.0-rc01"
         const val constraintLayoutCompose =
             "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01"
     }
 
     object Accompanist {
-        private const val version = "0.20.0"
+        private const val version = "0.21.2-beta"
         const val navAnimation =
             "com.google.accompanist:accompanist-navigation-animation:$version"
     }
@@ -74,7 +74,7 @@ object Libs {
     }
 
     object Kotest {
-        private const val version = "5.0.0.M3"
+        private const val version = "4.6.3"
 
         const val runner = "io.kotest:kotest-runner-junit5:$version"
         const val assertions = "io.kotest:kotest-assertions-core:$version"

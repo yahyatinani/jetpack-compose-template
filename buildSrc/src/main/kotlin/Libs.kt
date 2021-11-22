@@ -4,7 +4,7 @@ object Libs {
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.1.0-beta02"
+        const val version = "1.1.0-beta03"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -91,7 +91,7 @@ object Libs {
     }
 
     object Recompose {
-        private const val v = "0.0.6-LOCAL"
+        private const val v = "0.0.6"
         const val recompose = "com.github.whyrising.recompose:recompose:$v"
     }
 

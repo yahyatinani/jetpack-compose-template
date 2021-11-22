@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavGraphBuilder
 import com.github.whyrising.app.Keys.navigateFx
 import com.github.whyrising.app.about.AboutScreen
@@ -113,6 +114,7 @@ fun initAppDb() {
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
 
         initAppDb()
         regGlobalEvents()

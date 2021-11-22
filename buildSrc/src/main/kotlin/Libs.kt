@@ -57,9 +57,21 @@ object Libs {
 
     object Androidx {
         // Appcompat is needed for themes.xml resource
-        const val appcompat = "androidx.appcompat:appcompat:1.4.0-rc01"
+        const val appcompat = "androidx.appcompat:appcompat:1.4.0"
+
         const val constraintLayoutCompose =
-            "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01"
+            "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
+
+        const val coreSplashscreen =
+            "androidx.core:core-splashscreen:1.0.0-alpha02"
+
+        const val coreKtx = "androidx.core:core-ktx:1.7.0"
+    }
+
+    object Material {
+        private const val version = "1.5.0-beta01"
+
+        const val material = "com.google.android.material:material:$version"
     }
 
     object Accompanist {
@@ -102,12 +114,5 @@ object Libs {
         const val core = "$group:kotlinx-coroutines-core:$version"
         const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
-    }
-
-    object Mockk {
-        private const val version = "1.12.0"
-
-        const val core = "io.mockk:mockk:$version"
-        const val jvm = "io.mockk:mockk-agent-jvm:$version"
     }
 }

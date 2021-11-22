@@ -59,9 +59,9 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.6.0")
+    implementation(Libs.Androidx.coreKtx)
     implementation(Libs.Androidx.appcompat)
-    implementation("com.google.android.material:material:1.4.0")
+    implementation(Libs.Material.material)
 
 
     implementation(Libs.Compose.ui)
@@ -82,6 +82,8 @@ dependencies {
     implementation(Libs.Y.core)
     implementation(Libs.Y.concurrency)
     implementation(Libs.Y.collections)
+
+    implementation(Libs.Androidx.coreSplashscreen)
 
     testImplementation("junit:junit:4.13.2")
 

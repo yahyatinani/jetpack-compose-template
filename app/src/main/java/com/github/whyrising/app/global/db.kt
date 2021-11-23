@@ -6,9 +6,10 @@ import com.github.whyrising.app.home.defaultDbHomeSchema
 data class DbSchema(
     val screenTitle: String,
     val home: DbHomeSchema,
+    val isDark: Boolean = false
 )
 
 val defaultDb = DbSchema(
-    screenTitle = "",
+    screenTitle = "Page Title",
     home = defaultDbHomeSchema,
 )

@@ -45,6 +45,9 @@ enum class Keys {
     navigate_about,
     navigate,
     inc_counter,
+    toggle_theme,
+    setDarkMode,
+    isDark,
 
     // Subs
     sdk_version,
@@ -53,6 +56,8 @@ enum class Keys {
     is_about_btn_enabled,
     android_greeting,
     counter,
+    flashLight,
+    uiMode,
 
     // Fx
     navigateFx,

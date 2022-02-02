@@ -1,7 +1,7 @@
 Jetpack Compose Template
 =========
 
-![Android CI](https://github.com/whyrising/Jetpack-Compose-Template/workflows/Android%20CI/badge.svg)
+[![PR](https://github.com/whyrising/jetpack-compose-template/actions/workflows/PR.yml/badge.svg)](https://github.com/whyrising/jetpack-compose-template/actions/workflows/PR.yml)
 
 Up-To-Date Jetpack Compose project template in Kotlin.
 

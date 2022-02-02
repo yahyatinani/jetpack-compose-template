@@ -63,7 +63,6 @@ dependencies {
     implementation(Libs.Androidx.appcompat)
     implementation(Libs.Material.material)
 
-
     implementation(Libs.Compose.ui)
     implementation(Libs.Compose.uiTooling)
     implementation(Libs.Compose.foundation)

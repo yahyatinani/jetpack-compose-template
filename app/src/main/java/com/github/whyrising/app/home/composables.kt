@@ -51,7 +51,6 @@ fun HomeScreen() {
         dispatch(v(enable_about_btn))
     }
 
-
     val primaryColor = MaterialTheme.colors.primary
     Surface {
         Column(

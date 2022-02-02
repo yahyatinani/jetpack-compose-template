@@ -14,7 +14,6 @@ import com.github.whyrising.y.collections.core.m
 fun isSystemDarkMode(uiMode: Int) =
     uiMode and UI_MODE_NIGHT_MASK == UI_MODE_NIGHT_YES
 
-
 fun regGlobalEvents() {
     regEventDb<DbSchema>(id = update_screen_title) { db, (_, title) ->
         db.copy(screenTitle = title as String)

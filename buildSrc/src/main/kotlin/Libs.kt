@@ -1,10 +1,10 @@
 object Libs {
-    const val kotlinVersion = "1.5.21"
+    const val kotlinVersion = "1.5.31"
     const val jvmTarget = "1.8"
 
     object Compose {
         private const val gr = "androidx.compose"
-        const val version = "1.0.1"
+        const val version = "1.1.0-beta03"
 
         const val ui = "$gr.ui:ui:$version"
 
@@ -25,27 +25,57 @@ object Libs {
         const val uiTestJUnit = "$gr.ui:ui-test-junit4:$version"
     }
 
-    object Androidx {
+    object Lifecycle {
+        private const val version = "2.4.0"
+        private const val gr = "androidx.lifecycle"
+
+        // ViewModel
+        const val vm = "$gr:lifecycle-viewmodel-ktx:$version"
+
+        // ViewModel utilities for Compose
+        const val viewModelCompose = "$gr:lifecycle-viewmodel-compose:$version"
+
+        // Lifecycles only (without ViewModel or LiveData)
+        const val lifecycles = "$gr:lifecycle-runtime-ktx:$version"
+
+        // Saved state module for ViewModel
+        const val savedState = "$gr:lifecycle-viewmodel-savedstate:$version"
+    }
+
+    object Activity {
+        private const val version = "1.4.0"
+
         // Integration with activities
-        const val activityCompose =
-            "androidx.activity:activity-compose:1.3.1"
+        const val compose = "androidx.activity:activity-compose:$version"
+    }
 
-        // Integration with ViewModels
-        const val viewModelCompose =
-            "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+    object Navigation {
+        private const val version = "2.4.0-beta02"
 
+        const val compose = "androidx.navigation:navigation-compose:$version"
+    }
+
+    object Androidx {
         // Appcompat is needed for themes.xml resource
-        const val appcompat = "androidx.appcompat:appcompat:1.3.1"
-
-        const val navigationCompose =
-            "androidx.navigation:navigation-compose:2.4.0-alpha07"
+        const val appcompat = "androidx.appcompat:appcompat:1.4.0"
 
         const val constraintLayoutCompose =
-            "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
+            "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
+
+        const val coreSplashscreen =
+            "androidx.core:core-splashscreen:1.0.0-alpha02"
+
+        const val coreKtx = "androidx.core:core-ktx:1.7.0"
+    }
+
+    object Material {
+        private const val version = "1.5.0-beta01"
+
+        const val material = "com.google.android.material:material:$version"
     }
 
     object Accompanist {
-       private const val version = "0.17.0"
+        private const val version = "0.21.2-beta"
         const val navAnimation =
             "com.google.accompanist:accompanist-navigation-animation:$version"
     }
@@ -56,7 +86,7 @@ object Libs {
     }
 
     object Kotest {
-        private const val version = "4.6.1"
+        private const val version = "4.6.3"
 
         const val runner = "io.kotest:kotest-runner-junit5:$version"
         const val assertions = "io.kotest:kotest-assertions-core:$version"
@@ -65,7 +95,7 @@ object Libs {
 
     object Y {
         private const val group = "com.github.whyrising.y"
-        private const val version = "0.0.5"
+        private const val version = "0.0.7"
 
         const val core = "$group:y-core:$version"
         const val collections = "$group:y-collections:$version"
@@ -73,18 +103,16 @@ object Libs {
     }
 
     object Recompose {
-        private const val v = "0.0.3"
+        private const val v = "0.0.6"
         const val recompose = "com.github.whyrising.recompose:recompose:$v"
     }
 
     object Coroutines {
         private const val group = "org.jetbrains.kotlinx"
-        private const val version = "1.5.1"
+        private const val version = "1.5.2"
 
         const val core = "$group:kotlinx-coroutines-core:$version"
         const val android = "$group:kotlinx-coroutines-android:$version"
         const val coroutinesTest = "$group:kotlinx-coroutines-test:$version"
-
-        const val vm = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     }
 }

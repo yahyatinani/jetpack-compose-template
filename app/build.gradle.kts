@@ -56,6 +56,11 @@ android {
     packagingOptions {
         resources.excludes.add("META-INF/*")
     }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+        testLogging { events("passed", "skipped", "failed") }
+    }
 }
 
 dependencies {
@@ -84,11 +89,10 @@ dependencies {
 
     implementation(Libs.Androidx.coreSplashscreen)
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(Libs.Kotest.runner)
+    testImplementation(Libs.Kotest.assertions)
+    testImplementation(Libs.Kotest.property)
 
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Libs.Compose.version}")
     debugImplementation(Libs.LayoutInspector.uiTooling)
     debugImplementation(Libs.LayoutInspector.reflect)
 }

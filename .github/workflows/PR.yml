@@ -1,13 +1,6 @@
-name: Android CI
+name: PR
 
 on:
-  push:
-    paths-ignore:
-      - 'doc/**'
-      - 'docs/**'
-      - '*.md'
-      - '*.yml'
-    branches: [ main ]
   pull_request:
     paths-ignore:
       - 'doc/**'
@@ -18,16 +11,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout the repo
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - name: set up JDK
+      - name: setup JDK
         uses: actions/setup-java@v1
         with:
           java-version: '11'

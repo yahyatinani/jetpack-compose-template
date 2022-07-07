@@ -1,7 +1,7 @@
 Jetpack Compose Template
 =========
 
-[![PR](https://github.com/whyrising/jetpack-compose-template/actions/workflows/PR.yml/badge.svg)](https://github.com/whyrising/jetpack-compose-template/actions/workflows/PR.yml)
+[![build](https://github.com/whyrising/jetpack-compose-template/actions/workflows/main.yml/badge.svg)](https://github.com/whyrising/jetpack-compose-template/actions/workflows/main.yml)
 
 A project kickoff template for building modern Android apps.
 

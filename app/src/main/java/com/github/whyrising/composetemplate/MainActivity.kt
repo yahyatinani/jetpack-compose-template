@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.github.whyrising.composetemplate.ui.theme.JetpackComposeTemplateTheme
+import com.github.whyrising.composetemplate.ui.theme.TemplateTheme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
 
     setContent {
-      JetpackComposeTemplateTheme {
+      TemplateTheme {
         // A surface container using the 'background' color from the theme
         Surface(
           modifier = Modifier.fillMaxSize(),
@@ -40,7 +40,7 @@ fun Greeting(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-  JetpackComposeTemplateTheme {
+  TemplateTheme {
     Greeting("Android")
   }
 }

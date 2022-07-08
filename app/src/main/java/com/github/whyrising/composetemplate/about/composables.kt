@@ -1,6 +1,7 @@
 package com.github.whyrising.composetemplate.about
 
 import android.content.res.Configuration
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +16,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraphBuilder
 import com.github.whyrising.composetemplate.R
+import com.github.whyrising.composetemplate.ui.anim.enterAnimation
+import com.github.whyrising.composetemplate.ui.anim.exitAnimation
 import com.github.whyrising.composetemplate.ui.theme.TemplateTheme
+import com.google.accompanist.navigation.animation.composable
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.about(animOffSetX: Int) {
+  composable(
+    route = about.about_panel.name,
+    exitTransition = { exitAnimation(targetOffsetX = -animOffSetX) },
+    popEnterTransition = { enterAnimation(initialOffsetX = -animOffSetX) }
+  ) {
+    About()
+  }
+}
 
 @Composable
 fun About(modifier: Modifier = Modifier) {

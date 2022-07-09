@@ -35,7 +35,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 fun Main() {
   val navController = rememberAnimatedNavController().apply {
     addOnDestinationChangedListener { controller, _, _ ->
-      dispatch(v(base.set_backstack_status, controller.previousBackStackEntry != null))
+      val flag = controller.previousBackStackEntry != null
+      dispatch(v(base.set_backstack_status, flag))
     }
   }
 

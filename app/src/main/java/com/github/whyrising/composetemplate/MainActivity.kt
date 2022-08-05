@@ -62,7 +62,7 @@ fun Main() {
             else -> null
           }
         )
-      },
+      }
     ) { paddingValues ->
       AnimatedNavHost(
         modifier = Modifier.padding(paddingValues),

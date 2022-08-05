@@ -43,12 +43,12 @@ fun Home(modifier: Modifier = Modifier) {
       verticalArrangement = Arrangement.Center
     ) {
       Button(
-        onClick = { dispatch(v(home.inc_count)) },
+        onClick = { dispatch(v(home.inc_count)) }
       ) {
         Text(text = subscribe<String>(v(home.btn_count_name)).w())
       }
       Button(
-        onClick = { dispatch(v(base.navigate, about.about_panel)) },
+        onClick = { dispatch(v(base.navigate, about.about_panel)) }
       ) {
         Text(text = "About")
       }

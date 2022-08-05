@@ -14,7 +14,7 @@ fun BackArrow() {
   IconButton(
     onClick = {
       dispatch(v(base.navigate, base.go_back))
-    },
+    }
   ) {
     Icon(
       imageVector = Icons.Filled.ArrowBack,

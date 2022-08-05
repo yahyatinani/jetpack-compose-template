@@ -1,6 +1,0 @@
-[*.{kt, kts}]
-
-max_line_length = 80
-
-disabled_rules = curly-spacing, filename
-

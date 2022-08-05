@@ -7,7 +7,7 @@ A project kickoff template for building modern Android apps.
 
 #### Running on:
 
-* Android Studio Chipmunk | 2021.2.1
+* Android Studio Chipmunk | 2021.2.1 Patch 2
 
 #### MAD SCORECARD:
 

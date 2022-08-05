@@ -48,7 +48,6 @@ fun Main() {
   }
 
   TemplateTheme {
-    // A surface container using the 'background' color from the theme
     Scaffold(
       topBar = {
         TopAppBar(
@@ -69,8 +68,8 @@ fun Main() {
         navController = navController,
         startDestination = home.home_panel.name
       ) {
-        home(300)
-        about(300)
+        home(animOffSetX = 300)
+        about(animOffSetX = 300)
       }
     }
   }

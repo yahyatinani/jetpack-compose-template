@@ -24,17 +24,6 @@ import com.github.whyrising.recompose.w
 import com.github.whyrising.y.core.v
 import com.google.accompanist.navigation.animation.composable
 
-@OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.home(animOffSetX: Int) {
-  composable(
-    route = home.home_panel.name,
-    exitTransition = { exitAnimation(targetOffsetX = -animOffSetX) },
-    popEnterTransition = { enterAnimation(initialOffsetX = -animOffSetX) }
-  ) {
-    Home()
-  }
-}
-
 @Composable
 fun Home(modifier: Modifier = Modifier) {
   Surface(modifier = modifier.fillMaxSize()) {
@@ -53,6 +42,19 @@ fun Home(modifier: Modifier = Modifier) {
         Text(text = "About")
       }
     }
+  }
+}
+
+// -- navigation ---------------------------------------------------------------
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.home(animOffSetX: Int) {
+  composable(
+    route = home.home_panel.name,
+    exitTransition = { exitAnimation(targetOffsetX = -animOffSetX) },
+    popEnterTransition = { enterAnimation(initialOffsetX = -animOffSetX) }
+  ) {
+    Home()
   }
 }
 

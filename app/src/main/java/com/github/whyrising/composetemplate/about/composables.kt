@@ -23,17 +23,6 @@ import com.github.whyrising.composetemplate.ui.anim.exitAnimation
 import com.github.whyrising.composetemplate.ui.theme.TemplateTheme
 import com.google.accompanist.navigation.animation.composable
 
-@OptIn(ExperimentalAnimationApi::class)
-fun NavGraphBuilder.about(animOffSetX: Int) {
-  composable(
-    route = about.about_panel.name,
-    exitTransition = { exitAnimation(targetOffsetX = -animOffSetX) },
-    popEnterTransition = { enterAnimation(initialOffsetX = -animOffSetX) }
-  ) {
-    About()
-  }
-}
-
 @Composable
 fun About(modifier: Modifier = Modifier) {
   Surface(modifier = modifier.fillMaxSize()) {
@@ -48,6 +37,19 @@ fun About(modifier: Modifier = Modifier) {
         style = MaterialTheme.typography.subtitle1
       )
     }
+  }
+}
+
+// -- navigation ---------------------------------------------------------------
+
+@OptIn(ExperimentalAnimationApi::class)
+fun NavGraphBuilder.about(animOffSetX: Int) {
+  composable(
+    route = about.about_panel.name,
+    exitTransition = { exitAnimation(targetOffsetX = -animOffSetX) },
+    popEnterTransition = { enterAnimation(initialOffsetX = -animOffSetX) }
+  ) {
+    About()
   }
 }
 

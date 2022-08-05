@@ -10,8 +10,10 @@ android {
           disabled = false
           binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
           includes = [
-            'com.github.whyrising.flashyalarm.*'
+            //todo: change this to your package.
+            'com.github.whyrising.composetemplate.*'
           ]
+          //todo: change this to exclude things.
           excludes = ['com.example.subpackage.*']
         }
       }
